@@ -1,10 +1,12 @@
-package com.yifanfwu.locationevents;
+package com.yifanfwu.locationevents.Activities;
 
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
+
+import com.yifanfwu.locationevents.R;
+import com.yifanfwu.locationevents.Rest.RestServer;
 
 public class EventListActivity extends AppCompatActivity {
 
@@ -19,7 +21,7 @@ public class EventListActivity extends AppCompatActivity {
         this.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Hello!", Toast.LENGTH_SHORT).show();
+                RestServer.getInstance().getEvents();
             }
         });
     }

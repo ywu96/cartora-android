@@ -1,9 +1,10 @@
-package com.yifanfwu.locationevents;
+package com.yifanfwu.locationevents.Activities;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -16,6 +17,7 @@ import com.facebook.login.widget.LoginButton;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.yifanfwu.locationevents.R;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     protected CallbackManager callbackManager;
     protected AccessTokenTracker accessTokenTracker;
     protected Firebase firebaseRef;
+    protected FloatingActionButton fab;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +37,24 @@ public class LoginActivity extends AppCompatActivity {
 
         this.firebaseRef = new Firebase("https://vivid-inferno-3846.firebaseio.com");
 
-        if (this.firebaseRef.getAuth() != null) {
-            Log.d("test123", "User logged in: " + this.firebaseRef.getAuth());
-            Intent intent = new Intent(this, EventListActivity.class);
-            startActivity(intent);
-        } else {
+//        if (this.firebaseRef.getAuth() != null) {
+//            Log.d("test123", "User logged in: " + this.firebaseRef.getAuth());
+//            Intent intent = new Intent(this, EventListActivity.class);
+//            startActivity(intent);
+//        } else {
+//
+//        }
 
-        }
+        this.fab = (FloatingActionButton) findViewById(R.id.login_fab);
+        this.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (LoginActivity.this.firebaseRef.getAuth() != null) {
+                    Intent intent = new Intent(getBaseContext(), EventListActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         this.callbackManager = CallbackManager.Factory.create();
 

@@ -9,8 +9,14 @@ android {
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
     }
+
+    packagingOptions {
+        exclude 'META-INF/maven/com.squareup.retrofit/retrofit/pom.properties'
+        exclude 'META-INF/maven/com.squareup.retrofit/retrofit/pom.xml'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -30,4 +36,6 @@ dependencies {
     compile 'com.android.support:design:23.3.0'
     compile 'com.facebook.android:facebook-android-sdk:4.10.1'
     compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.squareup.retrofit2:retrofit:2.0.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.1'
 }
