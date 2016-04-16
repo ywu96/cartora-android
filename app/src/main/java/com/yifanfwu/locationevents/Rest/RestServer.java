@@ -2,8 +2,10 @@ package com.yifanfwu.locationevents.Rest;
 
 import android.util.Log;
 
-import com.yifanfwu.locationevents.Models.Event;
+import com.yifanfwu.locationevents.Models.EventRequest;
+import com.yifanfwu.locationevents.Models.EventResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -16,12 +18,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RestServer {
     public static final String LOG_TAG = "RestServer";
 
-    public static final String BASE_URL = "http://220f59ea.ngrok.io/";
+    // TODO: remember to update
+    public static final String BASE_URL = "http://419cfa56.ngrok.io/";
     protected static RestServer restServer = null;
 
     protected RestService restService;
-
-//    protected Retrofit retrofit;
 
     public static RestServer getInstance() {
         if (restServer == null) {
@@ -38,24 +39,39 @@ public class RestServer {
         this.restService = retrofit.create(RestService.class);
     }
 
-    public void getEvents() {
-        Call<List<Event>> eventListCall = this.restService.getEvents();
-        eventListCall.enqueue(new Callback<List<Event>>() {
+    //Callback for result
+    public interface Callback<E> {
+        void result(E result);
+    }
+
+    public void getEvents(final Callback<ArrayList<EventResponse>> callback) {
+        Call<ArrayList<EventResponse>> call = this.restService.getEvents();
+        call.enqueue(new RetrofitCall.RetrofitCallback<ArrayList<EventResponse>>() {
             @Override
-            public void onResponse(Call<List<Event>> call, Response<List<Event>> response) {
-                if (response.isSuccessful()) {
-                    for (Event event : response.body()) {
-                        Log.d(LOG_TAG, "id: " + event.Id);
-                    }
-                }
+            public void onResponse(Call<ArrayList<EventResponse>> call, Response<ArrayList<EventResponse>> response) {
+                callback.result(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Event>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<EventResponse>> call, Throwable t) {
 
             }
         });
     }
 
+    public void createEvent(EventRequest eventRequest, final Callback<EventResponse> callback) {
+        Call<EventResponse> call = this.restService.createEvent(eventRequest);
+        call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
+            @Override
+            public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
+                callback.result(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<EventResponse> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
+    }
 
 }

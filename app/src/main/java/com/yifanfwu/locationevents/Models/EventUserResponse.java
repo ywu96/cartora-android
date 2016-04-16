@@ -2,13 +2,23 @@ package com.yifanfwu.locationevents.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class EventLocation {
+public class EventUserResponse {
+
+    @SerializedName("userId")
+    protected String userId;
 
     @SerializedName("latitude")
     protected double latitude;
 
     @SerializedName("longitude")
     protected double longitude;
+
+    @SerializedName("_id")
+    protected String Id;
+
+    public String getUserId() {
+        return this.userId;
+    }
 
     public double getLatitude() {
         return this.latitude;
@@ -18,8 +28,7 @@ public class EventLocation {
         return this.longitude;
     }
 
-    public EventLocation(double lat, double lng) {
-        this.latitude = lat;
-        this.longitude = lng;
+    public String getId() {
+        return this.Id;
     }
 }

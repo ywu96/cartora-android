@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         this.firebaseRef = new Firebase("https://vivid-inferno-3846.firebaseio.com");
 
 //        if (this.firebaseRef.getAuth() != null) {
-//            Log.d("test123", "User logged in: " + this.firebaseRef.getAuth());
+//            Log.d("test123", "EventUserResponse logged in: " + this.firebaseRef.getAuth());
 //            Intent intent = new Intent(this, EventListActivity.class);
 //            startActivity(intent);
 //        } else {
