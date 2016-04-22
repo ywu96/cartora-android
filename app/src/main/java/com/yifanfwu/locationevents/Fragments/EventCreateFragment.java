@@ -36,7 +36,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.OnC
 
 	public EventCreateFragment() {}
 
-
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
