@@ -2,13 +2,13 @@ package com.yifanfwu.locationevents.Models;
 
 public class EventUserRequest {
 
-    protected String userId;
+	protected String userId;
 
-    protected double latitude;
+	protected double latitude;
 
-    protected double longitude;
+	protected double longitude;
 
-    public EventUserRequest(String userId) {
-        this.userId = userId;
-    }
+	public EventUserRequest(String userId) {
+		this.userId = userId;
+	}
 }

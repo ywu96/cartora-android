@@ -4,31 +4,31 @@ import com.google.gson.annotations.SerializedName;
 
 public class EventUserResponse {
 
-    @SerializedName("userId")
-    protected String userId;
+	@SerializedName("userId")
+	protected String userId;
 
-    @SerializedName("latitude")
-    protected double latitude;
+	@SerializedName("latitude")
+	protected double latitude;
 
-    @SerializedName("longitude")
-    protected double longitude;
+	@SerializedName("longitude")
+	protected double longitude;
 
-    @SerializedName("_id")
-    protected String Id;
+	@SerializedName("_id")
+	protected String Id;
 
-    public String getUserId() {
-        return this.userId;
-    }
+	public String getUserId() {
+		return this.userId;
+	}
 
-    public double getLatitude() {
-        return this.latitude;
-    }
+	public double getLatitude() {
+		return this.latitude;
+	}
 
-    public double getLongitude() {
-        return this.longitude;
-    }
+	public double getLongitude() {
+		return this.longitude;
+	}
 
-    public String getId() {
-        return this.Id;
-    }
+	public String getId() {
+		return this.Id;
+	}
 }

@@ -12,10 +12,11 @@ import retrofit2.http.POST;
 
 public interface RestService {
 
-    @GET("events")
-    Call<ArrayList<EventResponse>> getEvents();
+	@GET("events")
+	Call<ArrayList<EventResponse>> getEvents();
 
-    @POST("events")
-    Call<EventResponse> createEvent(@Body EventRequest eventRequest);
+	@POST("events")
+	Call<EventResponse> createEvent(@Body EventRequest eventRequest);
+
 
 }

@@ -6,45 +6,45 @@ import com.google.gson.annotations.SerializedName;
 
 public class EventResponse {
 
-    @SerializedName("_id")
-    protected String Id;
+	@SerializedName("_id")
+	protected String Id;
 
-    @SerializedName("eventName")
-    protected String eventName;
+	@SerializedName("eventName")
+	protected String eventName;
 
-    @SerializedName("timeMillis")
-    protected Integer timeMillis;
+	@SerializedName("timeMillis")
+	protected Integer timeMillis;
 
-    @SerializedName("__v")
-    protected Integer V;
+	@SerializedName("__v")
+	protected Integer V;
 
-    @SerializedName("eventLocation")
-    protected EventLocation eventLocation;
+	@SerializedName("eventLocation")
+	protected EventLocation eventLocation;
 
-    @SerializedName("users")
-    protected List<EventUserResponse> eventUserResponses = new ArrayList<>();
+	@SerializedName("users")
+	protected List<EventUserResponse> eventUserResponses = new ArrayList<>();
 
-    public String getId() {
-        return this.Id;
-    }
+	public String getId() {
+		return this.Id;
+	}
 
-    public String getEventName() {
-        return this.eventName;
-    }
+	public String getEventName() {
+		return this.eventName;
+	}
 
-    public Integer getTimeMillis() {
-        return this.timeMillis;
-    }
+	public Integer getTimeMillis() {
+		return this.timeMillis;
+	}
 
-    public Integer getV() {
-        return this.V;
-    }
+	public Integer getV() {
+		return this.V;
+	}
 
-    public EventLocation getEventLocation() {
-        return this.eventLocation;
-    }
+	public EventLocation getEventLocation() {
+		return this.eventLocation;
+	}
 
-    public List<EventUserResponse> getEventUserResponses() {
-        return this.eventUserResponses;
-    }
+	public List<EventUserResponse> getEventUserResponses() {
+		return this.eventUserResponses;
+	}
 }
