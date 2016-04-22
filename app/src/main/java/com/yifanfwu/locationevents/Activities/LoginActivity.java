@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
 //        if (this.firebaseRef.getAuth() != null) {
 //            Log.d("test123", "EventUserResponse logged in: " + this.firebaseRef.getAuth());
-//            Intent intent = new Intent(this, EventListActivity.class);
+//            Intent intent = new Intent(this, EventBaseActivity.class);
 //            startActivity(intent);
 //        } else {
 //
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				if (LoginActivity.this.firebaseRef.getAuth() != null) {
-					Intent intent = new Intent(getBaseContext(), EventListActivity.class);
+					Intent intent = new Intent(getBaseContext(), EventBaseActivity.class);
 					startActivity(intent);
 				}
 			}
