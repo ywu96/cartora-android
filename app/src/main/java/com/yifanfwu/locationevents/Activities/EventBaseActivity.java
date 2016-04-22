@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.yifanfwu.locationevents.Fragments.EventCreateFragment;
@@ -26,6 +27,8 @@ public class EventBaseActivity extends AppCompatActivity {
 		Firebase.setAndroidContext(this);
 		setContentView(R.layout.activity_event_base);
 
+		setTitle(R.string.event_list_title);
+
 		this.firebaseRef = new Firebase("https://vivid-inferno-3846.firebaseio.com");
 		this.userId = this.firebaseRef.getAuth().getUid();
 
@@ -39,11 +42,25 @@ public class EventBaseActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventListFragment) {
+					fab.setImageResource(R.drawable.ic_done);
+					setTitle(R.string.event_create_title);
 					getSupportFragmentManager().beginTransaction().replace(R.id.base_fragment_container, eventCreateFragment).commit();
-				} else {
+				} else if ((getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventCreateFragment)) {
+					fab.setImageResource(R.drawable.ic_add);
+					setTitle(R.string.event_list_title);
 					getSupportFragmentManager().beginTransaction().replace(R.id.base_fragment_container, eventListFragment).commit();
+					Toast.makeText(getBaseContext(), R.string.event_created, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventCreateFragment) {
+			this.fab.setImageResource(R.drawable.ic_add);
+			setTitle(R.string.event_list_title);
+			getSupportFragmentManager().beginTransaction().replace(R.id.base_fragment_container, this.eventListFragment).commit();
+		}
 	}
 }
