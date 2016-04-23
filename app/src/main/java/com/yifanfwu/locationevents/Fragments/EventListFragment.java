@@ -52,7 +52,7 @@ public class EventListFragment extends Fragment {
 			@Override
 			public void result(ArrayList<EventResponse> result) {
 				spinner.setVisibility(View.GONE);
-				if (result.size() != 0) {
+				if (result != null && result.size() != 0) {
 					eventList = result;
 					noMeshesText.setVisibility(View.GONE);
 					listRecyclerView.setAdapter(new EventListAdapter(eventList, R.layout.event_list_item));

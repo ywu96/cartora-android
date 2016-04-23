@@ -50,7 +50,7 @@ public class RestServer {
 
 			@Override
 			public void onFailure(Call<ArrayList<EventResponse>> call, Throwable t) {
-
+				t.printStackTrace();
 			}
 		});
 	}
