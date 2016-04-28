@@ -5,6 +5,9 @@
     <string name="event_list_title">Your Events</string>
     <string name="event_create_title">Create an Event</string>
 
+    <string name="action_cancel">Cancel</string>
+    <string name="action_accept">Accept</string>
+
     <string name="event_created">Event created!</string>
     <string name="no_events">No events to display.</string>
     <string name="event_name_hint">Enter the event name</string>

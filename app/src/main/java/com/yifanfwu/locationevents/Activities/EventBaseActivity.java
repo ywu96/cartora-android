@@ -4,12 +4,17 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.yifanfwu.locationevents.Fragments.EventCreateFragment;
 import com.yifanfwu.locationevents.Fragments.EventListFragment;
+import com.yifanfwu.locationevents.Models.EventResponse;
 import com.yifanfwu.locationevents.R;
+import com.yifanfwu.locationevents.Rest.RestServer;
+import com.yifanfwu.locationevents.Utils.Utility;
 
 public class EventBaseActivity extends AppCompatActivity {
 
@@ -41,14 +46,9 @@ public class EventBaseActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventListFragment) {
-					fab.setImageResource(R.drawable.ic_done);
+					fab.animate().translationY(Utility.convertToPixels(getBaseContext(), 100)).setDuration(300L).setInterpolator(new AccelerateInterpolator()).start();
 					setTitle(R.string.event_create_title);
 					getSupportFragmentManager().beginTransaction().replace(R.id.base_fragment_container, eventCreateFragment).commit();
-				} else if ((getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventCreateFragment)) {
-					fab.setImageResource(R.drawable.ic_add);
-					setTitle(R.string.event_list_title);
-					getSupportFragmentManager().beginTransaction().replace(R.id.base_fragment_container, eventListFragment).commit();
-					Toast.makeText(getBaseContext(), R.string.event_created, Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -57,7 +57,7 @@ public class EventBaseActivity extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 		if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventCreateFragment) {
-			this.fab.setImageResource(R.drawable.ic_add);
+			this.fab.animate().translationY(0f).setDuration(300L).setInterpolator(new DecelerateInterpolator()).start();
 			setTitle(R.string.event_list_title);
 			getSupportFragmentManager().beginTransaction().replace(R.id.base_fragment_container, this.eventListFragment).commit();
 		}

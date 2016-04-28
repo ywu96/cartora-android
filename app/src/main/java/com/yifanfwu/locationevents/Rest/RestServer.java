@@ -15,7 +15,7 @@ public class RestServer {
 	public static final String LOG_TAG = "RestServer";
 
 	// TODO: remember to update
-	public static final String BASE_URL = "http://aab0a40d.ngrok.io/";
+	public static final String BASE_URL = "http://732029ec.ngrok.io/";
 	protected static RestServer restServer = null;
 
 	protected RestService restService;
