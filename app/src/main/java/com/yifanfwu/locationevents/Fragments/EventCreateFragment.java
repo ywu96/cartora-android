@@ -22,22 +22,30 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.yifanfwu.locationevents.Activities.EventBaseActivity;
 import com.yifanfwu.locationevents.Models.EventRequest;
 import com.yifanfwu.locationevents.R;
-
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class EventCreateFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener,
-		DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener{
+public class EventCreateFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
+		DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, OnMapReadyCallback {
 
 	protected TextView placePickerText;
 	protected TextView datePickerText;
@@ -45,20 +53,27 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.OnC
 	protected FrameLayout spinnerContainer;
 	protected Calendar calendar;
 
+	protected LinearLayout mapLayout;
+	protected GoogleMap googleMap;
+	protected MapView mapView;
 	protected Place eventLocation;
 
 	protected GoogleApiClient googleApiClient;
 	protected final int PLACE_PICKER_REQUEST = 1;
 
-	public EventCreateFragment() {}
+	public EventCreateFragment() {
+	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (this.googleApiClient != null) {
+		if (this.googleApiClient == null) {
 			this.googleApiClient = new GoogleApiClient
 					.Builder(getActivity())
+					.addOnConnectionFailedListener(this)
+					.addConnectionCallbacks(this)
+					.addApi(LocationServices.API)
 					.addApi(Places.GEO_DATA_API)
 					.addApi(Places.PLACE_DETECTION_API)
 					.enableAutoManage(getActivity(), this)
@@ -139,7 +154,50 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.OnC
 				}
 			}
 		});
+
+		this.mapLayout = (LinearLayout) rootView.findViewById(R.id.map_layout);
+		this.mapView = (MapView) rootView.findViewById(R.id.map_view);
+		this.mapView.onCreate(savedInstanceState);
+		this.mapView.getMapAsync(this);
+		MapsInitializer.initialize(getActivity());
+
 		return rootView;
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		this.googleApiClient.connect();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		this.googleApiClient.disconnect();
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		this.mapView.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		this.mapView.onPause();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		this.mapView.onDestroy();
+	}
+
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		this.mapView.onLowMemory();
 	}
 
 	@Override
@@ -150,6 +208,12 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.OnC
 				Place place = PlacePicker.getPlace(getActivity(), data);
 				this.eventLocation = place;
 				this.placePickerText.setText(place.getName().toString());
+				this.mapLayout.setVisibility(View.VISIBLE);
+				this.googleMap.clear();
+				this.googleMap.addMarker(new MarkerOptions()
+						.position(place.getLatLng())
+						.icon(BitmapDescriptorFactory.defaultMarker()));
+				this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 13f));
 			}
 		}
 	}
@@ -162,14 +226,16 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.OnC
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.action_accept:
-				Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
-				getActivity().onBackPressed();
-				break;
-			case R.id.action_cancel:
-				getActivity().onBackPressed();
-				break;
+		if (!EventBaseActivity.isTransitioning) {
+			switch (item.getItemId()) {
+				case R.id.action_accept:
+					Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
+					getActivity().onBackPressed();
+					break;
+				case R.id.action_cancel:
+					getActivity().onBackPressed();
+					break;
+			}
 		}
 
 		return super.onOptionsItemSelected(item);
@@ -199,5 +265,20 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.OnC
 
 	public EventRequest generateEvent() {
 		return null;
+	}
+
+	@Override
+	public void onMapReady(GoogleMap googleMap) {
+		this.googleMap = googleMap;
+	}
+
+	@Override
+	public void onConnected(@Nullable Bundle bundle) {
+
+	}
+
+	@Override
+	public void onConnectionSuspended(int i) {
+
 	}
 }

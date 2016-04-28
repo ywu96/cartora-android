@@ -14,5 +14,6 @@
     <string name="event_date_hint">Pick an event date</string>
     <string name="event_time_hint">12:00 PM</string>
     <string name="event_location_hint">Pick an event location</string>
+    <string name="event_people_hint">Add people to this event</string>
 
 </resources>

@@ -3,7 +3,7 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_accept"
-        android:icon="@drawable/ic_done"
+        android:icon="@drawable/ic_accept"
         app:showAsAction="ifRoom"
         android:orderInCategory="10"
         android:title="@string/action_accept">
@@ -13,6 +13,6 @@
         android:icon="@drawable/ic_cancel"
         app:showAsAction="ifRoom"
         android:orderInCategory="5"
-        android:title="@string/action_accept">
+        android:title="@string/action_cancel">
     </item>
 </menu>

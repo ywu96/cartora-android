@@ -24,38 +24,38 @@
             android:id="@+id/event_date_time_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/event_name_field">
+            android:layout_below="@id/event_name_field"
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_weight="2"
-                android:layout_gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
                 android:alpha="0.9"
                 android:src="@drawable/ic_date"/>
 
             <TextView
                 android:id="@+id/event_date_text"
-                android:layout_weight="7"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="7"
+                android:gravity="start|center_vertical"
                 android:paddingBottom="8dp"
                 android:paddingStart="0dp"
                 android:paddingTop="8dp"
-                android:gravity="start|center_vertical"
                 android:text="@string/event_date_hint"/>
 
             <TextView
                 android:id="@+id/event_time_text"
-                android:layout_weight="3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:gravity="end|center_vertical"
                 android:paddingBottom="16dp"
                 android:paddingEnd="16dp"
                 android:paddingTop="16dp"
-                android:gravity="end|center_vertical"
                 android:text="@string/event_time_hint"/>
         </LinearLayout>
 
@@ -65,26 +65,81 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/event_date_time_layout"
             android:orientation="horizontal">
+
             <ImageView
-                android:layout_weight="2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="2"
                 android:alpha="0.9"
                 android:src="@drawable/ic_location"/>
+
             <TextView
                 android:id="@+id/event_location_text"
-                android:layout_weight="10"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="16dp"
-                android:paddingEnd="16dp"
-                android:paddingBottom="16dp"
-                android:gravity="start|center_vertical"
+                android:layout_weight="10"
                 android:ellipsize="end"
+                android:gravity="start|center_vertical"
                 android:maxLines="1"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
                 android:text="@string/event_location_hint"/>
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/map_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/event_location_layout"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <View
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"/>
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/map_view"
+                android:layout_width="0dp"
+                android:layout_height="148dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="24dp"
+                android:layout_weight="10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/event_people_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/map_layout"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:alpha="0.9"
+                android:src="@drawable/ic_people"/>
+
+            <TextView
+                android:id="@+id/event_people_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:maxLines="1"
+                android:paddingBottom="16dp"
+                android:paddingEnd="16dp"
+                android:paddingTop="16dp"
+                android:text="@string/event_people_hint"/>
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <FrameLayout
