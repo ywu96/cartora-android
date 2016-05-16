@@ -246,17 +246,23 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
 						return false;
 					}
-					if (this.eventLocation == null) {
-						Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
-						return false;
-					}
 					if (this.datePickerText.getText().equals(getString(R.string.event_date_hint))) {
 						Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
+						return false;
+					}
+					if (this.eventLocation == null) {
+						Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
 						return false;
 					}
 					SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 					EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
 					this.userList.add(selfUser);
+
+					// user did not change time
+					if (this.timePickerText.getText().toString().equals("12:00 PM")) {
+						this.calendar.set(Calendar.HOUR_OF_DAY, 12);
+						this.calendar.set(Calendar.MINUTE, 0);
+					}
 
 					EventRequest newEvent = new EventRequest(this.eventName.getText().toString(),
 							this.userList,
@@ -269,6 +275,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						public void result(EventResponse result) {
 							Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
 							eventName.setText("");
+							eventLocation = null;
 							getActivity().onBackPressed();
 						}
 					});
