@@ -21,13 +21,15 @@ import com.yifanfwu.locationevents.Utils.Utility;
 
 public class EventBaseActivity extends AppCompatActivity {
 
-	protected Firebase firebaseRef;
-	protected String userId;
+	private Firebase firebaseRef;
+	private String userId;
 
 	public static boolean isTransitioning = false;
-	protected FloatingActionButton fab;
-	protected EventListFragment eventListFragment;
-	protected EventCreateFragment eventCreateFragment;
+	private FloatingActionButton fab;
+	private EventListFragment eventListFragment;
+	private EventCreateFragment eventCreateFragment;
+
+	private static final long TRANSITION_DURATION = 300L;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +45,16 @@ public class EventBaseActivity extends AppCompatActivity {
 		this.eventListFragment = new EventListFragment();
 		this.eventCreateFragment = new EventCreateFragment();
 
-		getSupportFragmentManager().beginTransaction().add(R.id.base_fragment_container, eventListFragment).commit();
+		getSupportFragmentManager().beginTransaction()
+				.add(R.id.base_fragment_container, eventListFragment)
+				.addToBackStack("eventList").commit();
 
 		this.fab = (FloatingActionButton) findViewById(R.id.event_base_fab);
 		this.fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventListFragment) {
-					fab.animate().translationY(Utility.convertToPixels(getBaseContext(), 100)).setDuration(300L).setInterpolator(new AccelerateInterpolator()).start();
+					fab.animate().translationY(Utility.convertToPixels(getBaseContext(), 100)).setDuration(TRANSITION_DURATION).setInterpolator(new AccelerateInterpolator()).start();
 					setTitle(R.string.event_create_title);
 					FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 					fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
@@ -70,13 +74,13 @@ public class EventBaseActivity extends AppCompatActivity {
 			public void run() {
 				isTransitioning = false;
 			}
-		}, 300L);
+		}, TRANSITION_DURATION);
 	}
 
 	@Override
 	public void onBackPressed() {
 		if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventCreateFragment && !isTransitioning) {
-			this.fab.animate().translationY(0f).setDuration(300L).setInterpolator(new DecelerateInterpolator()).start();
+			this.fab.animate().translationY(0f).setDuration(TRANSITION_DURATION).setInterpolator(new DecelerateInterpolator()).start();
 			setTitle(R.string.event_list_title);
 			FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 			fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);

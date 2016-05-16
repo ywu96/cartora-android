@@ -281,6 +281,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					});
 					break;
 				case R.id.action_cancel:
+					this.eventName.setText("");
+					eventLocation = null;
 					getActivity().onBackPressed();
 					break;
 			}

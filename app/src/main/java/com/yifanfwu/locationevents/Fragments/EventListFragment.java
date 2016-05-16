@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewDebug;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,13 +23,11 @@ import com.yifanfwu.locationevents.UIHelpers.EventListAdapter;
 import com.yifanfwu.locationevents.Utils.Utility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class EventListFragment extends Fragment {
 
-	private FloatingActionButton fab;
 	private TextView noMeshesText;
 	private RecyclerView listRecyclerView;
 	private EventListAdapter listAdapter;
