@@ -1,6 +1,7 @@
 package com.yifanfwu.locationevents.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.yifanfwu.locationevents.R;
+import com.yifanfwu.locationevents.Utils.Strings;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -50,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				if (LoginActivity.this.firebaseRef.getAuth() != null) {
+					SharedPreferences preferences = getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE);
+					preferences.edit().putString(Strings.UID_KEY, LoginActivity.this.firebaseRef.getAuth().getUid()).apply();
 					Intent intent = new Intent(getBaseContext(), EventBaseActivity.class);
 					startActivity(intent);
 				}

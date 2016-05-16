@@ -1,7 +1,10 @@
 package com.yifanfwu.locationevents.Rest;
 
+import android.content.SharedPreferences;
+
 import com.yifanfwu.locationevents.Models.EventRequest;
 import com.yifanfwu.locationevents.Models.EventResponse;
+import com.yifanfwu.locationevents.Utils.Utility;
 
 import java.util.ArrayList;
 
@@ -15,7 +18,7 @@ public class RestServer {
 	public static final String LOG_TAG = "RestServer";
 
 	// TODO: remember to update
-	public static final String BASE_URL = "http://732029ec.ngrok.io/";
+	public static final String BASE_URL = "http://389ce16f.ngrok.io/";
 	protected static RestServer restServer = null;
 
 	protected RestService restService;
@@ -40,12 +43,14 @@ public class RestServer {
 		void result(E result);
 	}
 
-	public void getEvents(final Callback<ArrayList<EventResponse>> callback) {
-		Call<ArrayList<EventResponse>> call = this.restService.getEvents();
+	public void getEvents(String uid, final Callback<ArrayList<EventResponse>> callback) {
+		Call<ArrayList<EventResponse>> call = this.restService.getEvents(uid);
 		call.enqueue(new RetrofitCall.RetrofitCallback<ArrayList<EventResponse>>() {
 			@Override
 			public void onResponse(Call<ArrayList<EventResponse>> call, Response<ArrayList<EventResponse>> response) {
-				callback.result(response.body());
+				if (response.isSuccessful()) {
+					callback.result(response.body());
+				}
 			}
 
 			@Override
@@ -60,12 +65,31 @@ public class RestServer {
 		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
 			@Override
 			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
-				callback.result(response.body());
+				if (response.isSuccessful()) {
+					callback.result(response.body());
+				}
 			}
 
 			@Override
 			public void onFailure(Call<EventResponse> call, Throwable t) {
 				t.printStackTrace();
+			}
+		});
+	}
+
+	public void deleteEvent(String eventId, final Callback<EventResponse> callback) {
+		Call<EventResponse> call = this.restService.deleteEvent(eventId);
+		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
+			@Override
+			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
+				if (response.isSuccessful()) {
+					callback.result(response.body());
+				}
+			}
+
+			@Override
+			public void onFailure(Call<EventResponse> call, Throwable t) {
+
 			}
 		});
 	}

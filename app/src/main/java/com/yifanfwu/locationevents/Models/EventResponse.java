@@ -12,8 +12,8 @@ public class EventResponse {
 	@SerializedName("eventName")
 	protected String eventName;
 
-	@SerializedName("timeMillis")
-	protected Integer timeMillis;
+	@SerializedName("timeSecs")
+	protected long timeSecs;
 
 	@SerializedName("__v")
 	protected Integer V;
@@ -32,8 +32,8 @@ public class EventResponse {
 		return this.eventName;
 	}
 
-	public Integer getTimeMillis() {
-		return this.timeMillis;
+	public long getTimeSecs() {
+		return this.timeSecs;
 	}
 
 	public Integer getV() {

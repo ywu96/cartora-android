@@ -17,6 +17,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLines="1"
             android:hint="@string/event_name_hint"
             android:textSize="16dp"/>
 
@@ -104,7 +107,7 @@
             <com.google.android.gms.maps.MapView
                 android:id="@+id/map_view"
                 android:layout_width="0dp"
-                android:layout_height="148dp"
+                android:layout_height="160dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="24dp"
                 android:layout_weight="10"/>

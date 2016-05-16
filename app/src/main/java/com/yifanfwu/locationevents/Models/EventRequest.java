@@ -1,22 +1,28 @@
 package com.yifanfwu.locationevents.Models;
 
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class EventRequest {
 
+	@SerializedName("eventName")
 	protected String eventName;
 
+	@SerializedName("eventLocation")
 	protected EventLocation eventLocation;
 
+	@SerializedName("users")
 	protected ArrayList<EventUserRequest> users;
 
-	protected Integer timeMillis;
+	@SerializedName("timeSecs")
+	protected long timeSecs;
 
-	public EventRequest(String eventName, ArrayList<EventUserRequest> users, double lat, double lng, Integer time) {
+	public EventRequest(String eventName, ArrayList<EventUserRequest> users, double lat, double lng, long time) {
 		this.eventName = eventName;
 		this.users = users;
 		this.eventLocation = new EventLocation(lat, lng);
-		this.timeMillis = time;
+		this.timeSecs = time;
 	}
 }

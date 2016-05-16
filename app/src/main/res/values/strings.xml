@@ -10,10 +10,10 @@
 
     <string name="event_created">Event created!</string>
     <string name="no_events">No events to display.</string>
-    <string name="event_name_hint">Enter the event name</string>
-    <string name="event_date_hint">Pick an event date</string>
+    <string name="event_name_hint">Enter a name for this event</string>
+    <string name="event_date_hint">Pick a date</string>
     <string name="event_time_hint">12:00 PM</string>
-    <string name="event_location_hint">Pick an event location</string>
-    <string name="event_people_hint">Add people to this event</string>
+    <string name="event_location_hint">Set a location</string>
+    <string name="event_people_hint">Add people</string>
 
 </resources>

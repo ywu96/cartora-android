@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.yifanfwu.locationevents.Models.EventResponse;
 import com.yifanfwu.locationevents.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
@@ -33,7 +35,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		EventResponse event = this.eventList.get(position);
 		holder.eventName.setText(event.getEventName());
-		holder.eventTime.setText(event.getTimeMillis().toString());
+		Date date = new Date(event.getTimeSecs()*1000L);
+		SimpleDateFormat format = new SimpleDateFormat("E, MMM d 'at' h:mm a");
+		holder.eventTime.setText(format.format(date));
 	}
 
 	@Override

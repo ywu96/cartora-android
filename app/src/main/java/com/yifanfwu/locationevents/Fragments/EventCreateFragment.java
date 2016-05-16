@@ -2,7 +2,9 @@ package com.yifanfwu.locationevents.Fragments;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +15,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,34 +35,41 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.yifanfwu.locationevents.Activities.EventBaseActivity;
 import com.yifanfwu.locationevents.Models.EventRequest;
+import com.yifanfwu.locationevents.Models.EventResponse;
+import com.yifanfwu.locationevents.Models.EventUserRequest;
 import com.yifanfwu.locationevents.R;
+import com.yifanfwu.locationevents.Rest.RestServer;
+import com.yifanfwu.locationevents.Utils.Strings;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class EventCreateFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
 		DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, OnMapReadyCallback {
 
-	protected TextView placePickerText;
-	protected TextView datePickerText;
-	protected TextView timePickerText;
-	protected FrameLayout spinnerContainer;
-	protected Calendar calendar;
+	private TextView placePickerText;
+	private TextView datePickerText;
+	private TextView timePickerText;
+	private FrameLayout spinnerContainer;
+	private Calendar calendar;
 
-	protected LinearLayout mapLayout;
-	protected GoogleMap googleMap;
-	protected MapView mapView;
-	protected Place eventLocation;
+	private LinearLayout mapLayout;
+	private GoogleMap googleMap;
+	private MapView mapView;
 
-	protected GoogleApiClient googleApiClient;
-	protected final int PLACE_PICKER_REQUEST = 1;
+	private EditText eventName;
+	private Place eventLocation;
+	private ArrayList<EventUserRequest> userList;
+
+	private GoogleApiClient googleApiClient;
+	private final int PLACE_PICKER_REQUEST = 1;
 
 	public EventCreateFragment() {
 	}
@@ -80,6 +90,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					.build();
 		}
 
+		this.userList = new ArrayList<>();
+
 		setHasOptionsMenu(true);
 	}
 
@@ -88,6 +100,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_create, container, false);
 
+		this.eventName = (EditText) rootView.findViewById(R.id.event_name_field);
 		this.calendar = null;
 
 		this.spinnerContainer = (FrameLayout) rootView.findViewById(R.id.spinner_container);
@@ -114,7 +127,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						calendar.get(Calendar.DAY_OF_MONTH)
 				);
 				datePickerDialog.setThemeDark(true);
-				datePickerDialog.vibrate(false);
+				datePickerDialog.vibrate(true);
 				datePickerDialog.setMinDate(now);
 				datePickerDialog.show(getActivity().getFragmentManager(), "Datepickerdialog");
 			}
@@ -134,7 +147,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						false
 				);
 				timePickerDialog.setThemeDark(true);
-				timePickerDialog.vibrate(false);
+				timePickerDialog.vibrate(true);
 				timePickerDialog.show(getActivity().getFragmentManager(), "Timepickerdialog");
 			}
 		});
@@ -229,8 +242,36 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 		if (!EventBaseActivity.isTransitioning) {
 			switch (item.getItemId()) {
 				case R.id.action_accept:
-					Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
-					getActivity().onBackPressed();
+					if (this.eventName.getText().toString().isEmpty()) {
+						Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
+						return false;
+					}
+					if (this.eventLocation == null) {
+						Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
+						return false;
+					}
+					if (this.datePickerText.getText().equals(getString(R.string.event_date_hint))) {
+						Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
+						return false;
+					}
+					SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+					EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
+					this.userList.add(selfUser);
+
+					EventRequest newEvent = new EventRequest(this.eventName.getText().toString(),
+							this.userList,
+							this.eventLocation.getLatLng().latitude,
+							this.eventLocation.getLatLng().longitude,
+							this.calendar.getTimeInMillis()/1000);
+
+					RestServer.getInstance().createEvent(newEvent, new RestServer.Callback<EventResponse>() {
+						@Override
+						public void result(EventResponse result) {
+							Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
+							eventName.setText("");
+							getActivity().onBackPressed();
+						}
+					});
 					break;
 				case R.id.action_cancel:
 					getActivity().onBackPressed();
@@ -261,10 +302,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 		SimpleDateFormat format = new SimpleDateFormat("h:mm a");
 		this.timePickerText.setText(format.format(calendar.getTime()));
-	}
-
-	public EventRequest generateEvent() {
-		return null;
 	}
 
 	@Override
