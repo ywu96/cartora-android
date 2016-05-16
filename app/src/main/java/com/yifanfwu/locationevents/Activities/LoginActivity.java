@@ -23,11 +23,11 @@ import com.yifanfwu.locationevents.Utils.Strings;
 
 public class LoginActivity extends AppCompatActivity {
 
-	protected LoginButton fbLoginButton;
-	protected CallbackManager callbackManager;
-	protected AccessTokenTracker accessTokenTracker;
-	protected Firebase firebaseRef;
-	protected FloatingActionButton fab;
+	private LoginButton fbLoginButton;
+	private CallbackManager callbackManager;
+	private AccessTokenTracker accessTokenTracker;
+	private Firebase firebaseRef;
+	private FloatingActionButton fab;
 
 
 	@Override
