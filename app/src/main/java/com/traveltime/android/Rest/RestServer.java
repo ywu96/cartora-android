@@ -1,10 +1,7 @@
-package com.yifanfwu.locationevents.Rest;
+package com.traveltime.android.Rest;
 
-import android.content.SharedPreferences;
-
-import com.yifanfwu.locationevents.Models.EventRequest;
-import com.yifanfwu.locationevents.Models.EventResponse;
-import com.yifanfwu.locationevents.Utils.Utility;
+import com.traveltime.android.Models.EventRequest;
+import com.traveltime.android.Models.EventResponse;
 
 import java.util.ArrayList;
 
@@ -18,7 +15,7 @@ public class RestServer {
 	public static final String LOG_TAG = "RestServer";
 
 	// TODO: remember to update
-	public static final String BASE_URL = "http://389ce16f.ngrok.io/";
+	public static final String BASE_URL = "http://6075f13a.ngrok.io";
 	protected static RestServer restServer = null;
 
 	protected RestService restService;

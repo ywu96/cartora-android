@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.yifanfwu.locationevents">
+          package="com.traveltime.android">
 
     <permission
-        android:name="com.yifanfwu.locationevents.permission.MAPS_RECEIVE"
+        android:name="com.traveltime.android.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -29,7 +29,7 @@
             android:value="@string/facebook_app_id"/>
 
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name="com.traveltime.android.Activities.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -43,7 +43,7 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
-            android:name=".Activities.EventBaseActivity"
+            android:name="com.traveltime.android.Activities.EventBaseActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

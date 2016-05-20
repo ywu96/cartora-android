@@ -1,7 +1,7 @@
-package com.yifanfwu.locationevents.Rest;
+package com.traveltime.android.Rest;
 
-import com.yifanfwu.locationevents.Models.EventRequest;
-import com.yifanfwu.locationevents.Models.EventResponse;
+import com.traveltime.android.Models.EventRequest;
+import com.traveltime.android.Models.EventResponse;
 
 import java.util.ArrayList;
 

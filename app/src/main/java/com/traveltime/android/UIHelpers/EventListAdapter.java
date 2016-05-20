@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents.UIHelpers;
+package com.traveltime.android.UIHelpers;
 
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
@@ -7,13 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.yifanfwu.locationevents.Models.EventResponse;
-import com.yifanfwu.locationevents.R;
+import com.traveltime.android.Models.EventResponse;
+import com.traveltime.android.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 

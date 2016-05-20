@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents;
+package com.traveltime.android;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents.Utils;
+package com.traveltime.android.Utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

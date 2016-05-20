@@ -1,11 +1,13 @@
-package com.yifanfwu.locationevents.Activities;
+package com.traveltime.android.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -15,18 +17,23 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.yifanfwu.locationevents.R;
-import com.yifanfwu.locationevents.Utils.Strings;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FacebookAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.traveltime.android.R;
+import com.traveltime.android.Utils.Strings;
 
 public class LoginActivity extends AppCompatActivity {
 
 	private LoginButton fbLoginButton;
 	private CallbackManager callbackManager;
 	private AccessTokenTracker accessTokenTracker;
-	private Firebase firebaseRef;
+	private FirebaseAuth firebaseAuth;
+	private FirebaseAuth.AuthStateListener authStateListener;
 	private FloatingActionButton fab;
 
 
@@ -34,13 +41,12 @@ public class LoginActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		FacebookSdk.sdkInitialize(this);
-		Firebase.setAndroidContext(this);
 		setContentView(R.layout.activity_login);
 
-		this.firebaseRef = new Firebase("https://vivid-inferno-3846.firebaseio.com");
+		this.firebaseAuth = FirebaseAuth.getInstance();
 
-//        if (this.firebaseRef.getAuth() != null) {
-//            Log.d("test123", "EventUserResponse logged in: " + this.firebaseRef.getAuth());
+//        if (this.firebaseAuth.getAuth() != null) {
+//            Log.d("test123", "EventUserResponse logged in: " + this.firebaseAuth.getAuth());
 //            Intent intent = new Intent(this, EventBaseActivity.class);
 //            startActivity(intent);
 //        } else {
@@ -51,9 +57,9 @@ public class LoginActivity extends AppCompatActivity {
 		this.fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (LoginActivity.this.firebaseRef.getAuth() != null) {
+				if (LoginActivity.this.firebaseAuth.getCurrentUser() != null) {
 					SharedPreferences preferences = getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE);
-					preferences.edit().putString(Strings.UID_KEY, LoginActivity.this.firebaseRef.getAuth().getUid()).apply();
+					preferences.edit().putString(Strings.UID_KEY, LoginActivity.this.firebaseAuth.getCurrentUser().getUid()).apply();
 					Intent intent = new Intent(getBaseContext(), EventBaseActivity.class);
 					startActivity(intent);
 				}
@@ -84,7 +90,23 @@ public class LoginActivity extends AppCompatActivity {
 		this.accessTokenTracker = new AccessTokenTracker() {
 			@Override
 			protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-				LoginActivity.this.authFirebaseWithFacebookToken(currentAccessToken);
+				if (currentAccessToken != null) {
+					LoginActivity.this.authFirebaseWithFacebookToken(currentAccessToken);
+				} else {
+					FirebaseAuth.getInstance().signOut();
+				}
+			}
+		};
+
+		this.authStateListener = new FirebaseAuth.AuthStateListener() {
+			@Override
+			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+				FirebaseUser user = firebaseAuth.getCurrentUser();
+				if (user != null) {
+					// user is signed in
+				} else {
+					// user is signed out
+				}
 			}
 		};
 	}
@@ -92,9 +114,8 @@ public class LoginActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (this.accessTokenTracker != null && !this.accessTokenTracker.isTracking()) {
-			this.accessTokenTracker.startTracking();
-		}
+		this.accessTokenTracker.startTracking();
+		this.firebaseAuth.addAuthStateListener(this.authStateListener);
 	}
 
 	@Override
@@ -103,29 +124,26 @@ public class LoginActivity extends AppCompatActivity {
 		if (this.accessTokenTracker != null && this.accessTokenTracker.isTracking()) {
 			this.accessTokenTracker.stopTracking();
 		}
+		if (this.authStateListener != null) {
+			this.firebaseAuth.removeAuthStateListener(this.authStateListener);
+		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		callbackManager.onActivityResult(requestCode, resultCode, data);
+		this.callbackManager.onActivityResult(requestCode, resultCode, data);
 	}
 
 	protected void authFirebaseWithFacebookToken(AccessToken token) {
-		if (token != null) {
-			this.firebaseRef.authWithOAuthToken("facebook", token.getToken(), new Firebase.AuthResultHandler() {
-				@Override
-				public void onAuthenticated(AuthData authData) {
-					// The Facebook user is now authenticated with your Firebase app
+		AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+		this.firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+			@Override
+			public void onComplete(@NonNull Task<AuthResult> task) {
+				if (!task.isSuccessful()) {
+					Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
 				}
-				@Override
-				public void onAuthenticationError(FirebaseError firebaseError) {
-					// there was an error
-				}
-			});
-		} else {
-			/* Logged out of Facebook so do a logout from the Firebase app */
-			this.firebaseRef.unauth();
-		}
+			}
+		});
 	}
 }

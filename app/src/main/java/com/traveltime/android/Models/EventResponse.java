@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents.Models;
+package com.traveltime.android.Models;
 
 import java.util.ArrayList;
 import java.util.List;

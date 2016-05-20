@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.yifanfwu.locationevents"
+        applicationId "com.traveltime.android"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
@@ -36,11 +36,15 @@ dependencies {
     compile 'com.android.support:percent:23.3.0'
     compile 'com.android.support:design:23.3.0'
     compile 'com.android.support:support-v4:23.3.0'
-    compile 'com.google.android.gms:play-services-location:8.4.0'
-    compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.firebase:firebase-client-android:2.5.2'
+    compile 'com.google.android.gms:play-services-location:9.0.0'
+    compile 'com.google.android.gms:play-services-maps:9.0.0'
+    compile 'com.google.firebase:firebase-core:9.0.0'
+    compile 'com.google.firebase:firebase-auth:9.0.0'
+    compile 'com.google.firebase:firebase-messaging:9.0.0'
     compile 'com.facebook.android:facebook-android-sdk:4.10.1'
     compile 'com.squareup.retrofit2:retrofit:2.0.1'
     compile 'com.squareup.retrofit2:converter-gson:2.0.1'
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

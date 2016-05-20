@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents.Utils;
+package com.traveltime.android.Utils;
 
 public class Strings {
 

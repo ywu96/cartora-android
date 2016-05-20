@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents.Activities;
+package com.traveltime.android.Activities;
 
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -8,20 +8,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Toast;
 
-import com.firebase.client.Firebase;
-import com.firebase.client.Transaction;
-import com.yifanfwu.locationevents.Fragments.EventCreateFragment;
-import com.yifanfwu.locationevents.Fragments.EventListFragment;
-import com.yifanfwu.locationevents.Models.EventResponse;
-import com.yifanfwu.locationevents.R;
-import com.yifanfwu.locationevents.Rest.RestServer;
-import com.yifanfwu.locationevents.Utils.Utility;
+import com.traveltime.android.Fragments.EventCreateFragment;
+import com.traveltime.android.Fragments.EventListFragment;
+import com.traveltime.android.R;
+import com.traveltime.android.Utils.Strings;
+import com.traveltime.android.Utils.Utility;
 
 public class EventBaseActivity extends AppCompatActivity {
 
-	private Firebase firebaseRef;
+//	private Firebase firebaseRef;
 	private String userId;
 
 	public static boolean isTransitioning = false;
@@ -34,13 +30,11 @@ public class EventBaseActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Firebase.setAndroidContext(this);
 		setContentView(R.layout.activity_event_base);
 
 		setTitle(R.string.event_list_title);
 
-		this.firebaseRef = new Firebase("https://vivid-inferno-3846.firebaseio.com");
-		this.userId = this.firebaseRef.getAuth().getUid();
+		this.userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getString(Strings.UID_KEY, null);
 
 		this.eventListFragment = new EventListFragment();
 		this.eventCreateFragment = new EventCreateFragment();

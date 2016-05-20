@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents.Models;
+package com.traveltime.android.Models;
 
 
 import com.google.gson.annotations.SerializedName;

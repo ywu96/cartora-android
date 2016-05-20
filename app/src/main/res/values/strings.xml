@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LocationEvents</string>
+    <string name="app_name">TravelTime</string>
     <string name="facebook_app_id">845590462233963</string>
 
     <string name="event_list_title">Your Events</string>

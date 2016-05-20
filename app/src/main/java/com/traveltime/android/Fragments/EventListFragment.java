@@ -1,4 +1,4 @@
-package com.yifanfwu.locationevents.Fragments;
+package com.traveltime.android.Fragments;
 
 
 import android.os.Bundle;
@@ -15,11 +15,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.yifanfwu.locationevents.Models.EventResponse;
-import com.yifanfwu.locationevents.R;
-import com.yifanfwu.locationevents.Rest.RestServer;
-import com.yifanfwu.locationevents.UIHelpers.EventListAdapter;
-import com.yifanfwu.locationevents.Utils.Utility;
+import com.traveltime.android.Models.EventResponse;
+import com.traveltime.android.R;
+import com.traveltime.android.Rest.RestServer;
+import com.traveltime.android.UIHelpers.EventListAdapter;
+import com.traveltime.android.Utils.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;
