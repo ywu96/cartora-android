@@ -1,6 +1,8 @@
 package com.traveltime.android.UIHelpers;
 
+import android.content.Context;
 import android.support.annotation.LayoutRes;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.traveltime.android.Models.EventResponse;
+import com.traveltime.android.Models.LocationUpdateRequest;
 import com.traveltime.android.R;
+import com.traveltime.android.Rest.RestServer;
+import com.traveltime.android.Utils.Utility;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,10 +21,12 @@ import java.util.Date;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 
-	protected ArrayList<EventResponse> eventList;
-	protected int layoutResId;
+	private Context context;
+	private ArrayList<EventResponse> eventList;
+	private int layoutResId;
 
-	public EventListAdapter(ArrayList<EventResponse> eventList, @LayoutRes int layoutResId) {
+	public EventListAdapter(Context context, ArrayList<EventResponse> eventList, @LayoutRes int layoutResId) {
+		this.context = context;
 		this.eventList = eventList;
 		this.layoutResId = layoutResId;
 	}
@@ -32,11 +39,24 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
-		EventResponse event = this.eventList.get(position);
+		final EventResponse event = this.eventList.get(position);
 		holder.eventName.setText(event.getEventName());
 		Date date = new Date(event.getTimeSecs()*1000L);
 		SimpleDateFormat format = new SimpleDateFormat("E, MMM d 'at' h:mm a");
 		holder.eventTime.setText(format.format(date));
+
+		holder.card.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LocationUpdateRequest locationUpdate = new LocationUpdateRequest(Utility.getUid(context), 12.3, 45.6);
+				RestServer.getInstance().updateLocation(event.getId(), locationUpdate, new RestServer.Callback<EventResponse>() {
+					@Override
+					public void result(EventResponse result) {
+						//do nothing atm
+					}
+				});
+			}
+		});
 	}
 
 	@Override
@@ -45,11 +65,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder {
-		protected TextView eventName;
-		protected TextView eventTime;
+		private CardView card;
+		private TextView eventName;
+		private TextView eventTime;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
+			this.card = (CardView) itemView;
 			this.eventName = (TextView) itemView.findViewById(R.id.event_name);
 			this.eventTime = (TextView) itemView.findViewById(R.id.event_time);
 		}

@@ -2,6 +2,7 @@ package com.traveltime.android.Rest;
 
 import com.traveltime.android.Models.EventRequest;
 import com.traveltime.android.Models.EventResponse;
+import com.traveltime.android.Models.LocationUpdateRequest;
 
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class RestServer {
 	public static final String LOG_TAG = "RestServer";
 
 	// TODO: remember to update
-	public static final String BASE_URL = "http://6075f13a.ngrok.io";
+	public static final String BASE_URL = "http://569f06ad.ngrok.io";
 	protected static RestServer restServer = null;
 
 	protected RestService restService;
@@ -86,7 +87,24 @@ public class RestServer {
 
 			@Override
 			public void onFailure(Call<EventResponse> call, Throwable t) {
+				t.printStackTrace();
+			}
+		});
+	}
 
+	public void updateLocation(String eventId, LocationUpdateRequest locationUpdateRequest, final Callback<EventResponse> callback) {
+		Call<EventResponse> call = this.restService.updateLocation(eventId, locationUpdateRequest);
+		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
+			@Override
+			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
+				if (response.isSuccessful()) {
+					callback.result(response.body());
+				}
+			}
+
+			@Override
+			public void onFailure(Call<EventResponse> call, Throwable t) {
+				t.printStackTrace();
 			}
 		});
 	}
