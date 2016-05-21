@@ -1,5 +1,6 @@
 package com.traveltime.android.Activities;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentTransaction;
@@ -17,7 +18,6 @@ import com.traveltime.android.Utils.Utility;
 
 public class EventBaseActivity extends AppCompatActivity {
 
-//	private Firebase firebaseRef;
 	private String userId;
 
 	public static boolean isTransitioning = false;
@@ -39,9 +39,7 @@ public class EventBaseActivity extends AppCompatActivity {
 		this.eventListFragment = new EventListFragment();
 		this.eventCreateFragment = new EventCreateFragment();
 
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.base_fragment_container, eventListFragment)
-				.addToBackStack("eventList").commit();
+		getSupportFragmentManager().beginTransaction().add(R.id.base_fragment_container, eventListFragment).commit();
 
 		this.fab = (FloatingActionButton) findViewById(R.id.event_base_fab);
 		this.fab.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +53,14 @@ public class EventBaseActivity extends AppCompatActivity {
 					fragmentTransaction.replace(R.id.base_fragment_container, eventCreateFragment).commit();
 					startTransitionTimer();
 				}
+			}
+		});
+		this.fab.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				Intent intent = new Intent(getBaseContext(), LocationActivity.class);
+				startActivity(intent);
+				return true;
 			}
 		});
 	}

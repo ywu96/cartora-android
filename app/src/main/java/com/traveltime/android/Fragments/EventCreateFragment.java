@@ -224,9 +224,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 				this.mapLayout.setVisibility(View.VISIBLE);
 				this.googleMap.clear();
 				this.googleMap.addMarker(new MarkerOptions()
-						.position(place.getLatLng())
-						.icon(BitmapDescriptorFactory.defaultMarker()));
-				this.googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 13f));
+						.position(place.getLatLng()));
+				this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 13f));
 			}
 		}
 	}

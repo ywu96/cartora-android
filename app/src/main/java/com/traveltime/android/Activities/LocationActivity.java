@@ -17,12 +17,17 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.traveltime.android.R;
+import com.traveltime.android.UIHelpers.LatLngInterpolator;
+import com.traveltime.android.Utils.Utility;
 
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private GoogleMap map;
 
+	private Marker selfMarker;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
 
@@ -76,11 +81,21 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 	}
 
 	public class CustomLocationListener implements LocationListener {
+
+		private static final long ANIMATE_DURATION = 3000L;
+
 		@Override
 		public void onLocationChanged(Location location) {
-			Toast.makeText(getApplicationContext(), "location changed", Toast.LENGTH_SHORT).show();
-			LatLng currentLocation = new LatLng(location.getLatitude(), location.getLongitude());
-			map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16f));
+			LatLng newLocation = new LatLng(location.getLatitude(), location.getLongitude());
+
+			if (selfMarker == null) {
+				MarkerOptions markerOptions = new MarkerOptions().position(newLocation);
+				selfMarker = map.addMarker(markerOptions);
+			} else {
+				Utility.animateMarker(selfMarker, newLocation, ANIMATE_DURATION, new LatLngInterpolator.Linear());
+			}
+
+			map.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 16f));
 		}
 
 		@Override
@@ -101,25 +116,29 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		if (requestCode == LOCATION_UPDATES) {
 			for (int i : grantResults) {
-				if (i == PackageManager.PERMISSION_GRANTED) {
-					continue;
-				} else {
+				if (i != PackageManager.PERMISSION_GRANTED) {
 					Toast.makeText(LocationActivity.this, "Your location will not be used", Toast.LENGTH_SHORT).show();
 					return;
 				}
+			}
+			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+				return;
 			}
 			this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_MIN_TIME, LOCATION_MIN_DIST, this.locationListener);
 		}
 	}
 
 	private void setInitialMap() {
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			return;
+		}
 		Location lastLocation = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if (lastLocation != null) {
 			LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-			this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 12f));
+			this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 13f));
 		} else {
 			LatLng world = new LatLng(0, 0);
-			this.map.animateCamera(CameraUpdateFactory.newLatLngZoom(world, 0.1f));
+			this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(world, 0.1f));
 		}
 	}
 }

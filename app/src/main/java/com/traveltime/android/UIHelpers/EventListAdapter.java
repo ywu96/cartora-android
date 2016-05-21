@@ -46,14 +46,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 		Date date = new Date(event.getTimeSecs()*1000L);
 		SimpleDateFormat format = new SimpleDateFormat("E, MMM d 'at' h:mm a");
 		holder.eventTime.setText(format.format(date));
-
-		holder.card.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(context, LocationActivity.class);
-				context.startActivity(intent);
-			}
-		});
 	}
 
 	@Override
