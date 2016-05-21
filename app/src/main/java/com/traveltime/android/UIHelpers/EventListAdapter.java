@@ -1,6 +1,7 @@
 package com.traveltime.android.UIHelpers;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.traveltime.android.Activities.LocationActivity;
 import com.traveltime.android.Models.EventResponse;
 import com.traveltime.android.Models.LocationUpdateRequest;
 import com.traveltime.android.R;
@@ -48,13 +50,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 		holder.card.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				LocationUpdateRequest locationUpdate = new LocationUpdateRequest(Utility.getUid(context), 12.3, 45.6);
-				RestServer.getInstance().updateLocation(event.getId(), locationUpdate, new RestServer.Callback<EventResponse>() {
-					@Override
-					public void result(EventResponse result) {
-						//do nothing atm
-					}
-				});
+				Intent intent = new Intent(context, LocationActivity.class);
+				context.startActivity(intent);
 			}
 		});
 	}

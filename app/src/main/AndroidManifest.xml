@@ -46,6 +46,10 @@
             android:name="com.traveltime.android.Activities.EventBaseActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name="com.traveltime.android.Activities.LocationActivity"
+            android:label="@string/title_activity_location">
+        </activity>
     </application>
 
 </manifest>
