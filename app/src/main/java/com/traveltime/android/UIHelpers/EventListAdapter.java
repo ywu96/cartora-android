@@ -1,21 +1,14 @@
 package com.traveltime.android.UIHelpers;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.traveltime.android.Activities.LocationActivity;
 import com.traveltime.android.Models.EventResponse;
-import com.traveltime.android.Models.LocationUpdateRequest;
 import com.traveltime.android.R;
-import com.traveltime.android.Rest.RestServer;
-import com.traveltime.android.Utils.Utility;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,12 +16,10 @@ import java.util.Date;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 
-	private Context context;
 	private ArrayList<EventResponse> eventList;
 	private int layoutResId;
 
-	public EventListAdapter(Context context, ArrayList<EventResponse> eventList, @LayoutRes int layoutResId) {
-		this.context = context;
+	public EventListAdapter(ArrayList<EventResponse> eventList, @LayoutRes int layoutResId) {
 		this.eventList = eventList;
 		this.layoutResId = layoutResId;
 	}
@@ -54,13 +45,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder {
-		private CardView card;
 		private TextView eventName;
 		private TextView eventTime;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
-			this.card = (CardView) itemView;
 			this.eventName = (TextView) itemView.findViewById(R.id.event_name);
 			this.eventTime = (TextView) itemView.findViewById(R.id.event_time);
 		}
