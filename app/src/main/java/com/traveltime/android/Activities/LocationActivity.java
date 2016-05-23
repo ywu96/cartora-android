@@ -32,7 +32,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 	private LocationListener locationListener;
 
 	private static final long LOCATION_MIN_TIME = 3000L;
-	private static final float LOCATION_MIN_DIST = 10.0f;
+	private static final float LOCATION_MIN_DIST = 10f;
 
 	private static final int LOCATION_UPDATES = 1;
 

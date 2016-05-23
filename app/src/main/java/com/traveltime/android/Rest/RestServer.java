@@ -16,7 +16,7 @@ public class RestServer {
 	public static final String LOG_TAG = "RestServer";
 
 	// TODO: remember to update
-	public static final String BASE_URL = "http://569f06ad.ngrok.io";
+	public static final String BASE_URL = "https://quiet-bayou-32241.herokuapp.com/";
 	protected static RestServer restServer = null;
 
 	protected RestService restService;
