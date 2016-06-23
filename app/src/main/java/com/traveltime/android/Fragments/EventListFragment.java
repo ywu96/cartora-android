@@ -19,6 +19,7 @@ import com.traveltime.android.Models.EventResponse;
 import com.traveltime.android.R;
 import com.traveltime.android.Rest.RestServer;
 import com.traveltime.android.UIHelpers.EventListAdapter;
+import com.traveltime.android.UIHelpers.ItemOffsetDecorator;
 import com.traveltime.android.Utils.Utility;
 
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ public class EventListFragment extends Fragment {
 		this.listRecyclerView.setAdapter(this.listAdapter);
 		this.listRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		this.listRecyclerView.setItemAnimator(new DefaultItemAnimator());
+		this.listRecyclerView.addItemDecoration(new ItemOffsetDecorator(getActivity()));
 		this.itemTouchHelper.attachToRecyclerView(this.listRecyclerView);
 
 		RestServer.getInstance().getEvents(Utility.getUid(getActivity().getApplicationContext()), new RestServer.Callback<ArrayList<EventResponse>>() {
