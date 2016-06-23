@@ -42,7 +42,7 @@
             <TextView
                 android:id="@+id/event_date_text"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="7"
                 android:gravity="start|center_vertical"
                 android:paddingBottom="8dp"

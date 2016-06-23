@@ -34,7 +34,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
@@ -59,6 +58,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	private TextView timePickerText;
 	private FrameLayout spinnerContainer;
 	private Calendar calendar;
+	private boolean isCreatingEvent;
 
 	private LinearLayout mapLayout;
 	private GoogleMap googleMap;
@@ -100,6 +100,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_create, container, false);
 
+		this.isCreatingEvent = false;
 		this.eventName = (EditText) rootView.findViewById(R.id.event_name_field);
 		this.calendar = null;
 
@@ -126,7 +127,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						calendar.get(Calendar.MONTH),
 						calendar.get(Calendar.DAY_OF_MONTH)
 				);
-				datePickerDialog.setThemeDark(true);
 				datePickerDialog.vibrate(true);
 				datePickerDialog.setMinDate(now);
 				datePickerDialog.show(getActivity().getFragmentManager(), "Datepickerdialog");
@@ -146,7 +146,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						calendar.get(Calendar.MINUTE),
 						false
 				);
-				timePickerDialog.setThemeDark(true);
 				timePickerDialog.vibrate(true);
 				timePickerDialog.show(getActivity().getFragmentManager(), "Timepickerdialog");
 			}
@@ -253,6 +252,11 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
 						return false;
 					}
+					if (this.isCreatingEvent) {
+						return false;
+					}
+					this.isCreatingEvent = true;
+
 					SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 					EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
 					this.userList.add(selfUser);
@@ -272,6 +276,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					RestServer.getInstance().createEvent(newEvent, new RestServer.Callback<EventResponse>() {
 						@Override
 						public void result(EventResponse result) {
+							isCreatingEvent = false;
 							Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
 							eventName.setText("");
 							eventLocation = null;
