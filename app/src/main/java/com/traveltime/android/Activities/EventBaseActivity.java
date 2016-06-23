@@ -25,7 +25,7 @@ public class EventBaseActivity extends AppCompatActivity {
 	private EventListFragment eventListFragment;
 	private EventCreateFragment eventCreateFragment;
 
-	private static final long TRANSITION_DURATION = 300L;
+	private static final long TRANSITION_DURATION = 500L;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
