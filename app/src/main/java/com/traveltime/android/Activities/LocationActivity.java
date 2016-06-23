@@ -88,14 +88,11 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		public void onLocationChanged(Location location) {
 			LatLng newLocation = new LatLng(location.getLatitude(), location.getLongitude());
 
-			if (selfMarker == null) {
-				MarkerOptions markerOptions = new MarkerOptions().position(newLocation);
-				selfMarker = map.addMarker(markerOptions);
-			} else {
+			if (selfMarker != null) {
 				Utility.animateMarker(selfMarker, newLocation, ANIMATE_DURATION, new LatLngInterpolator.Linear());
 			}
 
-			map.animateCamera(CameraUpdateFactory.newLatLngZoom(newLocation, 16f));
+			map.animateCamera(CameraUpdateFactory.newLatLng(newLocation));
 		}
 
 		@Override
@@ -135,7 +132,9 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		Location lastLocation = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if (lastLocation != null) {
 			LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-			this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 13f));
+			MarkerOptions markerOptions = new MarkerOptions().position(lastLatLng);
+			selfMarker = map.addMarker(markerOptions);
+			this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 16f));
 		} else {
 			LatLng world = new LatLng(0, 0);
 			this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(world, 0.1f));
