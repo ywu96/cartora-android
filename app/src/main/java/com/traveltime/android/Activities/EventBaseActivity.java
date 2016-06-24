@@ -25,7 +25,7 @@ public class EventBaseActivity extends AppCompatActivity {
 	private EventListFragment eventListFragment;
 	private EventCreateFragment eventCreateFragment;
 
-	private static final long TRANSITION_DURATION = 500L;
+	private static final long TRANSITION_DURATION = 300L;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class EventBaseActivity extends AppCompatActivity {
 			public void run() {
 				isTransitioning = false;
 			}
-		}, TRANSITION_DURATION);
+		}, 500L);
 	}
 
 	@Override
