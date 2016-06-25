@@ -3,8 +3,8 @@
 	<color name="color_primary">#1E88E5</color>
 	<color name="color_primary_dark">#1A7fD7</color>
 	<color name="color_accent">#FFA726</color>
-	<color name="color_background">#16222d</color>
 
+	<color name="map_tint">#501A7fD7</color>
 	<color name="spinner_background">#5000</color>
 	<color name="border_color">#1000</color>
 </resources>

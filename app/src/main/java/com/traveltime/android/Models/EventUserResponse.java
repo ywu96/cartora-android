@@ -2,19 +2,24 @@ package com.traveltime.android.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class EventUserResponse {
 
+	public EventUserResponse(){}
+
 	@SerializedName("userId")
-	protected String userId;
+	String userId;
 
 	@SerializedName("latitude")
-	protected double latitude;
+	double latitude;
 
 	@SerializedName("longitude")
-	protected double longitude;
+	double longitude;
 
 	@SerializedName("_id")
-	protected String Id;
+	String Id;
 
 	public String getUserId() {
 		return this.userId;

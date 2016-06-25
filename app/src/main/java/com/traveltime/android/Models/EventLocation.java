@@ -2,13 +2,18 @@ package com.traveltime.android.Models;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class EventLocation {
 
+	public EventLocation(){}
+
 	@SerializedName("latitude")
-	protected double latitude;
+	double latitude;
 
 	@SerializedName("longitude")
-	protected double longitude;
+	double longitude;
 
 	public double getLatitude() {
 		return this.latitude;

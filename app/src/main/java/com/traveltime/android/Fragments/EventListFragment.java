@@ -54,7 +54,7 @@ public class EventListFragment extends Fragment {
 		this.spinner = (ProgressBar) rootView.findViewById(R.id.spinner);
 		this.noMeshesText = (TextView) rootView.findViewById(R.id.no_meshes_text);
 
-		this.listAdapter = new EventListAdapter(this.eventList, R.layout.event_list_item);
+		this.listAdapter = new EventListAdapter(getActivity(), this.eventList, R.layout.event_list_item);
 
 		ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 			@Override

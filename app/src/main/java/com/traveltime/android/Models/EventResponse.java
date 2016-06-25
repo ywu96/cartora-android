@@ -2,27 +2,33 @@ package com.traveltime.android.Models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class EventResponse {
 
+	public EventResponse(){}
+
 	@SerializedName("_id")
-	protected String Id;
+	String Id;
 
 	@SerializedName("eventName")
-	protected String eventName;
+	String eventName;
 
 	@SerializedName("timeSecs")
-	protected long timeSecs;
+	long timeSecs;
 
 	@SerializedName("__v")
-	protected Integer V;
+	int V;
 
 	@SerializedName("eventLocation")
-	protected EventLocation eventLocation;
+	EventLocation eventLocation;
 
 	@SerializedName("users")
-	protected List<EventUserResponse> eventUserResponses = new ArrayList<>();
+	List<EventUserResponse> eventUserResponses = new ArrayList<>();
 
 	public String getId() {
 		return this.Id;
@@ -36,7 +42,7 @@ public class EventResponse {
 		return this.timeSecs;
 	}
 
-	public Integer getV() {
+	public int getV() {
 		return this.V;
 	}
 
@@ -46,5 +52,14 @@ public class EventResponse {
 
 	public List<EventUserResponse> getEventUserResponses() {
 		return this.eventUserResponses;
+	}
+
+	public EventResponse(EventResponse eventResponse) {
+		this.Id = eventResponse.getId();
+		this.eventName = eventResponse.getEventName();
+		this.timeSecs = eventResponse.getTimeSecs();
+		this.V = eventResponse.getV();
+		this.eventLocation = eventResponse.getEventLocation();
+		this.eventUserResponses = eventResponse.getEventUserResponses();
 	}
 }
