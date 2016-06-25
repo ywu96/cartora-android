@@ -6,4 +6,5 @@
 	<color name="color_background">#16222d</color>
 
 	<color name="spinner_background">#5000</color>
+	<color name="border_color">#1000</color>
 </resources>
