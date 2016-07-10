@@ -82,7 +82,6 @@ public class EventListFragment extends Fragment {
 		this.listRecyclerView.setAdapter(this.listAdapter);
 		this.listRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		this.listRecyclerView.setItemAnimator(new DefaultItemAnimator());
-		this.listRecyclerView.addItemDecoration(new ItemOffsetDecorator(getActivity()));
 		this.itemTouchHelper.attachToRecyclerView(this.listRecyclerView);
 
 		RestServer.getInstance().getEvents(Utility.getUid(getActivity().getApplicationContext()), new RestServer.Callback<ArrayList<EventResponse>>() {
