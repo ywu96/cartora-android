@@ -42,7 +42,6 @@ public class EventListFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		this.eventList = new ArrayList<>();
 	}
 
@@ -69,9 +68,11 @@ public class EventListFragment extends Fragment {
 				RestServer.getInstance().deleteEvent(event.getId(), new RestServer.Callback<EventResponse>() {
 					@Override
 					public void result(EventResponse result) {
-						eventList.remove(listIndex);
-						listAdapter.notifyItemRemoved(listIndex);
-						Toast.makeText(getActivity(), "Event deleted", Toast.LENGTH_SHORT).show();
+						if (!isDetached()) {
+							eventList.remove(listIndex);
+							listAdapter.notifyItemRemoved(listIndex);
+							Toast.makeText(getActivity(), "Event deleted", Toast.LENGTH_SHORT).show();
+						}
 					}
 				});
 			}
@@ -87,16 +88,18 @@ public class EventListFragment extends Fragment {
 		RestServer.getInstance().getEvents(Utility.getUid(getActivity().getApplicationContext()), new RestServer.Callback<ArrayList<EventResponse>>() {
 			@Override
 			public void result(ArrayList<EventResponse> result) {
-				spinner.setVisibility(View.GONE);
-				if (result != null && result.size() != 0) {
-					eventList.clear();
-					eventList.addAll(result);
-					Collections.sort(eventList, new EventComparator());
-					noMeshesText.setVisibility(View.GONE);
-					listRecyclerView.setVisibility(View.VISIBLE);
-				} else {
-					listRecyclerView.setVisibility(View.GONE);
-					noMeshesText.setVisibility(View.VISIBLE);
+				if (!isDetached()) {
+					spinner.setVisibility(View.GONE);
+					if (result != null && result.size() != 0) {
+						eventList.clear();
+						eventList.addAll(result);
+						Collections.sort(eventList, new EventComparator());
+						noMeshesText.setVisibility(View.GONE);
+						listRecyclerView.setVisibility(View.VISIBLE);
+					} else {
+						listRecyclerView.setVisibility(View.GONE);
+						noMeshesText.setVisibility(View.VISIBLE);
+					}
 				}
 			}
 		});
