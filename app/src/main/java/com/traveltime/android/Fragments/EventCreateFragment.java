@@ -256,6 +256,9 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						return false;
 					}
 					this.isCreatingEvent = true;
+					this.spinnerContainer.setAlpha(0f);
+					this.spinnerContainer.setVisibility(View.VISIBLE);
+					this.spinnerContainer.animate().alpha(1f).setDuration(200L).start();
 
 					SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 					EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
@@ -277,6 +280,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						@Override
 						public void result(EventResponse result) {
 							isCreatingEvent = false;
+							spinnerContainer.setVisibility(View.GONE);
 							Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
 							eventName.setText("");
 							eventLocation = null;

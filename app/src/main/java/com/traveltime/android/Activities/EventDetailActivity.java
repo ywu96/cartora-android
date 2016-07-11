@@ -46,6 +46,6 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 		LatLng eventLatLng = new LatLng(this.event.getEventLocation().getLatitude(), this.event.getEventLocation().getLongitude());
 		MarkerOptions markerOptions = new MarkerOptions().position(eventLatLng);
 		this.map.addMarker(markerOptions);
-		this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 16f));
+		this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 15f));
 	}
 }

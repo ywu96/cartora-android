@@ -67,14 +67,13 @@ public class EventBaseActivity extends AppCompatActivity {
 
 	public static void startTransitionTimer() {
 		isTransitioning = true;
-
 		Handler handler = new Handler();
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				isTransitioning = false;
 			}
-		}, 500L);
+		}, 1000L);
 	}
 
 	@Override
