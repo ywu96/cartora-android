@@ -18,9 +18,14 @@ import com.traveltime.android.UIHelpers.EventListAdapter;
 
 import org.parceler.Parcels;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class EventDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
 	private TextView eventName;
+	private TextView eventDate;
+	private TextView eventLocation;
 
 	private EventResponse event;
 	private GoogleMap map;
@@ -33,7 +38,14 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 		event = Parcels.unwrap(getIntent().getParcelableExtra(EventListAdapter.EVENT_LIST_PARCEL_KEY));
 
 		eventName = (TextView) findViewById(R.id.event_name);
+		eventDate = (TextView) findViewById(R.id.event_date);
+		eventLocation = (TextView) findViewById(R.id.event_location);
+
 		eventName.setText(event.getEventName());
+
+		Date date = new Date(event.getTimeSecs()*1000L);
+		SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy 'at' h:mm a");
+		eventDate.setText(format.format(date));
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.event_map);

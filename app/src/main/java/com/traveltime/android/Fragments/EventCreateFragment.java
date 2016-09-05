@@ -129,7 +129,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 				);
 				datePickerDialog.vibrate(true);
 				datePickerDialog.setMinDate(now);
-				datePickerDialog.show(getActivity().getFragmentManager(), "Datepickerdialog");
+				datePickerDialog.show(getActivity().getFragmentManager(), "datepickerdialog");
 			}
 		});
 
@@ -147,7 +147,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						false
 				);
 				timePickerDialog.vibrate(true);
-				timePickerDialog.show(getActivity().getFragmentManager(), "Timepickerdialog");
+				timePickerDialog.show(getActivity().getFragmentManager(), "timepickerdialog");
 			}
 		});
 
@@ -300,11 +300,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-	}
-
-	@Override
 	public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 		calendar.set(year, monthOfYear, dayOfMonth);
 
@@ -322,17 +317,16 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
+
+	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.googleMap = googleMap;
 	}
 
 	@Override
-	public void onConnected(@Nullable Bundle bundle) {
-
-	}
+	public void onConnected(@Nullable Bundle bundle) {}
 
 	@Override
-	public void onConnectionSuspended(int i) {
-
-	}
+	public void onConnectionSuspended(int i) {}
 }

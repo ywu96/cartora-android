@@ -45,13 +45,10 @@ public class LoginActivity extends AppCompatActivity {
 
 		firebaseAuth = FirebaseAuth.getInstance();
 
-//        if (firebaseAuth.getAuth() != null) {
-//            Log.d("test123", "EventUserResponse logged in: " + firebaseAuth.getAuth());
-//            Intent intent = new Intent(this, EventBaseActivity.class);
-//            startActivity(intent);
-//        } else {
-//
-//        }
+        if (firebaseAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(this, EventBaseActivity.class);
+            startActivity(intent);
+        }
 
 		fab = (FloatingActionButton) findViewById(R.id.login_fab);
 		fab.setOnClickListener(new View.OnClickListener() {
@@ -77,14 +74,10 @@ public class LoginActivity extends AppCompatActivity {
 			}
 
 			@Override
-			public void onCancel() {
-
-			}
+			public void onCancel() {}
 
 			@Override
-			public void onError(FacebookException error) {
-
-			}
+			public void onError(FacebookException error) {}
 		});
 
 		accessTokenTracker = new AccessTokenTracker() {

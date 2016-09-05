@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="208dp">
+        android:layout_height="248dp">
 
         <fragment
             android:id="@+id/event_map"
@@ -23,15 +23,91 @@
 
         <TextView
             android:id="@+id/event_name"
-            android:layout_gravity="top|start"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|start"
+            android:gravity="center"
             android:layout_margin="16dp"
+            android:ellipsize="end"
             android:textColor="@android:color/primary_text_dark"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:ellipsize="end"
             tools:text="Walk on the Beach in the Summer"/>
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:alpha="0.9"
+            android:src="@drawable/ic_date"/>
+
+        <TextView
+            android:id="@+id/event_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="start|center_vertical"
+            android:paddingStart="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:alpha="0.9"
+            android:src="@drawable/ic_location"/>
+
+        <TextView
+            android:id="@+id/event_location"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="start|center_vertical"
+            android:paddingStart="16dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="2"
+            android:alpha="0.9"
+            android:src="@drawable/ic_people"/>
+
+        <TextView
+            android:id="@+id/event_users"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:gravity="start|center_vertical"
+            android:paddingStart="16dp"/>
+    </LinearLayout>
 
 </LinearLayout>

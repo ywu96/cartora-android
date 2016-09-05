@@ -73,7 +73,7 @@ public class EventBaseActivity extends AppCompatActivity {
 			public void run() {
 				isTransitioning = false;
 			}
-		}, 1000L);
+		}, 700L);
 	}
 
 	@Override
