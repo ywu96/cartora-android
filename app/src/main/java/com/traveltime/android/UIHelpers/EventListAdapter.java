@@ -37,13 +37,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
 	@Override
 	public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-		View view = LayoutInflater.from(parent.getContext()).inflate(this.layoutResId, parent, false);
+		View view = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
 		return new ViewHolder(view);
 	}
 
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
-		final EventResponse event = this.eventList.get(position);
+		final EventResponse event = eventList.get(position);
 		holder.eventName.setText(event.getEventName());
 		Date date = new Date(event.getTimeSecs()*1000L);
 		SimpleDateFormat format = new SimpleDateFormat("E, MMM d 'at' h:mm a");
@@ -63,7 +63,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
 	@Override
 	public int getItemCount() {
-		return this.eventList.size();
+		return eventList.size();
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder {
@@ -73,9 +73,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 
 		public ViewHolder(View itemView) {
 			super(itemView);
-			this.cardView = (CardView) itemView.findViewById(R.id.event_list_card);
-			this.eventName = (TextView) itemView.findViewById(R.id.event_name);
-			this.eventTime = (TextView) itemView.findViewById(R.id.event_time);
+			cardView = (CardView) itemView.findViewById(R.id.event_list_card);
+			eventName = (TextView) itemView.findViewById(R.id.event_name);
+			eventTime = (TextView) itemView.findViewById(R.id.event_time);
 		}
 	}
 

@@ -43,18 +43,18 @@ public class LoginActivity extends AppCompatActivity {
 		FacebookSdk.sdkInitialize(this);
 		setContentView(R.layout.activity_login);
 
-		this.firebaseAuth = FirebaseAuth.getInstance();
+		firebaseAuth = FirebaseAuth.getInstance();
 
-//        if (this.firebaseAuth.getAuth() != null) {
-//            Log.d("test123", "EventUserResponse logged in: " + this.firebaseAuth.getAuth());
+//        if (firebaseAuth.getAuth() != null) {
+//            Log.d("test123", "EventUserResponse logged in: " + firebaseAuth.getAuth());
 //            Intent intent = new Intent(this, EventBaseActivity.class);
 //            startActivity(intent);
 //        } else {
 //
 //        }
 
-		this.fab = (FloatingActionButton) findViewById(R.id.login_fab);
-		this.fab.setOnClickListener(new View.OnClickListener() {
+		fab = (FloatingActionButton) findViewById(R.id.login_fab);
+		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (LoginActivity.this.firebaseAuth.getCurrentUser() != null) {
@@ -66,11 +66,11 @@ public class LoginActivity extends AppCompatActivity {
 			}
 		});
 
-		this.callbackManager = CallbackManager.Factory.create();
+		callbackManager = CallbackManager.Factory.create();
 
-		this.fbLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
-		this.fbLoginButton.setReadPermissions("user_friends");
-		this.fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+		fbLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+		fbLoginButton.setReadPermissions("user_friends");
+		fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 			@Override
 			public void onSuccess(LoginResult loginResult) {
 				LoginActivity.this.authFirebaseWithFacebookToken(loginResult.getAccessToken());
@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
 			}
 		});
 
-		this.accessTokenTracker = new AccessTokenTracker() {
+		accessTokenTracker = new AccessTokenTracker() {
 			@Override
 			protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
 				if (currentAccessToken != null) {
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 			}
 		};
 
-		this.authStateListener = new FirebaseAuth.AuthStateListener() {
+		authStateListener = new FirebaseAuth.AuthStateListener() {
 			@Override
 			public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 				FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -115,30 +115,30 @@ public class LoginActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		this.accessTokenTracker.startTracking();
-		this.firebaseAuth.addAuthStateListener(this.authStateListener);
+		accessTokenTracker.startTracking();
+		firebaseAuth.addAuthStateListener(authStateListener);
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (this.accessTokenTracker != null && this.accessTokenTracker.isTracking()) {
-			this.accessTokenTracker.stopTracking();
+		if (accessTokenTracker != null && accessTokenTracker.isTracking()) {
+			accessTokenTracker.stopTracking();
 		}
-		if (this.authStateListener != null) {
-			this.firebaseAuth.removeAuthStateListener(this.authStateListener);
+		if (authStateListener != null) {
+			firebaseAuth.removeAuthStateListener(authStateListener);
 		}
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		this.callbackManager.onActivityResult(requestCode, resultCode, data);
+		callbackManager.onActivityResult(requestCode, resultCode, data);
 	}
 
 	protected void authFirebaseWithFacebookToken(AccessToken token) {
 		AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-		this.firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+		firebaseAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 			@Override
 			public void onComplete(@NonNull Task<AuthResult> task) {
 				if (!task.isSuccessful()) {

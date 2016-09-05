@@ -34,15 +34,15 @@ public class EventBaseActivity extends AppCompatActivity {
 
 		setTitle(R.string.event_list_title);
 
-		this.userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getString(Strings.UID_KEY, null);
+		userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getString(Strings.UID_KEY, null);
 
-		this.eventListFragment = new EventListFragment();
-		this.eventCreateFragment = new EventCreateFragment();
+		eventListFragment = new EventListFragment();
+		eventCreateFragment = new EventCreateFragment();
 
 		getSupportFragmentManager().beginTransaction().add(R.id.base_fragment_container, eventListFragment).commit();
 
-		this.fab = (FloatingActionButton) findViewById(R.id.event_base_fab);
-		this.fab.setOnClickListener(new View.OnClickListener() {
+		fab = (FloatingActionButton) findViewById(R.id.event_base_fab);
+		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventListFragment) {
@@ -55,7 +55,7 @@ public class EventBaseActivity extends AppCompatActivity {
 				}
 			}
 		});
-		this.fab.setOnLongClickListener(new View.OnLongClickListener() {
+		fab.setOnLongClickListener(new View.OnLongClickListener() {
 			@Override
 			public boolean onLongClick(View v) {
 				Intent intent = new Intent(getBaseContext(), LocationActivity.class);
@@ -79,11 +79,11 @@ public class EventBaseActivity extends AppCompatActivity {
 	@Override
 	public void onBackPressed() {
 		if (getSupportFragmentManager().findFragmentById(R.id.base_fragment_container) instanceof EventCreateFragment && !isTransitioning) {
-			this.fab.animate().translationY(0f).setDuration(TRANSITION_DURATION).setInterpolator(new DecelerateInterpolator()).start();
+			fab.animate().translationY(0f).setDuration(TRANSITION_DURATION).setInterpolator(new DecelerateInterpolator()).start();
 			setTitle(R.string.event_list_title);
 			FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 			fragmentTransaction.setCustomAnimations(R.anim.slide_in_from_left, R.anim.slide_out_to_right);
-			fragmentTransaction.replace(R.id.base_fragment_container, this.eventListFragment).commit();
+			fragmentTransaction.replace(R.id.base_fragment_container, eventListFragment).commit();
 			startTransitionTimer();
 		}
 	}

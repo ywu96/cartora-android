@@ -18,6 +18,6 @@ public class ItemOffsetDecorator extends RecyclerView.ItemDecoration {
 	@Override
 	public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
 		if (parent.getChildLayoutPosition(view) == 0)
-			outRect.top = (int) Utility.convertToPixels(this.context, 8);
+			outRect.top = (int) Utility.convertToPixels(context, 8);
 	}
 }

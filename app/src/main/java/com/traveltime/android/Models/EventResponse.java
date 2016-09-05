@@ -31,35 +31,35 @@ public class EventResponse {
 	List<EventUserResponse> eventUserResponses = new ArrayList<>();
 
 	public String getId() {
-		return this.Id;
+		return Id;
 	}
 
 	public String getEventName() {
-		return this.eventName;
+		return eventName;
 	}
 
 	public long getTimeSecs() {
-		return this.timeSecs;
+		return timeSecs;
 	}
 
 	public int getV() {
-		return this.V;
+		return V;
 	}
 
 	public EventLocation getEventLocation() {
-		return this.eventLocation;
+		return eventLocation;
 	}
 
 	public List<EventUserResponse> getEventUserResponses() {
-		return this.eventUserResponses;
+		return eventUserResponses;
 	}
 
 	public EventResponse(EventResponse eventResponse) {
-		this.Id = eventResponse.getId();
-		this.eventName = eventResponse.getEventName();
-		this.timeSecs = eventResponse.getTimeSecs();
-		this.V = eventResponse.getV();
-		this.eventLocation = eventResponse.getEventLocation();
-		this.eventUserResponses = eventResponse.getEventUserResponses();
+		Id = eventResponse.getId();
+		eventName = eventResponse.getEventName();
+		timeSecs = eventResponse.getTimeSecs();
+		V = eventResponse.getV();
+		eventLocation = eventResponse.getEventLocation();
+		eventUserResponses = eventResponse.getEventUserResponses();
 	}
 }

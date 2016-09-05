@@ -42,7 +42,7 @@ public class EventListFragment extends Fragment {
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.eventList = new ArrayList<>();
+		eventList = new ArrayList<>();
 	}
 
 	@Override
@@ -50,10 +50,10 @@ public class EventListFragment extends Fragment {
 							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
 
-		this.spinner = (ProgressBar) rootView.findViewById(R.id.spinner);
-		this.noMeshesText = (TextView) rootView.findViewById(R.id.no_meshes_text);
+		spinner = (ProgressBar) rootView.findViewById(R.id.spinner);
+		noMeshesText = (TextView) rootView.findViewById(R.id.no_meshes_text);
 
-		this.listAdapter = new EventListAdapter(getActivity(), this.eventList, R.layout.event_list_item);
+		listAdapter = new EventListAdapter(getActivity(), eventList, R.layout.event_list_item);
 
 		ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 			@Override
@@ -77,13 +77,13 @@ public class EventListFragment extends Fragment {
 				});
 			}
 		};
-		this.itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+		itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
 
-		this.listRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_list_recyclerview);
-		this.listRecyclerView.setAdapter(this.listAdapter);
-		this.listRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-		this.listRecyclerView.setItemAnimator(new DefaultItemAnimator());
-		this.itemTouchHelper.attachToRecyclerView(this.listRecyclerView);
+		listRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_list_recyclerview);
+		listRecyclerView.setAdapter(listAdapter);
+		listRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+		listRecyclerView.setItemAnimator(new DefaultItemAnimator());
+		itemTouchHelper.attachToRecyclerView(listRecyclerView);
 
 		RestServer.getInstance().getEvents(Utility.getUid(getActivity().getApplicationContext()), new RestServer.Callback<ArrayList<EventResponse>>() {
 			@Override

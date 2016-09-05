@@ -76,7 +76,7 @@ public class RestServer {
 	}
 
 	public void deleteEvent(String eventId, final Callback<EventResponse> callback) {
-		Call<EventResponse> call = this.restService.deleteEvent(eventId);
+		Call<EventResponse> call = restService.deleteEvent(eventId);
 		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
 			@Override
 			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
@@ -93,7 +93,7 @@ public class RestServer {
 	}
 
 	public void updateLocation(String eventId, LocationUpdateRequest locationUpdateRequest, final Callback<EventResponse> callback) {
-		Call<EventResponse> call = this.restService.updateLocation(eventId, locationUpdateRequest);
+		Call<EventResponse> call = restService.updateLocation(eventId, locationUpdateRequest);
 		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
 			@Override
 			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {

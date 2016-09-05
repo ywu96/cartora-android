@@ -22,18 +22,18 @@ public class EventUserResponse {
 	String Id;
 
 	public String getUserId() {
-		return this.userId;
+		return userId;
 	}
 
 	public double getLatitude() {
-		return this.latitude;
+		return latitude;
 	}
 
 	public double getLongitude() {
-		return this.longitude;
+		return longitude;
 	}
 
 	public String getId() {
-		return this.Id;
+		return Id;
 	}
 }

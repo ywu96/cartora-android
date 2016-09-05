@@ -46,8 +46,8 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 				.findFragmentById(R.id.map);
 		mapFragment.getMapAsync(this);
 
-		this.locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		this.locationListener = new CustomLocationListener();
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationListener = new CustomLocationListener();
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_UPDATES);
 			return;
 		}
-		this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_MIN_TIME, LOCATION_MIN_DIST, this.locationListener);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_MIN_TIME, LOCATION_MIN_DIST, locationListener);
 	}
 
 	@Override
@@ -67,17 +67,17 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			return;
 		}
-		this.locationManager.removeUpdates(this.locationListener);
+		locationManager.removeUpdates(locationListener);
 	}
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
-		this.map = googleMap;
+		map = googleMap;
 
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			return;
 		}
-		this.setInitialMap();
+		setInitialMap();
 	}
 
 	public class CustomLocationListener implements LocationListener {
@@ -121,7 +121,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 				return;
 			}
-			this.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_MIN_TIME, LOCATION_MIN_DIST, this.locationListener);
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_MIN_TIME, LOCATION_MIN_DIST, locationListener);
 		}
 	}
 
@@ -129,15 +129,15 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			return;
 		}
-		Location lastLocation = this.locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if (lastLocation != null) {
 			LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
 			MarkerOptions markerOptions = new MarkerOptions().position(lastLatLng);
 			selfMarker = map.addMarker(markerOptions);
-			this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 16f));
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 16f));
 		} else {
 			LatLng world = new LatLng(0, 0);
-			this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(world, 0.1f));
+			map.moveCamera(CameraUpdateFactory.newLatLngZoom(world, 0.1f));
 		}
 	}
 }

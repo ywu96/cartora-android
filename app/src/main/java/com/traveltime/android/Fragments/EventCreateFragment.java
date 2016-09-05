@@ -78,8 +78,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (this.googleApiClient == null) {
-			this.googleApiClient = new GoogleApiClient
+		if (googleApiClient == null) {
+			googleApiClient = new GoogleApiClient
 					.Builder(getActivity())
 					.addOnConnectionFailedListener(this)
 					.addConnectionCallbacks(this)
@@ -90,7 +90,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					.build();
 		}
 
-		this.userList = new ArrayList<>();
+		userList = new ArrayList<>();
 
 		setHasOptionsMenu(true);
 	}
@@ -100,21 +100,21 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_create, container, false);
 
-		this.isCreatingEvent = false;
-		this.eventName = (EditText) rootView.findViewById(R.id.event_name_field);
-		this.calendar = null;
+		isCreatingEvent = false;
+		eventName = (EditText) rootView.findViewById(R.id.event_name_field);
+		calendar = null;
 
-		this.spinnerContainer = (FrameLayout) rootView.findViewById(R.id.spinner_container);
-		this.spinnerContainer.setOnClickListener(new View.OnClickListener() {
+		spinnerContainer = (FrameLayout) rootView.findViewById(R.id.spinner_container);
+		spinnerContainer.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// stop user from pressing things
 			}
 		});
-		this.spinnerContainer.setVisibility(View.GONE);
+		spinnerContainer.setVisibility(View.GONE);
 
-		this.datePickerText = (TextView) rootView.findViewById(R.id.event_date_text);
-		this.datePickerText.setOnClickListener(new View.OnClickListener() {
+		datePickerText = (TextView) rootView.findViewById(R.id.event_date_text);
+		datePickerText.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (calendar == null) {
@@ -133,8 +133,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 			}
 		});
 
-		this.timePickerText = (TextView) rootView.findViewById(R.id.event_time_text);
-		this.timePickerText.setOnClickListener(new View.OnClickListener() {
+		timePickerText = (TextView) rootView.findViewById(R.id.event_time_text);
+		timePickerText.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (calendar == null) {
@@ -151,8 +151,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 			}
 		});
 
-		this.placePickerText = (TextView) rootView.findViewById(R.id.event_location_text);
-		this.placePickerText.setOnClickListener(new View.OnClickListener() {
+		placePickerText = (TextView) rootView.findViewById(R.id.event_location_text);
+		placePickerText.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				spinnerContainer.setAlpha(0f);
@@ -167,10 +167,10 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 			}
 		});
 
-		this.mapLayout = (LinearLayout) rootView.findViewById(R.id.map_layout);
-		this.mapView = (MapView) rootView.findViewById(R.id.map_view);
-		this.mapView.onCreate(savedInstanceState);
-		this.mapView.getMapAsync(this);
+		mapLayout = (LinearLayout) rootView.findViewById(R.id.map_layout);
+		mapView = (MapView) rootView.findViewById(R.id.map_view);
+		mapView.onCreate(savedInstanceState);
+		mapView.getMapAsync(this);
 		MapsInitializer.initialize(getActivity());
 
 		return rootView;
@@ -179,37 +179,37 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	@Override
 	public void onStart() {
 		super.onStart();
-		this.googleApiClient.connect();
+		googleApiClient.connect();
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
-		this.googleApiClient.disconnect();
+		googleApiClient.disconnect();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		this.mapView.onResume();
+		mapView.onResume();
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-		this.mapView.onPause();
+		mapView.onPause();
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		this.mapView.onDestroy();
+		mapView.onDestroy();
 	}
 
 	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
-		this.mapView.onLowMemory();
+		mapView.onLowMemory();
 	}
 
 	@Override
@@ -218,13 +218,13 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 			spinnerContainer.setVisibility(View.GONE);
 			if (resultCode == Activity.RESULT_OK) {
 				Place place = PlacePicker.getPlace(getActivity(), data);
-				this.eventLocation = place;
-				this.placePickerText.setText(place.getName().toString());
-				this.mapLayout.setVisibility(View.VISIBLE);
-				this.googleMap.clear();
-				this.googleMap.addMarker(new MarkerOptions()
+				eventLocation = place;
+				placePickerText.setText(place.getName().toString());
+				mapLayout.setVisibility(View.VISIBLE);
+				googleMap.clear();
+				googleMap.addMarker(new MarkerOptions()
 						.position(place.getLatLng()));
-				this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 13f));
+				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 13f));
 			}
 		}
 	}
@@ -240,41 +240,41 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 		if (!EventBaseActivity.isTransitioning) {
 			switch (item.getItemId()) {
 				case R.id.action_accept:
-					if (this.eventName.getText().toString().isEmpty()) {
+					if (eventName.getText().toString().isEmpty()) {
 						Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
 						return false;
 					}
-					if (this.datePickerText.getText().equals(getString(R.string.event_date_hint))) {
+					if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
 						Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
 						return false;
 					}
-					if (this.eventLocation == null) {
+					if (eventLocation == null) {
 						Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
 						return false;
 					}
-					if (this.isCreatingEvent) {
+					if (isCreatingEvent) {
 						return false;
 					}
-					this.isCreatingEvent = true;
-					this.spinnerContainer.setAlpha(0f);
-					this.spinnerContainer.setVisibility(View.VISIBLE);
-					this.spinnerContainer.animate().alpha(1f).setDuration(200L).start();
+					isCreatingEvent = true;
+					spinnerContainer.setAlpha(0f);
+					spinnerContainer.setVisibility(View.VISIBLE);
+					spinnerContainer.animate().alpha(1f).setDuration(200L).start();
 
 					SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 					EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
-					this.userList.add(selfUser);
+					userList.add(selfUser);
 
 					// user did not change time
-					if (this.timePickerText.getText().toString().equals("12:00 PM")) {
-						this.calendar.set(Calendar.HOUR_OF_DAY, 12);
-						this.calendar.set(Calendar.MINUTE, 0);
+					if (timePickerText.getText().toString().equals("12:00 PM")) {
+						calendar.set(Calendar.HOUR_OF_DAY, 12);
+						calendar.set(Calendar.MINUTE, 0);
 					}
 
-					EventRequest newEvent = new EventRequest(this.eventName.getText().toString(),
-							this.userList,
-							this.eventLocation.getLatLng().latitude,
-							this.eventLocation.getLatLng().longitude,
-							this.calendar.getTimeInMillis()/1000);
+					EventRequest newEvent = new EventRequest(eventName.getText().toString(),
+							userList,
+							eventLocation.getLatLng().latitude,
+							eventLocation.getLatLng().longitude,
+							calendar.getTimeInMillis()/1000);
 
 					RestServer.getInstance().createEvent(newEvent, new RestServer.Callback<EventResponse>() {
 						@Override
@@ -289,7 +289,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					});
 					break;
 				case R.id.action_cancel:
-					this.eventName.setText("");
+					eventName.setText("");
 					eventLocation = null;
 					getActivity().onBackPressed();
 					break;
@@ -306,19 +306,19 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 	@Override
 	public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-		this.calendar.set(year, monthOfYear, dayOfMonth);
+		calendar.set(year, monthOfYear, dayOfMonth);
 
 		SimpleDateFormat format = new SimpleDateFormat("EEEE, MMMM d, yyyy");
-		this.datePickerText.setText(format.format(calendar.getTime()));
+		datePickerText.setText(format.format(calendar.getTime()));
 	}
 
 	@Override
 	public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-		this.calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-		this.calendar.set(Calendar.MINUTE, minute);
+		calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+		calendar.set(Calendar.MINUTE, minute);
 
 		SimpleDateFormat format = new SimpleDateFormat("h:mm a");
-		this.timePickerText.setText(format.format(calendar.getTime()));
+		timePickerText.setText(format.format(calendar.getTime()));
 	}
 
 	@Override

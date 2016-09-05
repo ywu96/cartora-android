@@ -30,10 +30,10 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_detail);
 
-		this.event = Parcels.unwrap(getIntent().getParcelableExtra(EventListAdapter.EVENT_LIST_PARCEL_KEY));
+		event = Parcels.unwrap(getIntent().getParcelableExtra(EventListAdapter.EVENT_LIST_PARCEL_KEY));
 
-		this.eventName = (TextView) findViewById(R.id.event_name);
-		this.eventName.setText(this.event.getEventName());
+		eventName = (TextView) findViewById(R.id.event_name);
+		eventName.setText(event.getEventName());
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.event_map);
@@ -42,10 +42,10 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
-		this.map = googleMap;
-		LatLng eventLatLng = new LatLng(this.event.getEventLocation().getLatitude(), this.event.getEventLocation().getLongitude());
+		map = googleMap;
+		LatLng eventLatLng = new LatLng(event.getEventLocation().getLatitude(), event.getEventLocation().getLongitude());
 		MarkerOptions markerOptions = new MarkerOptions().position(eventLatLng);
-		this.map.addMarker(markerOptions);
-		this.map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 15f));
+		map.addMarker(markerOptions);
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 15f));
 	}
 }
