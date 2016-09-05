@@ -19,7 +19,7 @@
         android:visibility="gone"/>
 
     <TextView
-        android:id="@+id/no_meshes_text"
+        android:id="@+id/no_events_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

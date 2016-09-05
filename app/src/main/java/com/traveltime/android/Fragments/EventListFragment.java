@@ -28,7 +28,7 @@ import java.util.Comparator;
 
 public class EventListFragment extends Fragment {
 
-	private TextView noMeshesText;
+	private TextView noEventsText;
 	private RecyclerView listRecyclerView;
 	private EventListAdapter listAdapter;
 	private ItemTouchHelper itemTouchHelper;
@@ -51,7 +51,7 @@ public class EventListFragment extends Fragment {
 		View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
 
 		spinner = (ProgressBar) rootView.findViewById(R.id.spinner);
-		noMeshesText = (TextView) rootView.findViewById(R.id.no_meshes_text);
+		noEventsText = (TextView) rootView.findViewById(R.id.no_events_text);
 
 		listAdapter = new EventListAdapter(getActivity(), eventList, R.layout.event_list_item);
 
@@ -94,11 +94,11 @@ public class EventListFragment extends Fragment {
 						eventList.clear();
 						eventList.addAll(result);
 						Collections.sort(eventList, new EventComparator());
-						noMeshesText.setVisibility(View.GONE);
+						noEventsText.setVisibility(View.GONE);
 						listRecyclerView.setVisibility(View.VISIBLE);
 					} else {
 						listRecyclerView.setVisibility(View.GONE);
-						noMeshesText.setVisibility(View.VISIBLE);
+						noEventsText.setVisibility(View.VISIBLE);
 					}
 				}
 			}
