@@ -1,4 +1,4 @@
-package com.traveltime.android.Activities;
+package com.traveltime.android.activities;
 
 import android.Manifest;
 import android.content.Context;
@@ -20,8 +20,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.traveltime.android.R;
-import com.traveltime.android.UIHelpers.LatLngInterpolator;
-import com.traveltime.android.Utils.Utility;
+import com.traveltime.android.uihelpers.LatLngInterpolator;
+import com.traveltime.android.utils.Utility;
 
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
 

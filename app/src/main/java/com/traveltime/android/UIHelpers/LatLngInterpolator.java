@@ -1,4 +1,4 @@
-package com.traveltime.android.UIHelpers;
+package com.traveltime.android.uihelpers;
 
 import com.google.android.gms.maps.model.LatLng;
 

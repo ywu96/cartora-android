@@ -1,4 +1,4 @@
-package com.traveltime.android.Models;
+package com.traveltime.android.models;
 
 import java.util.ArrayList;
 import java.util.List;

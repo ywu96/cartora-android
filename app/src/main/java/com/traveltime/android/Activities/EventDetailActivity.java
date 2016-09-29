@@ -1,8 +1,7 @@
-package com.traveltime.android.Activities;
+package com.traveltime.android.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -10,11 +9,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.traveltime.android.Models.EventResponse;
+import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.R;
-import com.traveltime.android.UIHelpers.EventListAdapter;
+import com.traveltime.android.uihelpers.EventListAdapter;
 
 import org.parceler.Parcels;
 

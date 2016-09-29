@@ -1,4 +1,4 @@
-package com.traveltime.android.Models;
+package com.traveltime.android.models;
 
 import com.google.gson.annotations.SerializedName;
 

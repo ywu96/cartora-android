@@ -1,4 +1,4 @@
-package com.traveltime.android.Utils;
+package com.traveltime.android.utils;
 
 public class Strings {
 

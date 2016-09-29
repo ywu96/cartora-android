@@ -1,11 +1,11 @@
-package com.traveltime.android.UIHelpers;
+package com.traveltime.android.uihelpers;
 
 import android.content.Context;
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.traveltime.android.Utils.Utility;
+import com.traveltime.android.utils.Utility;
 
 public class ItemOffsetDecorator extends RecyclerView.ItemDecoration {
 

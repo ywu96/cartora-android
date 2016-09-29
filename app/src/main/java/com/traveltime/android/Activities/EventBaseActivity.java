@@ -1,4 +1,4 @@
-package com.traveltime.android.Activities;
+package com.traveltime.android.activities;
 
 import android.content.Intent;
 import android.os.Handler;
@@ -10,11 +10,11 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 
-import com.traveltime.android.Fragments.EventCreateFragment;
-import com.traveltime.android.Fragments.EventListFragment;
+import com.traveltime.android.fragments.EventCreateFragment;
+import com.traveltime.android.fragments.EventListFragment;
 import com.traveltime.android.R;
-import com.traveltime.android.Utils.Strings;
-import com.traveltime.android.Utils.Utility;
+import com.traveltime.android.utils.Strings;
+import com.traveltime.android.utils.Utility;
 
 public class EventBaseActivity extends AppCompatActivity {
 

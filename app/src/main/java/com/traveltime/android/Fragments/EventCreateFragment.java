@@ -1,4 +1,4 @@
-package com.traveltime.android.Fragments;
+package com.traveltime.android.fragments;
 
 
 import android.app.Activity;
@@ -38,13 +38,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.traveltime.android.Activities.EventBaseActivity;
-import com.traveltime.android.Models.EventRequest;
-import com.traveltime.android.Models.EventResponse;
-import com.traveltime.android.Models.EventUserRequest;
+import com.traveltime.android.activities.EventBaseActivity;
+import com.traveltime.android.models.EventRequest;
+import com.traveltime.android.models.EventResponse;
+import com.traveltime.android.models.EventUserRequest;
 import com.traveltime.android.R;
-import com.traveltime.android.Rest.RestServer;
-import com.traveltime.android.Utils.Strings;
+import com.traveltime.android.rest.RestServer;
+import com.traveltime.android.utils.Strings;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

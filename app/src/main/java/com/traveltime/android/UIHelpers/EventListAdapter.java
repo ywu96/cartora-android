@@ -1,4 +1,4 @@
-package com.traveltime.android.UIHelpers;
+package com.traveltime.android.uihelpers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.traveltime.android.Activities.EventDetailActivity;
-import com.traveltime.android.Models.EventResponse;
+import com.traveltime.android.activities.EventDetailActivity;
+import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.R;
 
 import org.parceler.Parcels;

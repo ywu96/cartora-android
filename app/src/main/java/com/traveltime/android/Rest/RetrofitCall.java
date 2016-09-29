@@ -1,4 +1,4 @@
-package com.traveltime.android.Rest;
+package com.traveltime.android.rest;
 
 import android.util.Log;
 

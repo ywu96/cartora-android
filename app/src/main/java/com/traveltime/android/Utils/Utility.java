@@ -1,4 +1,4 @@
-package com.traveltime.android.Utils;
+package com.traveltime.android.utils;
 
 import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
@@ -9,7 +9,7 @@ import android.util.TypedValue;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.traveltime.android.UIHelpers.LatLngInterpolator;
+import com.traveltime.android.uihelpers.LatLngInterpolator;
 
 public class Utility {
 

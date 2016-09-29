@@ -1,4 +1,4 @@
-package com.traveltime.android.Activities;
+package com.traveltime.android.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -25,7 +25,7 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.traveltime.android.R;
-import com.traveltime.android.Utils.Strings;
+import com.traveltime.android.utils.Strings;
 
 public class LoginActivity extends AppCompatActivity {
 

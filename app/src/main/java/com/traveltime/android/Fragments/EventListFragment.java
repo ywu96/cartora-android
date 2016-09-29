@@ -1,4 +1,4 @@
-package com.traveltime.android.Fragments;
+package com.traveltime.android.fragments;
 
 
 import android.os.Bundle;
@@ -15,12 +15,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.traveltime.android.Models.EventResponse;
+import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.R;
-import com.traveltime.android.Rest.RestServer;
-import com.traveltime.android.UIHelpers.EventListAdapter;
-import com.traveltime.android.UIHelpers.ItemOffsetDecorator;
-import com.traveltime.android.Utils.Utility;
+import com.traveltime.android.rest.RestServer;
+import com.traveltime.android.uihelpers.EventListAdapter;
+import com.traveltime.android.utils.Utility;
 
 import java.util.ArrayList;
 import java.util.Collections;

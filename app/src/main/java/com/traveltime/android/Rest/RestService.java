@@ -1,8 +1,8 @@
-package com.traveltime.android.Rest;
+package com.traveltime.android.rest;
 
-import com.traveltime.android.Models.EventRequest;
-import com.traveltime.android.Models.EventResponse;
-import com.traveltime.android.Models.LocationUpdateRequest;
+import com.traveltime.android.models.EventRequest;
+import com.traveltime.android.models.EventResponse;
+import com.traveltime.android.models.LocationUpdateRequest;
 
 import java.util.ArrayList;
 
