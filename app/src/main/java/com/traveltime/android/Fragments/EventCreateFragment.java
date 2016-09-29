@@ -303,7 +303,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 		calendar.set(year, monthOfYear, dayOfMonth);
 
-		SimpleDateFormat format = new SimpleDateFormat("EEEE, MMMM d, yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy");
 		datePickerText.setText(format.format(calendar.getTime()));
 	}
 

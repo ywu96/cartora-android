@@ -44,7 +44,7 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 		eventName.setText(event.getEventName());
 
 		Date date = new Date(event.getTimeSecs()*1000L);
-		SimpleDateFormat format = new SimpleDateFormat("MMMM d, yyyy 'at' h:mm a");
+		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy 'at' h:mm a");
 		eventDate.setText(format.format(date));
 
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()

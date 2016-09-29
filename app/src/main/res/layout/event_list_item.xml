@@ -49,8 +49,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@android:color/tertiary_text_light"
-                android:textSize="14sp"
-                tools:text="Sept. 30 at 4:30 p.m."/>
+                android:textSize="12sp"
+                tools:text="Thu, Sep 30 at 4:30 p.m."/>
         </LinearLayout>
 
         <LinearLayout
