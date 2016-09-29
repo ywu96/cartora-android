@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="color_primary">#1E88E5</color>
-	<color name="color_primary_dark">#1A7fD7</color>
-	<color name="color_accent">#FFA726</color>
+    <color name="color_primary">#1E88E5</color>
+    <color name="color_primary_dark">#1A7fD7</color>
+    <color name="color_accent">#FFA726</color>
 
-	<color name="map_tint">#701A7fD7</color>
-	<color name="spinner_background">#5000</color>
-	<color name="border_color">#1000</color>
+    <color name="map_tint">#701A7fD7</color>
+    <color name="spinner_background">#5000</color>
+    <color name="border_color">#1000</color>
+
+    <color name="black_10p">#1A000000</color>
 </resources>

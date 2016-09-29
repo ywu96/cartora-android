@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.traveltime.android.activities.EventDetailActivity;
@@ -45,11 +46,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		final EventResponse event = eventList.get(position);
 		holder.eventName.setText(event.getEventName());
-		Date date = new Date(event.getTimeSecs()*1000L);
+		Date date = new Date(event.getTimeSecs() * 1000L);
 		SimpleDateFormat format = new SimpleDateFormat("E, MMM d 'at' h:mm a");
 		holder.eventTime.setText(format.format(date));
 
-		holder.cardView.setOnClickListener(new View.OnClickListener() {
+		holder.container.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
@@ -67,13 +68,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 	}
 
 	public class ViewHolder extends RecyclerView.ViewHolder {
-		private CardView cardView;
+		private FrameLayout container;
 		private TextView eventName;
 		private TextView eventTime;
 
 		public ViewHolder(View itemView) {
 			super(itemView);
-			cardView = (CardView) itemView.findViewById(R.id.event_list_card);
+			container = (FrameLayout) itemView.findViewById(R.id.event_list_card);
 			eventName = (TextView) itemView.findViewById(R.id.event_name);
 			eventTime = (TextView) itemView.findViewById(R.id.event_time);
 		}
