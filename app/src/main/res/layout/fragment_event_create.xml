@@ -18,10 +18,10 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_margin="16dp"
+            android:hint="@string/event_name_hint"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"
-            android:hint="@string/event_name_hint"
             android:textSize="16dp"/>
 
         <LinearLayout
@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/event_name_field"
-            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
@@ -47,27 +47,27 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="6.25"
+                android:background="?android:attr/selectableItemBackground"
                 android:gravity="start|center_vertical"
                 android:paddingBottom="16dp"
-                android:paddingTop="16dp"
-                android:text="@string/event_date_hint"
                 android:paddingStart="16dp"
-                android:background="?android:attr/selectableItemBackground"/>
+                android:paddingTop="16dp"
+                android:text="@string/event_date_hint"/>
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25" />
+                android:layout_weight="0.25"/>
 
             <TextView
                 android:id="@+id/event_time_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="3.5"
+                android:background="?android:attr/selectableItemBackground"
                 android:gravity="end|center_vertical"
                 android:padding="16dp"
-                android:text="@string/event_time_hint"
-                android:background="?android:attr/selectableItemBackground"/>
+                android:text="@string/event_time_hint"/>
         </LinearLayout>
 
         <LinearLayout
@@ -75,9 +75,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/event_date_time_layout"
-            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="0dp"
@@ -92,12 +92,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
+                android:background="?android:attr/selectableItemBackground"
                 android:ellipsize="end"
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
                 android:padding="16dp"
-                android:text="@string/event_location_hint"
-                android:background="?android:attr/selectableItemBackground" />
+                android:text="@string/event_location_hint"/>
         </LinearLayout>
 
         <LinearLayout
@@ -105,15 +105,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/event_location_layout"
-            android:orientation="horizontal"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
+            android:orientation="horizontal"
             android:visibility="gone">
 
             <View
-                android:layout_weight="2"
                 android:layout_width="0dp"
-                android:layout_height="0dp"/>
+                android:layout_height="0dp"
+                android:layout_weight="2"/>
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/map_view"
@@ -143,12 +143,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
+                android:background="?android:attr/selectableItemBackground"
                 android:ellipsize="end"
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
                 android:padding="16dp"
-                android:text="@string/event_people_hint"
-                android:background="?android:attr/selectableItemBackground" />
+                android:text="@string/event_people_hint"/>
         </LinearLayout>
 
 

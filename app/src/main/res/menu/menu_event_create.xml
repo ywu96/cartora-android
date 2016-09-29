@@ -5,14 +5,7 @@
         android:id="@+id/action_accept"
         android:icon="@drawable/ic_accept"
         app:showAsAction="ifRoom"
-        android:orderInCategory="10"
+        android:orderInCategory="100"
         android:title="@string/action_accept">
-    </item>
-    <item
-        android:id="@+id/action_cancel"
-        android:icon="@drawable/ic_cancel"
-        app:showAsAction="ifRoom"
-        android:orderInCategory="5"
-        android:title="@string/action_cancel">
     </item>
 </menu>

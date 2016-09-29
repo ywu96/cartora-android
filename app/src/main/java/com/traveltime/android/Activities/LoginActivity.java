@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 		firebaseAuth = FirebaseAuth.getInstance();
 
         if (firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, EventBaseActivity.class);
+            Intent intent = new Intent(this, EventListActivity.class);
             startActivity(intent);
         }
 
@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
 				if (LoginActivity.this.firebaseAuth.getCurrentUser() != null) {
 					SharedPreferences preferences = getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE);
 					preferences.edit().putString(Strings.UID_KEY, LoginActivity.this.firebaseAuth.getCurrentUser().getUid()).apply();
-					Intent intent = new Intent(getBaseContext(), EventBaseActivity.class);
+					Intent intent = new Intent(getBaseContext(), EventListActivity.class);
 					startActivity(intent);
 				}
 			}

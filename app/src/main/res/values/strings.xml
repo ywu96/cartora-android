@@ -2,8 +2,8 @@
     <string name="app_name">TravelTime</string>
     <string name="facebook_app_id">845590462233963</string>
 
-    <string name="event_list_title">Your Events</string>
-    <string name="event_create_title">Create an Event</string>
+    <string name="event_list_title">@string/app_name</string>
+    <string name="event_create_title">New Event</string>
 
     <string name="action_cancel">Cancel</string>
     <string name="action_accept">Accept</string>

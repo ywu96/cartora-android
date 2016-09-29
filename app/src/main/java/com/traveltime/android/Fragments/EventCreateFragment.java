@@ -38,7 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.traveltime.android.activities.EventBaseActivity;
+import com.traveltime.android.activities.EventListActivity;
 import com.traveltime.android.models.EventRequest;
 import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.models.EventUserRequest;
@@ -237,65 +237,57 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		if (!EventBaseActivity.isTransitioning) {
-			switch (item.getItemId()) {
-				case R.id.action_accept:
-					if (eventName.getText().toString().isEmpty()) {
-						Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
-						return false;
-					}
-					if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
-						Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
-						return false;
-					}
-					if (eventLocation == null) {
-						Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
-						return false;
-					}
-					if (isCreatingEvent) {
-						return false;
-					}
-					isCreatingEvent = true;
-					spinnerContainer.setAlpha(0f);
-					spinnerContainer.setVisibility(View.VISIBLE);
-					spinnerContainer.animate().alpha(1f).setDuration(200L).start();
+		switch (item.getItemId()) {
+			case R.id.action_accept:
+				if (eventName.getText().toString().isEmpty()) {
+					Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
+					return false;
+				}
+				if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
+					Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
+					return false;
+				}
+				if (eventLocation == null) {
+					Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
+					return false;
+				}
+				if (isCreatingEvent) {
+					return false;
+				}
+				isCreatingEvent = true;
+				spinnerContainer.setAlpha(0f);
+				spinnerContainer.setVisibility(View.VISIBLE);
+				spinnerContainer.animate().alpha(1f).setDuration(200L).start();
 
-					SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-					EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
-					userList.add(selfUser);
+				SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+				EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
+				userList.add(selfUser);
 
-					// user did not change time
-					if (timePickerText.getText().toString().equals("12:00 PM")) {
-						calendar.set(Calendar.HOUR_OF_DAY, 12);
-						calendar.set(Calendar.MINUTE, 0);
+				// user did not change time
+				if (timePickerText.getText().toString().equals("12:00 PM")) {
+					calendar.set(Calendar.HOUR_OF_DAY, 12);
+					calendar.set(Calendar.MINUTE, 0);
+				}
+
+				EventRequest newEvent = new EventRequest(eventName.getText().toString(),
+						userList,
+						eventLocation.getLatLng().latitude,
+						eventLocation.getLatLng().longitude,
+						calendar.getTimeInMillis() / 1000);
+
+				RestServer.getInstance().createEvent(newEvent, new RestServer.Callback<EventResponse>() {
+					@Override
+					public void result(EventResponse result) {
+						isCreatingEvent = false;
+						spinnerContainer.setVisibility(View.GONE);
+						Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
+						eventName.setText("");
+						eventLocation = null;
+						getActivity().onBackPressed();
 					}
-
-					EventRequest newEvent = new EventRequest(eventName.getText().toString(),
-							userList,
-							eventLocation.getLatLng().latitude,
-							eventLocation.getLatLng().longitude,
-							calendar.getTimeInMillis()/1000);
-
-					RestServer.getInstance().createEvent(newEvent, new RestServer.Callback<EventResponse>() {
-						@Override
-						public void result(EventResponse result) {
-							isCreatingEvent = false;
-							spinnerContainer.setVisibility(View.GONE);
-							Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
-							eventName.setText("");
-							eventLocation = null;
-							getActivity().onBackPressed();
-						}
-					});
-					break;
-				case R.id.action_cancel:
-					eventName.setText("");
-					eventLocation = null;
-					getActivity().onBackPressed();
-					break;
-			}
+				});
+				break;
 		}
-
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -317,7 +309,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+	}
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
@@ -325,8 +318,10 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onConnected(@Nullable Bundle bundle) {}
+	public void onConnected(@Nullable Bundle bundle) {
+	}
 
 	@Override
-	public void onConnectionSuspended(int i) {}
+	public void onConnectionSuspended(int i) {
+	}
 }
