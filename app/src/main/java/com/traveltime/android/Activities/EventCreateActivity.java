@@ -18,5 +18,4 @@ public class EventCreateActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportFragmentManager().beginTransaction().replace(R.id.container, new EventCreateFragment()).commit();
 	}
-
 }
