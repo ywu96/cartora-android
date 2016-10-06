@@ -25,6 +25,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+
 public class EventListFragment extends Fragment {
 
 	private TextView noEventsText;
@@ -84,25 +87,36 @@ public class EventListFragment extends Fragment {
 		listRecyclerView.setItemAnimator(new DefaultItemAnimator());
 		itemTouchHelper.attachToRecyclerView(listRecyclerView);
 
-		RestServer.getInstance().getEvents(Utility.getUid(getActivity().getApplicationContext()), new RestServer.Callback<ArrayList<EventResponse>>() {
-			@Override
-			public void result(ArrayList<EventResponse> result) {
-				if (!isDetached()) {
-					spinner.setVisibility(View.GONE);
-					if (result != null && result.size() != 0) {
-						eventList.clear();
-						eventList.addAll(result);
-						Collections.sort(eventList, new EventComparator());
-						noEventsText.setVisibility(View.GONE);
-						listRecyclerView.setVisibility(View.VISIBLE);
-					} else {
-						listRecyclerView.setVisibility(View.GONE);
-						noEventsText.setVisibility(View.VISIBLE);
-					}
-				}
-			}
-		});
+		RestServer.getInstance().getEvents(Utility.getUid(getActivity()))
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Observer<ArrayList<EventResponse>>() {
+					@Override
+					public void onCompleted() {
 
+					}
+
+					@Override
+					public void onError(Throwable e) {
+
+					}
+
+					@Override
+					public void onNext(ArrayList<EventResponse> events) {
+						if (!isDetached()) {
+							spinner.setVisibility(View.GONE);
+							if (events != null && events.size() != 0) {
+								eventList.clear();
+								eventList.addAll(events);
+								Collections.sort(eventList, new EventComparator());
+								noEventsText.setVisibility(View.GONE);
+								listRecyclerView.setVisibility(View.VISIBLE);
+							} else {
+								listRecyclerView.setVisibility(View.GONE);
+								noEventsText.setVisibility(View.VISIBLE);
+							}
+						}
+					}
+				});
 		return rootView;
 	}
 

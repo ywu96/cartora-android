@@ -13,11 +13,12 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import rx.Observable;
 
 public interface RestService {
 
 	@GET("events/user/{eventId}")
-	Call<ArrayList<EventResponse>> getEvents(@Path("eventId") String uid);
+	Observable<ArrayList<EventResponse>> getEvents(@Path("eventId") String uid);
 
 	@POST("events")
 	Call<EventResponse> createEvent(@Body EventRequest eventRequest);

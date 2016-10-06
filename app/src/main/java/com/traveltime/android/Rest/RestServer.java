@@ -9,7 +9,12 @@ import java.util.ArrayList;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 
 public class RestServer {
@@ -30,10 +35,11 @@ public class RestServer {
 
 	public RestServer() {
 		Retrofit retrofit = new Retrofit.Builder()
-				.baseUrl(BASE_URL)
+				.addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
 				.addConverterFactory(GsonConverterFactory.create())
+				.baseUrl(BASE_URL)
 				.build();
-		this.restService = retrofit.create(RestService.class);
+		restService = retrofit.create(RestService.class);
 	}
 
 	//Callback for result
@@ -41,22 +47,26 @@ public class RestServer {
 		void result(E result);
 	}
 
-	public void getEvents(String uid, final Callback<ArrayList<EventResponse>> callback) {
-		Call<ArrayList<EventResponse>> call = this.restService.getEvents(uid);
-		call.enqueue(new RetrofitCall.RetrofitCallback<ArrayList<EventResponse>>() {
-			@Override
-			public void onResponse(Call<ArrayList<EventResponse>> call, Response<ArrayList<EventResponse>> response) {
-				if (response.isSuccessful()) {
-					callback.result(response.body());
-				}
-			}
-
-			@Override
-			public void onFailure(Call<ArrayList<EventResponse>> call, Throwable t) {
-				t.printStackTrace();
-			}
-		});
+	public Observable<ArrayList<EventResponse>> getEvents(String uid) {
+		return restService.getEvents(uid);
 	}
+
+//	public void getEvents(String uid, final Callback<ArrayList<EventResponse>> callback) {
+//		restService.getEvents(uid);
+//		call.enqueue(new RetrofitCall.RetrofitCallback<ArrayList<EventResponse>>() {
+//			@Override
+//			public void onResponse(Call<ArrayList<EventResponse>> call, Response<ArrayList<EventResponse>> response) {
+//				if (response.isSuccessful()) {
+//					callback.result(response.body());
+//				}
+//			}
+//
+//			@Override
+//			public void onFailure(Call<ArrayList<EventResponse>> call, Throwable t) {
+//				t.printStackTrace();
+//			}
+//		});
+//	}
 
 	public void createEvent(EventRequest eventRequest, final Callback<EventResponse> callback) {
 		Call<EventResponse> call = this.restService.createEvent(eventRequest);
