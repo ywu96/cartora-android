@@ -13,9 +13,6 @@ public class EventCreateActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_event_create);
 
-		setTitle(getString(R.string.event_create_title));
-
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportFragmentManager().beginTransaction().replace(R.id.container, new EventCreateFragment()).commit();
 	}
 

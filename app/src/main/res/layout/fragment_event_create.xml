@@ -7,31 +7,49 @@
     android:animateLayoutChanges="true"
     tools:context="com.traveltime.android.fragments.EventCreateFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/event_name_field"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="16dp"
-            android:hint="@string/event_name_hint"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:maxLines="1"
-            android:textSize="16dp"/>
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:title="@string/event_create_title"/>
+
+            <EditText
+                android:id="@+id/event_name_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="68dp"
+                android:layout_marginTop="8dp"
+                android:hint="@string/event_name_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:textColor="@color/white_100p"
+                android:textColorHint="@color/white_50p"
+                android:textSize="18sp"/>
+
+        </android.support.design.widget.AppBarLayout>
 
         <LinearLayout
             android:id="@+id/event_date_time_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/event_name_field"
+            android:layout_gravity="start"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -50,7 +68,8 @@
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="start|center_vertical"
                 android:paddingBottom="16dp"
-                android:paddingStart="16dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
                 android:paddingTop="16dp"
                 android:text="@string/event_date_hint"/>
 
@@ -66,7 +85,10 @@
                 android:layout_weight="3.5"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="end|center_vertical"
-                android:padding="16dp"
+                android:paddingBottom="16dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="16dp"
                 android:text="@string/event_time_hint"/>
         </LinearLayout>
 
@@ -74,7 +96,6 @@
             android:id="@+id/event_location_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/event_date_time_layout"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:orientation="horizontal">
@@ -96,7 +117,10 @@
                 android:ellipsize="end"
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
-                android:padding="16dp"
+                android:paddingBottom="16dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="16dp"
                 android:text="@string/event_location_hint"/>
         </LinearLayout>
 
@@ -104,7 +128,6 @@
             android:id="@+id/map_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/event_location_layout"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
             android:orientation="horizontal"
@@ -126,7 +149,6 @@
             android:id="@+id/event_people_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/map_layout"
             android:layout_marginEnd="16dp"
             android:orientation="horizontal">
 
@@ -147,12 +169,15 @@
                 android:ellipsize="end"
                 android:gravity="start|center_vertical"
                 android:maxLines="1"
-                android:padding="16dp"
+                android:paddingBottom="16dp"
+                android:paddingEnd="8dp"
+                android:paddingStart="8dp"
+                android:paddingTop="16dp"
                 android:text="@string/event_people_hint"/>
         </LinearLayout>
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/spinner_container"

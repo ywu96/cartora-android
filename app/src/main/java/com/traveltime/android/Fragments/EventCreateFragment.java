@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -55,12 +57,13 @@ import rx.android.schedulers.AndroidSchedulers;
 public class EventCreateFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
 		DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, OnMapReadyCallback {
 	private final int PLACE_PICKER_REQUEST = 1;
-	public static final String NEW_EVENT_SUCCESS = "new_event_success";
 
+	private Toolbar toolbar;
 	private TextView placePickerText;
 	private TextView datePickerText;
 	private TextView timePickerText;
 	private FrameLayout spinnerContainer;
+
 	private Calendar calendar;
 	private boolean isCreatingEvent;
 
@@ -92,9 +95,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					.enableAutoManage(getActivity(), this)
 					.build();
 		}
-
 		userList = new ArrayList<>();
-
 		setHasOptionsMenu(true);
 	}
 
@@ -102,10 +103,15 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_create, container, false);
-
 		isCreatingEvent = false;
-		eventName = (EditText) rootView.findViewById(R.id.event_name_field);
 		calendar = null;
+
+		toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+		toolbar.setTitle(R.string.event_create_title);
+		toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
+		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
+		eventName = (EditText) rootView.findViewById(R.id.event_name_field);
 
 		spinnerContainer = (FrameLayout) rootView.findViewById(R.id.spinner_container);
 		spinnerContainer.setOnClickListener(new View.OnClickListener() {

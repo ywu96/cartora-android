@@ -9,4 +9,10 @@
     <color name="border_color">#1000</color>
 
     <color name="black_10p">#1A000000</color>
+
+    <color name="white_10p">#1AFFFFFF</color>
+    <color name="white_50p">#88FFFFFF</color>
+    <!--not actually 50%, pls fix-->
+    <color name="white_100p">#FFFFFF</color>
+
 </resources>

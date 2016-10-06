@@ -55,7 +55,8 @@
             android:name=".activities.EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.EventCreateActivity">
+        <activity android:name=".activities.EventCreateActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.EventListActivity" />

@@ -145,8 +145,7 @@ public class EventListFragment extends Fragment {
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<ArrayList<EventResponse>>() {
 					@Override
-					public void onCompleted() {
-					}
+					public void onCompleted() {}
 
 					@Override
 					public void onError(Throwable e) {
