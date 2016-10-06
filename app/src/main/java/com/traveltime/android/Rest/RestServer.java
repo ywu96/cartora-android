@@ -6,14 +6,10 @@ import com.traveltime.android.models.LocationUpdateRequest;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 
@@ -51,72 +47,16 @@ public class RestServer {
 		return restService.getEvents(uid);
 	}
 
-//	public void getEvents(String uid, final Callback<ArrayList<EventResponse>> callback) {
-//		restService.getEvents(uid);
-//		call.enqueue(new RetrofitCall.RetrofitCallback<ArrayList<EventResponse>>() {
-//			@Override
-//			public void onResponse(Call<ArrayList<EventResponse>> call, Response<ArrayList<EventResponse>> response) {
-//				if (response.isSuccessful()) {
-//					callback.result(response.body());
-//				}
-//			}
-//
-//			@Override
-//			public void onFailure(Call<ArrayList<EventResponse>> call, Throwable t) {
-//				t.printStackTrace();
-//			}
-//		});
-//	}
-
-	public void createEvent(EventRequest eventRequest, final Callback<EventResponse> callback) {
-		Call<EventResponse> call = this.restService.createEvent(eventRequest);
-		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
-			@Override
-			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
-				if (response.isSuccessful()) {
-					callback.result(response.body());
-				}
-			}
-
-			@Override
-			public void onFailure(Call<EventResponse> call, Throwable t) {
-				t.printStackTrace();
-			}
-		});
+	public Observable<EventResponse> createEvent(EventRequest eventRequest) {
+		return restService.createEvent(eventRequest);
 	}
 
-	public void deleteEvent(String eventId, final Callback<EventResponse> callback) {
-		Call<EventResponse> call = restService.deleteEvent(eventId);
-		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
-			@Override
-			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
-				if (response.isSuccessful()) {
-					callback.result(response.body());
-				}
-			}
-
-			@Override
-			public void onFailure(Call<EventResponse> call, Throwable t) {
-				t.printStackTrace();
-			}
-		});
+	public Observable<EventResponse> deleteEvent(String eventId) {
+		return restService.deleteEvent(eventId);
 	}
 
-	public void updateLocation(String eventId, LocationUpdateRequest locationUpdateRequest, final Callback<EventResponse> callback) {
-		Call<EventResponse> call = restService.updateLocation(eventId, locationUpdateRequest);
-		call.enqueue(new RetrofitCall.RetrofitCallback<EventResponse>() {
-			@Override
-			public void onResponse(Call<EventResponse> call, Response<EventResponse> response) {
-				if (response.isSuccessful()) {
-					callback.result(response.body());
-				}
-			}
-
-			@Override
-			public void onFailure(Call<EventResponse> call, Throwable t) {
-				t.printStackTrace();
-			}
-		});
+	public Observable<EventResponse> updateLocation(String eventId, LocationUpdateRequest locationUpdateRequest) {
+		return restService.updateLocation(eventId, locationUpdateRequest);
 	}
 
 }

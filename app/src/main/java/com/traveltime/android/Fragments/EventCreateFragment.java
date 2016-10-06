@@ -35,22 +35,27 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.traveltime.android.rest.RestServer;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
-import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
+import com.traveltime.android.R;
 import com.traveltime.android.models.EventRequest;
 import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.models.EventUserRequest;
-import com.traveltime.android.R;
+import com.traveltime.android.rest.RestServer;
 import com.traveltime.android.utils.Strings;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+
 public class EventCreateFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
 		DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, OnMapReadyCallback {
+	private final int PLACE_PICKER_REQUEST = 1;
+	public static final String NEW_EVENT_SUCCESS = "new_event_success";
 
 	private TextView placePickerText;
 	private TextView datePickerText;
@@ -68,7 +73,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	private ArrayList<EventUserRequest> userList;
 
 	private GoogleApiClient googleApiClient;
-	private final int PLACE_PICKER_REQUEST = 1;
 
 	public EventCreateFragment() {
 	}
@@ -236,57 +240,65 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.action_accept:
-				if (eventName.getText().toString().isEmpty()) {
-					Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
-					return false;
-				}
-				if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
-					Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
-					return false;
-				}
-				if (eventLocation == null) {
-					Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
-					return false;
-				}
-				if (isCreatingEvent) {
-					return false;
-				}
-				isCreatingEvent = true;
-				spinnerContainer.setAlpha(0f);
-				spinnerContainer.setVisibility(View.VISIBLE);
-				spinnerContainer.animate().alpha(1f).setDuration(200L).start();
+		if (eventName.getText().toString().isEmpty()) {
+			Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
+			Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (eventLocation == null) {
+			Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (isCreatingEvent) {
+			return false;
+		}
+		isCreatingEvent = true;
+		spinnerContainer.setAlpha(0f);
+		spinnerContainer.setVisibility(View.VISIBLE);
+		spinnerContainer.animate().alpha(1f).setDuration(200L).start();
 
-				SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-				EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
-				userList.add(selfUser);
+		SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
+		userList.add(selfUser);
 
-				// user did not change time
-				if (timePickerText.getText().toString().equals("12:00 PM")) {
-					calendar.set(Calendar.HOUR_OF_DAY, 12);
-					calendar.set(Calendar.MINUTE, 0);
-				}
+		// user did not change time
+		if (timePickerText.getText().toString().equals("12:00 PM")) {
+			calendar.set(Calendar.HOUR_OF_DAY, 12);
+			calendar.set(Calendar.MINUTE, 0);
+		}
 
-				EventRequest newEvent = new EventRequest(eventName.getText().toString(),
-						userList,
-						eventLocation.getLatLng().latitude,
-						eventLocation.getLatLng().longitude,
-						calendar.getTimeInMillis() / 1000);
+		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
+				userList,
+				eventLocation.getLatLng().latitude,
+				eventLocation.getLatLng().longitude,
+				calendar.getTimeInMillis() / 1000);
 
-				RestServer.getInstance().createEvent(newEvent, new RestServer.Callback<EventResponse>() {
+		RestServer.getInstance().createEvent(newEvent)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Observer<EventResponse>() {
 					@Override
-					public void result(EventResponse result) {
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+					}
+
+					@Override
+					public void onNext(EventResponse eventResponse) {
 						isCreatingEvent = false;
 						spinnerContainer.setVisibility(View.GONE);
 						Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
 						eventName.setText("");
 						eventLocation = null;
-						getActivity().onBackPressed();
+
+						getActivity().setResult(Activity.RESULT_OK);
+						getActivity().finish();
 					}
 				});
-				break;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 

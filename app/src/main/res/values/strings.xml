@@ -9,6 +9,7 @@
     <string name="action_accept">Accept</string>
 
     <string name="event_created">Event created!</string>
+    <string name="event_deleted">Event deleted</string>
     <string name="no_events">When you join or create an event,\nit will appear here.</string>
     <string name="event_name_hint">Enter a name</string>
     <string name="event_date_hint">Pick a date</string>

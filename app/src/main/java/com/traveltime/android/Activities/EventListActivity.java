@@ -14,8 +14,6 @@ public class EventListActivity extends AppCompatActivity {
 
 	private String userId;
 
-	private FloatingActionButton fab;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,23 +24,6 @@ public class EventListActivity extends AppCompatActivity {
 		userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getString(Strings.UID_KEY, null);
 
 		getSupportFragmentManager().beginTransaction().replace(R.id.container, new EventListFragment()).commit();
-
-		fab = (FloatingActionButton) findViewById(R.id.event_list_fab);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getBaseContext(), EventCreateActivity.class);
-				startActivity(intent);
-			}
-		});
-		fab.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View v) {
-				Intent intent = new Intent(getBaseContext(), LocationActivity.class);
-				startActivity(intent);
-				return true;
-			}
-		});
 	}
 
 	@Override

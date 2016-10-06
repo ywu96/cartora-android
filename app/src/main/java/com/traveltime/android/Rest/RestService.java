@@ -6,7 +6,6 @@ import com.traveltime.android.models.LocationUpdateRequest;
 
 import java.util.ArrayList;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -21,11 +20,11 @@ public interface RestService {
 	Observable<ArrayList<EventResponse>> getEvents(@Path("eventId") String uid);
 
 	@POST("events")
-	Call<EventResponse> createEvent(@Body EventRequest eventRequest);
+	Observable<EventResponse> createEvent(@Body EventRequest eventRequest);
 
 	@DELETE("events/{eventId}")
-	Call<EventResponse> deleteEvent(@Path("eventId") String eventId);
+	Observable<EventResponse> deleteEvent(@Path("eventId") String eventId);
 
 	@PUT("events/{eventId}/location")
-	Call<EventResponse> updateLocation(@Path("eventId") String eventId, @Body LocationUpdateRequest locationUpdateRequest);
+	Observable<EventResponse> updateLocation(@Path("eventId") String eventId, @Body LocationUpdateRequest locationUpdateRequest);
 }
