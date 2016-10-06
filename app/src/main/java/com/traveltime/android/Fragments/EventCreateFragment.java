@@ -35,15 +35,14 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.traveltime.android.rest.RestServer;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
-import com.traveltime.android.activities.EventListActivity;
 import com.traveltime.android.models.EventRequest;
 import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.models.EventUserRequest;
 import com.traveltime.android.R;
-import com.traveltime.android.rest.RestServer;
 import com.traveltime.android.utils.Strings;
 
 import java.text.SimpleDateFormat;
