@@ -1,7 +1,7 @@
 package com.traveltime.android.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -10,8 +10,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.R;
+import com.traveltime.android.models.EventResponse;
 import com.traveltime.android.uihelpers.EventListAdapter;
 
 import org.parceler.Parcels;
@@ -41,7 +41,7 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 
 		eventName.setText(event.getEventName());
 
-		Date date = new Date(event.getTimeSecs()*1000L);
+		Date date = new Date(event.getTimeSecs() * 1000L);
 		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy 'at' h:mm a");
 		eventDate.setText(format.format(date));
 

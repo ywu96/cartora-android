@@ -9,10 +9,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,12 +131,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_event_create, menu);
-	}
-
-	@Override
 	public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 		calendar.set(year, monthOfYear, dayOfMonth);
 
@@ -222,6 +215,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 		fab = (FloatingActionButton) rootView.findViewById(R.id.event_create_fab);
 		fab.setOnClickListener(this);
+		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
 		spinnerContainer = (FrameLayout) rootView.findViewById(R.id.spinner_container);
 		spinnerContainer.setOnTouchListener(new View.OnTouchListener() {
@@ -328,7 +322,8 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+	}
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
@@ -336,9 +331,11 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onConnected(@Nullable Bundle bundle) {}
+	public void onConnected(@Nullable Bundle bundle) {
+	}
 
 	@Override
-	public void onConnectionSuspended(int i) {}
+	public void onConnectionSuspended(int i) {
+	}
 
 }
