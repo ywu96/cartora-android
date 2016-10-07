@@ -7,7 +7,8 @@ import org.parceler.Parcel;
 @Parcel
 public class EventLocation {
 
-	public EventLocation(){}
+	public EventLocation() {
+	}
 
 	@SerializedName("latitude")
 	double latitude;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.traveltime.android.R;
 import com.traveltime.android.activities.EventDetailActivity;
 import com.traveltime.android.models.EventResponse;
-import com.traveltime.android.R;
 
 import org.parceler.Parcels;
 

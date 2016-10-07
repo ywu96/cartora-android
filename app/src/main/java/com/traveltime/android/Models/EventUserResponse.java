@@ -7,7 +7,8 @@ import org.parceler.Parcel;
 @Parcel
 public class EventUserResponse {
 
-	public EventUserResponse(){}
+	public EventUserResponse() {
+	}
 
 	@SerializedName("userId")
 	String userId;

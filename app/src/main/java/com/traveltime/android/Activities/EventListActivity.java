@@ -1,13 +1,10 @@
 package com.traveltime.android.activities;
 
-import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.AppCompatActivity;
 
-import com.traveltime.android.fragments.EventListFragment;
 import com.traveltime.android.R;
+import com.traveltime.android.fragments.EventListFragment;
 import com.traveltime.android.utils.Strings;
 
 public class EventListActivity extends AppCompatActivity {

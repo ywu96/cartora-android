@@ -44,8 +44,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <activity
             android:name=".activities.EventListActivity"
-            android:screenOrientation="portrait"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activities.LocationActivity"
@@ -55,11 +55,12 @@
             android:name=".activities.EventDetailActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        <activity android:name=".activities.EventCreateActivity"
+        <activity
+            android:name=".activities.EventCreateActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.EventListActivity" />
+                android:value=".activities.EventListActivity"/>
         </activity>
     </application>
 

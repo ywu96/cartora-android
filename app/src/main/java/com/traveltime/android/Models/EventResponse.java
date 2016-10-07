@@ -1,16 +1,17 @@
 package com.traveltime.android.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Parcel
 public class EventResponse {
 
-	public EventResponse(){}
+	public EventResponse() {
+	}
 
 	@SerializedName("_id")
 	String Id;

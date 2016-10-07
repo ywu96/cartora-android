@@ -2,10 +2,10 @@ package com.traveltime.android.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
@@ -45,10 +45,10 @@ public class LoginActivity extends AppCompatActivity {
 
 		firebaseAuth = FirebaseAuth.getInstance();
 
-        if (firebaseAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(this, EventListActivity.class);
-            startActivity(intent);
-        }
+		if (firebaseAuth.getCurrentUser() != null) {
+			Intent intent = new Intent(this, EventListActivity.class);
+			startActivity(intent);
+		}
 
 		fab = (FloatingActionButton) findViewById(R.id.login_fab);
 		fab.setOnClickListener(new View.OnClickListener() {
@@ -74,10 +74,12 @@ public class LoginActivity extends AppCompatActivity {
 			}
 
 			@Override
-			public void onCancel() {}
+			public void onCancel() {
+			}
 
 			@Override
-			public void onError(FacebookException error) {}
+			public void onError(FacebookException error) {
+			}
 		});
 
 		accessTokenTracker = new AccessTokenTracker() {
