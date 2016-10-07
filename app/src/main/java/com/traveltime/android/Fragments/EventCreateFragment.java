@@ -1,6 +1,5 @@
 package com.traveltime.android.fragments;
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -8,13 +7,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -54,18 +53,19 @@ import java.util.Calendar;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
-public class EventCreateFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,
-		DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, OnMapReadyCallback {
+public class EventCreateFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
+		GoogleApiClient.OnConnectionFailedListener, DatePickerDialog.OnDateSetListener,
+		TimePickerDialog.OnTimeSetListener, OnMapReadyCallback, View.OnClickListener {
 	private final int PLACE_PICKER_REQUEST = 1;
 
 	private Toolbar toolbar;
 	private TextView placePickerText;
 	private TextView datePickerText;
 	private TextView timePickerText;
+	private FloatingActionButton fab;
 	private FrameLayout spinnerContainer;
 
 	private Calendar calendar;
-	private boolean isCreatingEvent;
 
 	private LinearLayout mapLayout;
 	private GoogleMap googleMap;
@@ -103,21 +103,132 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_create, container, false);
-		isCreatingEvent = false;
+		initViews(rootView);
+
 		calendar = null;
 
+		mapView.onCreate(savedInstanceState);
+		mapView.getMapAsync(this);
+		MapsInitializer.initialize(getActivity());
+		return rootView;
+	}
+
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == PLACE_PICKER_REQUEST) {
+			spinnerContainer.setVisibility(View.GONE);
+			if (resultCode == Activity.RESULT_OK) {
+				Place place = PlacePicker.getPlace(getActivity(), data);
+				eventLocation = place;
+				placePickerText.setText(place.getName().toString());
+				mapLayout.setVisibility(View.VISIBLE);
+				googleMap.clear();
+				googleMap.addMarker(new MarkerOptions()
+						.position(place.getLatLng()));
+				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 13f));
+			}
+		}
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.menu_event_create, menu);
+	}
+
+	@Override
+	public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+		calendar.set(year, monthOfYear, dayOfMonth);
+
+		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy");
+		datePickerText.setText(format.format(calendar.getTime()));
+	}
+
+	@Override
+	public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
+		calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+		calendar.set(Calendar.MINUTE, minute);
+
+		SimpleDateFormat format = new SimpleDateFormat("h:mm a");
+		timePickerText.setText(format.format(calendar.getTime()));
+	}
+
+	@Override
+	public void onClick(View view) {
+		if (view instanceof FloatingActionButton) {
+			if (eventName.getText().toString().isEmpty()) {
+				Toast.makeText(getActivity(), R.string.no_event_name, Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
+				Toast.makeText(getActivity(), R.string.no_event_date, Toast.LENGTH_SHORT).show();
+				return;
+			}
+			if (eventLocation == null) {
+				Toast.makeText(getActivity(), R.string.no_event_location, Toast.LENGTH_SHORT).show();
+				return;
+			}
+			fab.setOnClickListener(null);
+			spinnerContainer.setAlpha(0f);
+			spinnerContainer.setVisibility(View.VISIBLE);
+			spinnerContainer.animate().alpha(1f).setDuration(200L).start();
+
+			SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+			EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
+			userList.add(selfUser);
+
+			// user did not change time
+			if (timePickerText.getText().toString().equals("12:00 PM")) {
+				calendar.set(Calendar.HOUR_OF_DAY, 12);
+				calendar.set(Calendar.MINUTE, 0);
+			}
+
+			EventRequest newEvent = new EventRequest(eventName.getText().toString(),
+					userList,
+					eventLocation.getLatLng().latitude,
+					eventLocation.getLatLng().longitude,
+					calendar.getTimeInMillis() / 1000);
+
+			RestServer.getInstance().createEvent(newEvent)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(new Observer<EventResponse>() {
+						@Override
+						public void onCompleted() {
+						}
+
+						@Override
+						public void onError(Throwable e) {
+						}
+
+						@Override
+						public void onNext(EventResponse eventResponse) {
+							spinnerContainer.setVisibility(View.GONE);
+							Toast.makeText(getActivity(), R.string.event_created, Toast.LENGTH_SHORT).show();
+
+							getActivity().setResult(Activity.RESULT_OK);
+							getActivity().finish();
+						}
+					});
+		}
+	}
+
+	private void initViews(View rootView) {
 		toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
 		toolbar.setTitle(R.string.event_create_title);
 		toolbar.setNavigationIcon(R.drawable.ic_arrow_back);
-		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
 		eventName = (EditText) rootView.findViewById(R.id.event_name_field);
 
+		fab = (FloatingActionButton) rootView.findViewById(R.id.event_create_fab);
+		fab.setOnClickListener(this);
+
 		spinnerContainer = (FrameLayout) rootView.findViewById(R.id.spinner_container);
-		spinnerContainer.setOnClickListener(new View.OnClickListener() {
+		spinnerContainer.setOnTouchListener(new View.OnTouchListener() {
 			@Override
-			public void onClick(View v) {
-				// stop user from pressing things
+			public boolean onTouch(View view, MotionEvent motionEvent) {
+				// Stop the user from touching things
+				return false;
 			}
 		});
 		spinnerContainer.setVisibility(View.GONE);
@@ -178,11 +289,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 		mapLayout = (LinearLayout) rootView.findViewById(R.id.map_layout);
 		mapView = (MapView) rootView.findViewById(R.id.map_view);
-		mapView.onCreate(savedInstanceState);
-		mapView.getMapAsync(this);
-		MapsInitializer.initialize(getActivity());
-
-		return rootView;
 	}
 
 	@Override
@@ -222,112 +328,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == PLACE_PICKER_REQUEST) {
-			spinnerContainer.setVisibility(View.GONE);
-			if (resultCode == Activity.RESULT_OK) {
-				Place place = PlacePicker.getPlace(getActivity(), data);
-				eventLocation = place;
-				placePickerText.setText(place.getName().toString());
-				mapLayout.setVisibility(View.VISIBLE);
-				googleMap.clear();
-				googleMap.addMarker(new MarkerOptions()
-						.position(place.getLatLng()));
-				googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.getLatLng(), 13f));
-			}
-		}
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		super.onCreateOptionsMenu(menu, inflater);
-		inflater.inflate(R.menu.menu_event_create, menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (eventName.getText().toString().isEmpty()) {
-			Toast.makeText(getActivity(), "Enter an event name", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
-			Toast.makeText(getActivity(), "Pick an event date", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (eventLocation == null) {
-			Toast.makeText(getActivity(), "Set an event location", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (isCreatingEvent) {
-			return false;
-		}
-		isCreatingEvent = true;
-		spinnerContainer.setAlpha(0f);
-		spinnerContainer.setVisibility(View.VISIBLE);
-		spinnerContainer.animate().alpha(1f).setDuration(200L).start();
-
-		SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
-		userList.add(selfUser);
-
-		// user did not change time
-		if (timePickerText.getText().toString().equals("12:00 PM")) {
-			calendar.set(Calendar.HOUR_OF_DAY, 12);
-			calendar.set(Calendar.MINUTE, 0);
-		}
-
-		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
-				userList,
-				eventLocation.getLatLng().latitude,
-				eventLocation.getLatLng().longitude,
-				calendar.getTimeInMillis() / 1000);
-
-		RestServer.getInstance().createEvent(newEvent)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Observer<EventResponse>() {
-					@Override
-					public void onCompleted() {
-					}
-
-					@Override
-					public void onError(Throwable e) {
-					}
-
-					@Override
-					public void onNext(EventResponse eventResponse) {
-						isCreatingEvent = false;
-						spinnerContainer.setVisibility(View.GONE);
-						Toast.makeText(getActivity(), "Event created!", Toast.LENGTH_SHORT).show();
-						eventName.setText("");
-						eventLocation = null;
-
-						getActivity().setResult(Activity.RESULT_OK);
-						getActivity().finish();
-					}
-				});
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
-	public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-		calendar.set(year, monthOfYear, dayOfMonth);
-
-		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy");
-		datePickerText.setText(format.format(calendar.getTime()));
-	}
-
-	@Override
-	public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-		calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-		calendar.set(Calendar.MINUTE, minute);
-
-		SimpleDateFormat format = new SimpleDateFormat("h:mm a");
-		timePickerText.setText(format.format(calendar.getTime()));
-	}
-
-	@Override
-	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-	}
+	public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
@@ -335,10 +336,9 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onConnected(@Nullable Bundle bundle) {
-	}
+	public void onConnected(@Nullable Bundle bundle) {}
 
 	@Override
-	public void onConnectionSuspended(int i) {
-	}
+	public void onConnectionSuspended(int i) {}
+
 }

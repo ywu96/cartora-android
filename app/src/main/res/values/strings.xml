@@ -18,4 +18,8 @@
     <string name="event_people_hint">Add people</string>
     <string name="title_activity_location">Map</string>
 
+    <string name="no_event_name">Your event needs a name!</string>
+    <string name="no_event_date">Your event needs a date!</string>
+    <string name="no_event_location">Your event needs a location!</string>
+
 </resources>
