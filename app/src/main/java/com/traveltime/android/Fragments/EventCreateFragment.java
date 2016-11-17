@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -82,6 +83,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
 
 		if (googleApiClient == null) {
 			googleApiClient = new GoogleApiClient
@@ -151,15 +153,24 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	public void onClick(View view) {
 		if (view instanceof FloatingActionButton) {
 			if (eventName.getText().toString().isEmpty()) {
-				Toast.makeText(getActivity(), R.string.no_event_name, Toast.LENGTH_SHORT).show();
+				Snackbar.make(getActivity().findViewById(R.id.container),
+						R.string.no_event_name,
+						Snackbar.LENGTH_SHORT)
+						.show();
 				return;
 			}
 			if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
-				Toast.makeText(getActivity(), R.string.no_event_date, Toast.LENGTH_SHORT).show();
+				Snackbar.make(getActivity().findViewById(R.id.container),
+						R.string.no_event_date,
+						Snackbar.LENGTH_SHORT)
+						.show();
 				return;
 			}
 			if (eventLocation == null) {
-				Toast.makeText(getActivity(), R.string.no_event_location, Toast.LENGTH_SHORT).show();
+				Snackbar.make(getActivity().findViewById(R.id.container),
+						R.string.no_event_location,
+						Snackbar.LENGTH_SHORT)
+						.show();
 				return;
 			}
 			fab.setOnClickListener(null);
@@ -167,11 +178,12 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 			spinnerContainer.setVisibility(View.VISIBLE);
 			spinnerContainer.animate().alpha(1f).setDuration(200L).start();
 
-			SharedPreferences preferences = getActivity().getApplicationContext().getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+			SharedPreferences preferences = getActivity().getApplicationContext()
+					.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
 			EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
 			userList.add(selfUser);
 
-			// user did not change time
+			// User did not change the time
 			if (timePickerText.getText().toString().equals("12:00 PM")) {
 				calendar.set(Calendar.HOUR_OF_DAY, 12);
 				calendar.set(Calendar.MINUTE, 0);
@@ -197,7 +209,10 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 						@Override
 						public void onNext(EventResponse eventResponse) {
 							spinnerContainer.setVisibility(View.GONE);
-							Toast.makeText(getActivity(), R.string.event_created, Toast.LENGTH_SHORT).show();
+							Snackbar.make(getActivity().findViewById(R.id.container),
+									R.string.event_created,
+									Snackbar.LENGTH_SHORT)
+									.show();
 
 							getActivity().setResult(Activity.RESULT_OK);
 							getActivity().finish();

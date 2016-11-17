@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 24
@@ -60,6 +61,9 @@ dependencies {
     // RxJava & RxAndroid
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+
+    // GreenDAO
+//    compile 'org.greenrobot:greendao:3.2.0'
 
     // Other
     compile 'com.wdullaer:materialdatetimepicker:2.3.0'

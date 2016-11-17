@@ -14,13 +14,12 @@ import rx.schedulers.Schedulers;
 
 
 public class RestServer {
-	public static final String LOG_TAG = "RestServer";
 
 	// TODO: remember to update
-	public static final String BASE_URL = "https://quiet-bayou-32241.herokuapp.com/";
-	protected static RestServer restServer = null;
+	private static final String BASE_URL = "https://quiet-bayou-32241.herokuapp.com/";
+	private static RestServer restServer = null;
 
-	protected RestService restService;
+	private RestService restService;
 
 	public static RestServer getInstance() {
 		if (restServer == null) {
@@ -29,18 +28,13 @@ public class RestServer {
 		return restServer;
 	}
 
-	public RestServer() {
+	private RestServer() {
 		Retrofit retrofit = new Retrofit.Builder()
 				.addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
 				.addConverterFactory(GsonConverterFactory.create())
 				.baseUrl(BASE_URL)
 				.build();
 		restService = retrofit.create(RestService.class);
-	}
-
-	//Callback for result
-	public interface Callback<E> {
-		void result(E result);
 	}
 
 	public Observable<ArrayList<EventResponse>> getEvents(String uid) {
