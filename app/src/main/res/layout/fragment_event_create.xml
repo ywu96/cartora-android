@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    tools:context="com.traveltime.android.fragments.EventCreateFragment">
+    tools:context="com.cartora.android.fragments.EventCreateFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

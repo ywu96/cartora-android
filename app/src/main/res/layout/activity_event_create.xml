@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.traveltime.android.activities.EventCreateActivity">
+    tools:context="com.cartora.android.activities.EventCreateActivity">
 
     <FrameLayout
         android:id="@+id/container"
