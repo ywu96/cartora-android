@@ -7,7 +7,7 @@ android {
     buildToolsVersion "24.0.3"
 
     defaultConfig {
-        applicationId "com.traveltime.android"
+        applicationId "com.cartora.android"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
@@ -57,6 +57,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    compile 'com.squareup.okhttp3:okhttp:3.4.2'
 
     // RxJava & RxAndroid
     compile 'io.reactivex:rxandroid:1.2.1'

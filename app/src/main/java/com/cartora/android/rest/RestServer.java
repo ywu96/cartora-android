@@ -3,6 +3,7 @@ package com.cartora.android.rest;
 import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.LocationUpdateRequest;
+import com.cartora.android.models.SignUpRequest;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ import rx.schedulers.Schedulers;
 public class RestServer {
 
 	// TODO: remember to update
-	private static final String BASE_URL = "https://quiet-bayou-32241.herokuapp.com/";
+	private static final String BASE_URL = "https://travel-time.herokuapp.com/";
 	private static RestServer restServer = null;
 
 	private RestService restService;
@@ -35,6 +36,10 @@ public class RestServer {
 				.baseUrl(BASE_URL)
 				.build();
 		restService = retrofit.create(RestService.class);
+	}
+
+	public Observable<String> signUp(SignUpRequest signUpRequest) {
+		return restService.signUp(signUpRequest);
 	}
 
 	public Observable<ArrayList<EventResponse>> getEvents(String uid) {
