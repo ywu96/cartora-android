@@ -21,7 +21,6 @@ public class LoginActivity extends AppCompatActivity {
 
 	private EditText email;
 	private EditText password;
-	private EditText passwordConfirm;
 	private Button signUpButton;
 
 
@@ -36,13 +35,10 @@ public class LoginActivity extends AppCompatActivity {
 	private void setupViews() {
 		email = (EditText) findViewById(R.id.login_email_edittext);
 		password = (EditText) findViewById(R.id.login_pwd_edittext);
-		passwordConfirm = (EditText) findViewById(R.id.login_pwd_confirm_edittext);
 		signUpButton = (Button) findViewById(R.id.login_sign_up_button);
 
 		password.setTypeface(Typeface.DEFAULT);
 		password.setTransformationMethod(new PasswordTransformationMethod());
-		passwordConfirm.setTypeface(Typeface.DEFAULT);
-		passwordConfirm.setTransformationMethod(new PasswordTransformationMethod());
 
 		signUpButton.setOnClickListener(new View.OnClickListener() {
 			@Override
