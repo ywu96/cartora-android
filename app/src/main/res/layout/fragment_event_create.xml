@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                android:title="@string/event_create_title"/>
+                android:title="@string/event_create_title" />
 
             <EditText
                 android:id="@+id/event_name_field"
@@ -38,7 +37,7 @@
                 android:maxLines="1"
                 android:textColor="@color/white_100p"
                 android:textColorHint="@color/white_50p"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
         </android.support.design.widget.AppBarLayout>
 
@@ -58,7 +57,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:alpha="0.9"
-                android:src="@drawable/ic_date"/>
+                android:src="@drawable/ic_date" />
 
             <TextView
                 android:id="@+id/event_date_text"
@@ -71,12 +70,12 @@
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:paddingTop="16dp"
-                android:text="@string/event_date_hint"/>
+                android:text="@string/event_date_hint" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25"/>
+                android:layout_weight="0.25" />
 
             <TextView
                 android:id="@+id/event_time_text"
@@ -89,7 +88,7 @@
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:paddingTop="16dp"
-                android:text="@string/event_time_hint"/>
+                android:text="@string/event_time_hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,7 +105,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:alpha="0.9"
-                android:src="@drawable/ic_location"/>
+                android:src="@drawable/ic_location" />
 
             <TextView
                 android:id="@+id/event_location_text"
@@ -121,7 +120,7 @@
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:paddingTop="16dp"
-                android:text="@string/event_location_hint"/>
+                android:text="@string/event_location_hint" />
         </LinearLayout>
 
         <LinearLayout
@@ -136,13 +135,13 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="2"/>
+                android:layout_weight="2" />
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/map_view"
                 android:layout_width="0dp"
                 android:layout_height="200dp"
-                android:layout_weight="10"/>
+                android:layout_weight="10" />
         </LinearLayout>
 
         <LinearLayout
@@ -158,7 +157,7 @@
                 android:layout_gravity="center"
                 android:layout_weight="2"
                 android:alpha="0.9"
-                android:src="@drawable/ic_people"/>
+                android:src="@drawable/ic_people" />
 
             <TextView
                 android:id="@+id/event_people_text"
@@ -173,19 +172,9 @@
                 android:paddingEnd="8dp"
                 android:paddingStart="8dp"
                 android:paddingTop="16dp"
-                android:text="@string/event_people_hint"/>
+                android:text="@string/event_people_hint" />
         </LinearLayout>
-
-
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/event_create_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_accept"/>
 
     <FrameLayout
         android:id="@+id/spinner_container"
@@ -198,7 +187,6 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
+            android:layout_gravity="center" />
     </FrameLayout>
-
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

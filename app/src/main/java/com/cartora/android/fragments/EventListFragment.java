@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.cartora.android.R;
 import com.cartora.android.activities.EventCreateActivity;
+import com.cartora.android.activities.EventListActivity;
 import com.cartora.android.activities.LocationActivity;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.rest.RestServer;
@@ -34,7 +35,6 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class EventListFragment extends Fragment {
-	private static final int NEW_EVENT_REQUEST = 100;
 
 	private TextView noEventsText;
 	private RecyclerView listRecyclerView;
@@ -61,26 +61,8 @@ public class EventListFragment extends Fragment {
 
 		spinner = (ProgressBar) rootView.findViewById(R.id.spinner);
 		noEventsText = (TextView) rootView.findViewById(R.id.no_events_text);
-		fab = (FloatingActionButton) rootView.findViewById(R.id.event_list_fab);
 
 		listAdapter = new EventListAdapter(getActivity(), eventList, R.layout.event_list_item);
-
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), EventCreateActivity.class);
-				startActivityForResult(intent, NEW_EVENT_REQUEST);
-			}
-		});
-
-		fab.setOnLongClickListener(new View.OnLongClickListener() {
-			@Override
-			public boolean onLongClick(View v) {
-				Intent intent = new Intent(getActivity(), LocationActivity.class);
-				startActivity(intent);
-				return true;
-			}
-		});
 
 		ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
 			@Override
@@ -133,7 +115,7 @@ public class EventListFragment extends Fragment {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode) {
-			case NEW_EVENT_REQUEST:
+			case EventListActivity.NEW_EVENT_REQUEST:
 				if (resultCode == Activity.RESULT_OK) {
 					loadList();
 				}

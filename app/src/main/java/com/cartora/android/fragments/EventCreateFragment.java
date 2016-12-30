@@ -21,6 +21,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cartora.android.activities.EventCreateActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -54,14 +55,13 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class EventCreateFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks,
 		GoogleApiClient.OnConnectionFailedListener, DatePickerDialog.OnDateSetListener,
-		TimePickerDialog.OnTimeSetListener, OnMapReadyCallback, View.OnClickListener {
+		TimePickerDialog.OnTimeSetListener, OnMapReadyCallback, EventCreateActivity.EventCreateFabListener {
 	private final int PLACE_PICKER_REQUEST = 1;
 
 	private Toolbar toolbar;
 	private TextView placePickerText;
 	private TextView datePickerText;
 	private TextView timePickerText;
-	private FloatingActionButton fab;
 	private FrameLayout spinnerContainer;
 
 	private Calendar calendar;
@@ -149,75 +149,73 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onClick(View view) {
-		if (view instanceof FloatingActionButton) {
-			if (eventName.getText().toString().isEmpty()) {
-				Snackbar.make(getActivity().findViewById(R.id.container),
-						R.string.no_event_name,
-						Snackbar.LENGTH_SHORT)
-						.show();
-				return;
-			}
-			if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
-				Snackbar.make(getActivity().findViewById(R.id.container),
-						R.string.no_event_date,
-						Snackbar.LENGTH_SHORT)
-						.show();
-				return;
-			}
-			if (eventLocation == null) {
-				Snackbar.make(getActivity().findViewById(R.id.container),
-						R.string.no_event_location,
-						Snackbar.LENGTH_SHORT)
-						.show();
-				return;
-			}
-			fab.setOnClickListener(null);
-			spinnerContainer.setAlpha(0f);
-			spinnerContainer.setVisibility(View.VISIBLE);
-			spinnerContainer.animate().alpha(1f).setDuration(200L).start();
-
-			SharedPreferences preferences = getActivity().getApplicationContext()
-					.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-			EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
-			userList.add(selfUser);
-
-			// User did not change the time
-			if (timePickerText.getText().toString().equals("12:00 PM")) {
-				calendar.set(Calendar.HOUR_OF_DAY, 12);
-				calendar.set(Calendar.MINUTE, 0);
-			}
-
-			EventRequest newEvent = new EventRequest(eventName.getText().toString(),
-					userList,
-					eventLocation.getLatLng().latitude,
-					eventLocation.getLatLng().longitude,
-					calendar.getTimeInMillis() / 1000);
-
-			RestServer.getInstance().createEvent(newEvent)
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(new Observer<EventResponse>() {
-						@Override
-						public void onCompleted() {
-						}
-
-						@Override
-						public void onError(Throwable e) {
-						}
-
-						@Override
-						public void onNext(EventResponse eventResponse) {
-							spinnerContainer.setVisibility(View.GONE);
-							Snackbar.make(getActivity().findViewById(R.id.container),
-									R.string.event_created,
-									Snackbar.LENGTH_SHORT)
-									.show();
-
-							getActivity().setResult(Activity.RESULT_OK);
-							getActivity().finish();
-						}
-					});
+	public void onFabClick(FloatingActionButton fab) {
+		if (eventName.getText().toString().isEmpty()) {
+			Snackbar.make(getActivity().findViewById(R.id.container),
+					R.string.no_event_name,
+					Snackbar.LENGTH_SHORT)
+					.show();
+			return;
 		}
+		if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
+			Snackbar.make(getActivity().findViewById(R.id.container),
+					R.string.no_event_date,
+					Snackbar.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		if (eventLocation == null) {
+			Snackbar.make(getActivity().findViewById(R.id.container),
+					R.string.no_event_location,
+					Snackbar.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		fab.setOnClickListener(null);
+		spinnerContainer.setAlpha(0f);
+		spinnerContainer.setVisibility(View.VISIBLE);
+		spinnerContainer.animate().alpha(1f).setDuration(200L).start();
+
+		SharedPreferences preferences = getActivity().getApplicationContext()
+				.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
+		userList.add(selfUser);
+
+		// User did not change the time
+		if (timePickerText.getText().toString().equals("12:00 PM")) {
+			calendar.set(Calendar.HOUR_OF_DAY, 12);
+			calendar.set(Calendar.MINUTE, 0);
+		}
+
+		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
+				userList,
+				eventLocation.getLatLng().latitude,
+				eventLocation.getLatLng().longitude,
+				calendar.getTimeInMillis() / 1000);
+
+		RestServer.getInstance().createEvent(newEvent)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Observer<EventResponse>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+					}
+
+					@Override
+					public void onNext(EventResponse eventResponse) {
+						spinnerContainer.setVisibility(View.GONE);
+						Snackbar.make(getActivity().findViewById(R.id.container),
+								R.string.event_created,
+								Snackbar.LENGTH_SHORT)
+								.show();
+
+						getActivity().setResult(Activity.RESULT_OK);
+						getActivity().finish();
+					}
+				});
 	}
 
 	private void initViews(View rootView) {
@@ -227,8 +225,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 		eventName = (EditText) rootView.findViewById(R.id.event_name_field);
 
-		fab = (FloatingActionButton) rootView.findViewById(R.id.event_create_fab);
-		fab.setOnClickListener(this);
 		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
 		spinnerContainer = (FrameLayout) rootView.findViewById(R.id.spinner_container);
@@ -351,5 +347,4 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	@Override
 	public void onConnectionSuspended(int i) {
 	}
-
 }
