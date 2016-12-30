@@ -14,7 +14,7 @@ public class EventListActivity extends AppCompatActivity {
 
 	public static final int NEW_EVENT_REQUEST = 100;
 
-	private String userId;
+	private int userId;
 	private FloatingActionButton fab;
 
 	@Override
@@ -24,7 +24,7 @@ public class EventListActivity extends AppCompatActivity {
 
 		setTitle(R.string.event_list_title);
 
-		userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getString(Strings.SHARED_PREF_UID_KEY, null);
+		userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Strings.SHARED_PREF_ID_KEY, -1);
 
 		fab = (FloatingActionButton) findViewById(R.id.event_list_fab);
 		fab.setOnClickListener(new View.OnClickListener() {

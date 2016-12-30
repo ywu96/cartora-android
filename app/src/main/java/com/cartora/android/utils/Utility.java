@@ -20,7 +20,7 @@ public class Utility {
 
 	public static String getUid(Context context) {
 		SharedPreferences preferences = context.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-		return preferences.getString(Strings.SHARED_PREF_UID_KEY, null);
+		return preferences.getString(Strings.SHARED_PREF_ID_KEY, null);
 	}
 
 	public static String getAuthToken(Context context) {
@@ -39,9 +39,5 @@ public class Utility {
 		ObjectAnimator animator = ObjectAnimator.ofObject(marker, property, typeEvaluator, finalPosition);
 		animator.setDuration(duration);
 		animator.start();
-	}
-
-	public static boolean isStringNullOrEmpty(String s) {
-		return s == null || s.isEmpty();
 	}
 }

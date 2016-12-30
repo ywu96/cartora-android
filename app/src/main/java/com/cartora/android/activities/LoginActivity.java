@@ -17,7 +17,6 @@ import com.cartora.android.models.SignUpRequest;
 import com.cartora.android.models.UserResponse;
 import com.cartora.android.rest.RestServer;
 import com.cartora.android.utils.Strings;
-import com.cartora.android.utils.Utility;
 
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -37,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_login);
 
 		sharedPreferences = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE);
-		if (!Utility.isStringNullOrEmpty(sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null))) {
+		if (!Strings.isNullOrEmpty(sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null))) {
 			goToEventListActivity();
 		}
 
@@ -73,7 +72,13 @@ public class LoginActivity extends AppCompatActivity {
 							@Override
 							public void onNext(UserResponse userResponse) {
 								Log.d("test123", userResponse.authToken);
-								sharedPreferences.edit().putString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, userResponse.authToken).apply();
+								SharedPreferences.Editor editor = sharedPreferences.edit();
+								editor.putInt(Strings.SHARED_PREF_ID_KEY, userResponse.id);
+								editor.putString(Strings.SHARED_PREF_FIRST_NAME_KEY, userResponse.firstName);
+								editor.putString(Strings.SHARED_PREF_LAST_NAME_KEY, userResponse.lastName);
+								editor.putString(Strings.SHARED_PREF_AVATAR_KEY, userResponse.photo);
+								editor.putString(Strings.SHARED_PREF_EMAIL_KEY, userResponse.email);
+								editor.putString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, userResponse.authToken);
 
 								goToEventListActivity();
 							}
