@@ -147,77 +147,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 		SimpleDateFormat format = new SimpleDateFormat("h:mm a");
 		timePickerText.setText(format.format(calendar.getTime()));
 	}
-
-	@Override
-	public void onFabClick(FloatingActionButton fab) {
-		if (eventName.getText().toString().isEmpty()) {
-			Snackbar.make(getActivity().findViewById(R.id.container),
-					R.string.no_event_name,
-					Snackbar.LENGTH_SHORT)
-					.show();
-			return;
-		}
-		if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
-			Snackbar.make(getActivity().findViewById(R.id.container),
-					R.string.no_event_date,
-					Snackbar.LENGTH_SHORT)
-					.show();
-			return;
-		}
-		if (eventLocation == null) {
-			Snackbar.make(getActivity().findViewById(R.id.container),
-					R.string.no_event_location,
-					Snackbar.LENGTH_SHORT)
-					.show();
-			return;
-		}
-		fab.setOnClickListener(null);
-		spinnerContainer.setAlpha(0f);
-		spinnerContainer.setVisibility(View.VISIBLE);
-		spinnerContainer.animate().alpha(1f).setDuration(200L).start();
-
-		SharedPreferences preferences = getActivity().getApplicationContext()
-				.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
-		userList.add(selfUser);
-
-		// User did not change the time
-		if (timePickerText.getText().toString().equals("12:00 PM")) {
-			calendar.set(Calendar.HOUR_OF_DAY, 12);
-			calendar.set(Calendar.MINUTE, 0);
-		}
-
-		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
-				userList,
-				eventLocation.getLatLng().latitude,
-				eventLocation.getLatLng().longitude,
-				calendar.getTimeInMillis() / 1000);
-
-		RestServer.getInstance().createEvent(newEvent)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Observer<EventResponse>() {
-					@Override
-					public void onCompleted() {
-					}
-
-					@Override
-					public void onError(Throwable e) {
-					}
-
-					@Override
-					public void onNext(EventResponse eventResponse) {
-						spinnerContainer.setVisibility(View.GONE);
-						Snackbar.make(getActivity().findViewById(R.id.container),
-								R.string.event_created,
-								Snackbar.LENGTH_SHORT)
-								.show();
-
-						getActivity().setResult(Activity.RESULT_OK);
-						getActivity().finish();
-					}
-				});
-	}
-
+	
 	private void initViews(View rootView) {
 		toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
 		toolbar.setTitle(R.string.event_create_title);
@@ -294,6 +224,77 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 		mapLayout = (LinearLayout) rootView.findViewById(R.id.map_layout);
 		mapView = (MapView) rootView.findViewById(R.id.map_view);
 	}
+
+	@Override
+	public void onFabClick(FloatingActionButton fab) {
+		if (eventName.getText().toString().isEmpty()) {
+			Snackbar.make(getActivity().findViewById(R.id.container),
+					R.string.no_event_name,
+					Snackbar.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		if (datePickerText.getText().equals(getString(R.string.event_date_hint))) {
+			Snackbar.make(getActivity().findViewById(R.id.container),
+					R.string.no_event_date,
+					Snackbar.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		if (eventLocation == null) {
+			Snackbar.make(getActivity().findViewById(R.id.container),
+					R.string.no_event_location,
+					Snackbar.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		fab.setOnClickListener(null);
+		spinnerContainer.setAlpha(0f);
+		spinnerContainer.setVisibility(View.VISIBLE);
+		spinnerContainer.animate().alpha(1f).setDuration(200L).start();
+
+		SharedPreferences preferences = getActivity().getApplicationContext()
+				.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
+		userList.add(selfUser);
+
+		// User did not change the time
+		if (timePickerText.getText().toString().equals("12:00 PM")) {
+			calendar.set(Calendar.HOUR_OF_DAY, 12);
+			calendar.set(Calendar.MINUTE, 0);
+		}
+
+		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
+				userList,
+				eventLocation.getLatLng().latitude,
+				eventLocation.getLatLng().longitude,
+				calendar.getTimeInMillis() / 1000);
+
+		RestServer.getInstance().createEvent(newEvent)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(new Observer<EventResponse>() {
+					@Override
+					public void onCompleted() {
+					}
+
+					@Override
+					public void onError(Throwable e) {
+					}
+
+					@Override
+					public void onNext(EventResponse eventResponse) {
+						spinnerContainer.setVisibility(View.GONE);
+						Snackbar.make(getActivity().findViewById(R.id.container),
+								R.string.event_created,
+								Snackbar.LENGTH_SHORT)
+								.show();
+
+						getActivity().setResult(Activity.RESULT_OK);
+						getActivity().finish();
+					}
+				});
+	}
+
 
 	@Override
 	public void onStart() {
