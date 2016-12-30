@@ -26,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
 	private EditText email;
 	private EditText password;
 	private Button signUpButton;
+	private Button logInButton;
 
 	private SharedPreferences sharedPreferences;
 
@@ -36,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_login);
 
 		sharedPreferences = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE);
-		if (!Strings.isNullOrEmpty(sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null))) {
-			goToEventListActivity();
-		}
+//		if (!Strings.isNullOrEmpty(sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null))) {
+//			goToEventListActivity();
+//		}
 
 		setupViews();
 	}
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 		email = (EditText) findViewById(R.id.login_email_edittext);
 		password = (EditText) findViewById(R.id.login_pwd_edittext);
 		signUpButton = (Button) findViewById(R.id.login_sign_up_button);
+		logInButton = (Button) findViewById(R.id.login_log_in_button);
 
 		password.setTypeface(Typeface.DEFAULT);
 		password.setTransformationMethod(new PasswordTransformationMethod());
@@ -83,6 +85,16 @@ public class LoginActivity extends AppCompatActivity {
 								goToEventListActivity();
 							}
 						});
+			}
+		});
+
+		// Sketchy stuff for now.
+		logInButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (!Strings.isNullOrEmpty(sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null))) {
+					goToEventListActivity();
+				}
 			}
 		});
 	}
