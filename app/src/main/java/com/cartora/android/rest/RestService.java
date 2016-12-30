@@ -4,6 +4,7 @@ import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.LocationUpdateRequest;
 import com.cartora.android.models.SignUpRequest;
+import com.cartora.android.models.UserResponse;
 
 import java.util.ArrayList;
 
@@ -23,7 +24,7 @@ public interface RestService {
 			"Accept: application/vnd.traveltime.v1"
 	})
 	@POST("users")
-	Observable<String> signUp(@Body SignUpRequest signUpRequest);
+	Observable<UserResponse> signUp(@Body SignUpRequest signUpRequest);
 
 	@GET("events/user/{eventId}")
 	Observable<ArrayList<EventResponse>> getEvents(@Path("eventId") String uid);

@@ -24,7 +24,7 @@ public class EventListActivity extends AppCompatActivity {
 
 		setTitle(R.string.event_list_title);
 
-		userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getString(Strings.UID_KEY, null);
+		userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getString(Strings.SHARED_PREF_UID_KEY, null);
 
 		fab = (FloatingActionButton) findViewById(R.id.event_list_fab);
 		fab.setOnClickListener(new View.OnClickListener() {

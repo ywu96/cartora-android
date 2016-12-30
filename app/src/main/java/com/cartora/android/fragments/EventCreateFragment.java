@@ -147,7 +147,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 		SimpleDateFormat format = new SimpleDateFormat("h:mm a");
 		timePickerText.setText(format.format(calendar.getTime()));
 	}
-	
+
 	private void initViews(View rootView) {
 		toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
 		toolbar.setTitle(R.string.event_create_title);
@@ -255,7 +255,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 		SharedPreferences preferences = getActivity().getApplicationContext()
 				.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.UID_KEY, null));
+		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.SHARED_PREF_UID_KEY, null));
 		userList.add(selfUser);
 
 		// User did not change the time

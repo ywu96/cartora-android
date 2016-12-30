@@ -4,6 +4,7 @@ import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.LocationUpdateRequest;
 import com.cartora.android.models.SignUpRequest;
+import com.cartora.android.models.UserResponse;
 
 import java.util.ArrayList;
 
@@ -38,7 +39,7 @@ public class RestServer {
 		restService = retrofit.create(RestService.class);
 	}
 
-	public Observable<String> signUp(SignUpRequest signUpRequest) {
+	public Observable<UserResponse> signUp(SignUpRequest signUpRequest) {
 		return restService.signUp(signUpRequest);
 	}
 
