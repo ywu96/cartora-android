@@ -4,10 +4,10 @@
 
     To get one, follow this link, follow the directions and press "Create" at the end:
 
-    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=56:14:4B:08:00:7E:5C:25:7E:5C:85:43:06:69:73:46:60:BF:D7:3D%3Bcom.traveltime.android.Activities
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=FB:AD:2C:9F:F7:F4:FB:A3:E2:B7:1F:D4:28:B4:E7:5E:C9:89:D5:7C%3Bcom.cartora.android
 
     You can also add your credentials to an existing key, using this line:
-    56:14:4B:08:00:7E:5C:25:7E:5C:85:43:06:69:73:46:60:BF:D7:3D;com.traveltime.android.Activities
+    FB:AD:2C:9F:F7:F4:FB:A3:E2:B7:1F:D4:28:B4:E7:5E:C9:89:D5:7C;com.cartora.android
 
     Alternatively, follow the directions here:
     https://developers.google.com/maps/documentation/android/start#get-key
