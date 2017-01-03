@@ -26,8 +26,12 @@ public interface RestService {
 	@POST("users")
 	Observable<UserResponse> signUp(@Body SignUpRequest signUpRequest);
 
-	@GET("events/user/{eventId}")
-	Observable<ArrayList<EventResponse>> getEvents(@Path("eventId") String uid);
+	@Headers({
+			"Accept: application/vnd.traveltime.v1",
+			"Authorization: djjdb7GBDmc8ikLiRsdr"
+	})
+	@GET("users/{userId}/events")
+	Observable<ArrayList<EventResponse>> getEvents(@Path("userId") int userId);
 
 	@POST("events")
 	Observable<EventResponse> createEvent(@Body EventRequest eventRequest);

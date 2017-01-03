@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
 								editor.putString(Strings.SHARED_PREF_AVATAR_KEY, userResponse.photo);
 								editor.putString(Strings.SHARED_PREF_EMAIL_KEY, userResponse.email);
 								editor.putString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, userResponse.authToken);
+								editor.apply();
 
 								goToEventListActivity();
 							}

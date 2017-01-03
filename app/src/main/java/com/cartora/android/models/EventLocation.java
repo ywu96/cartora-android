@@ -10,22 +10,14 @@ public class EventLocation {
 	public EventLocation() {
 	}
 
-	@SerializedName("latitude")
-	double latitude;
+	@SerializedName("lat")
+	public double latitude;
 
-	@SerializedName("longitude")
-	double longitude;
+	@SerializedName("lon")
+	public double longitude;
 
-	public double getLatitude() {
-		return this.latitude;
-	}
-
-	public double getLongitude() {
-		return this.longitude;
-	}
-
-	public EventLocation(double lat, double lng) {
-		this.latitude = lat;
-		this.longitude = lng;
+	public EventLocation(double lat, double lon) {
+		latitude = lat;
+		longitude = lon;
 	}
 }

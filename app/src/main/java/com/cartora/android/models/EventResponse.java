@@ -13,54 +13,18 @@ public class EventResponse {
 	public EventResponse() {
 	}
 
-	@SerializedName("_id")
-	String Id;
+	@SerializedName("id")
+	public String id;
 
-	@SerializedName("eventName")
-	String eventName;
+	@SerializedName("name")
+	public String name;
 
-	@SerializedName("timeSecs")
-	long timeSecs;
+	@SerializedName("start_time")
+	public long startTime;
 
-	@SerializedName("__v")
-	int V;
+	@SerializedName("end_time")
+	public long endTime;
 
-	@SerializedName("eventLocation")
-	EventLocation eventLocation;
-
-	@SerializedName("users")
-	List<EventUserResponse> eventUserResponses = new ArrayList<>();
-
-	public String getId() {
-		return Id;
-	}
-
-	public String getEventName() {
-		return eventName;
-	}
-
-	public long getTimeSecs() {
-		return timeSecs;
-	}
-
-	public int getV() {
-		return V;
-	}
-
-	public EventLocation getEventLocation() {
-		return eventLocation;
-	}
-
-	public List<EventUserResponse> getEventUserResponses() {
-		return eventUserResponses;
-	}
-
-	public EventResponse(EventResponse eventResponse) {
-		Id = eventResponse.getId();
-		eventName = eventResponse.getEventName();
-		timeSecs = eventResponse.getTimeSecs();
-		V = eventResponse.getV();
-		eventLocation = eventResponse.getEventLocation();
-		eventUserResponses = eventResponse.getEventUserResponses();
-	}
+	@SerializedName("location")
+	public EventLocation location;
 }

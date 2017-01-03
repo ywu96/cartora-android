@@ -75,7 +75,7 @@ public class EventListFragment extends Fragment {
 				final int listIndex = viewHolder.getLayoutPosition();
 				EventResponse event = eventList.get(listIndex);
 
-				RestServer.getInstance().deleteEvent(event.getId())
+				RestServer.getInstance().deleteEvent(event.id)
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe(new Observer<EventResponse>() {
 							@Override
@@ -158,7 +158,7 @@ public class EventListFragment extends Fragment {
 	public class EventComparator implements Comparator<EventResponse> {
 		@Override
 		public int compare(EventResponse lhs, EventResponse rhs) {
-			long diff = lhs.getTimeSecs() - rhs.getTimeSecs();
+			long diff = lhs.startTime - rhs.startTime;
 			if (diff < 0) {
 				return -1;
 			} else if (diff > 0) {

@@ -44,8 +44,8 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 	@Override
 	public void onBindViewHolder(ViewHolder holder, int position) {
 		final EventResponse event = eventList.get(position);
-		holder.eventName.setText(event.getEventName());
-		Date date = new Date(event.getTimeSecs() * 1000L);
+		holder.eventName.setText(event.name);
+		Date date = new Date(event.startTime * 1000L);
 		SimpleDateFormat format = new SimpleDateFormat("E, MMM d 'at' h:mm a");
 		holder.eventTime.setText(format.format(date));
 
@@ -53,7 +53,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
-				bundle.putParcelable(EVENT_LIST_PARCEL_KEY, Parcels.wrap(new EventResponse(event)));
+				bundle.putParcelable(EVENT_LIST_PARCEL_KEY, Parcels.wrap(event));
 				Intent intent = new Intent(context, EventDetailActivity.class);
 				intent.putExtras(bundle);
 				context.startActivity(intent);

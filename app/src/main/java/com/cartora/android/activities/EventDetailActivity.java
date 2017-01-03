@@ -39,9 +39,9 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 		eventDate = (TextView) findViewById(R.id.event_date);
 		eventLocation = (TextView) findViewById(R.id.event_location);
 
-		eventName.setText(event.getEventName());
+		eventName.setText(event.name);
 
-		Date date = new Date(event.getTimeSecs() * 1000L);
+		Date date = new Date(event.startTime * 1000L);
 		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy 'at' h:mm a");
 		eventDate.setText(format.format(date));
 
@@ -53,7 +53,7 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		map = googleMap;
-		LatLng eventLatLng = new LatLng(event.getEventLocation().getLatitude(), event.getEventLocation().getLongitude());
+		LatLng eventLatLng = new LatLng(event.location.latitude, event.location.longitude);
 		MarkerOptions markerOptions = new MarkerOptions().position(eventLatLng);
 		map.addMarker(markerOptions);
 		map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 15f));

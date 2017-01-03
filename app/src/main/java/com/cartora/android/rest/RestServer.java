@@ -43,8 +43,8 @@ public class RestServer {
 		return restService.signUp(signUpRequest);
 	}
 
-	public Observable<ArrayList<EventResponse>> getEvents(String uid) {
-		return restService.getEvents(uid);
+	public Observable<ArrayList<EventResponse>> getEvents(int userId) {
+		return restService.getEvents(userId);
 	}
 
 	public Observable<EventResponse> createEvent(EventRequest eventRequest) {

@@ -10,7 +10,7 @@ public class EventRequest {
 	@SerializedName("eventName")
 	protected String eventName;
 
-	@SerializedName("eventLocation")
+	@SerializedName("location")
 	protected EventLocation eventLocation;
 
 	@SerializedName("users")

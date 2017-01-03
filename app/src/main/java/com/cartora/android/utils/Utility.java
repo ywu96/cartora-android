@@ -18,9 +18,9 @@ public class Utility {
 				TypedValue.COMPLEX_UNIT_DIP, valueDp, context.getResources().getDisplayMetrics());
 	}
 
-	public static String getUid(Context context) {
+	public static int getUid(Context context) {
 		SharedPreferences preferences = context.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-		return preferences.getString(Strings.SHARED_PREF_ID_KEY, null);
+		return preferences.getInt(Strings.SHARED_PREF_ID_KEY, -1);
 	}
 
 	public static String getAuthToken(Context context) {
