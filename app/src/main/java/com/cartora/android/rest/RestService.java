@@ -20,25 +20,12 @@ import rx.Observable;
 
 public interface RestService {
 
-	@Headers({
-			"Content-Type: application/json",
-			"Accept: application/vnd.traveltime.v1"
-	})
 	@POST("users")
 	Observable<UserResponse> signUp(@Body SignUpRequest signUpRequest);
 
-	@Headers({
-			"Accept: application/vnd.traveltime.v1",
-			"Authorization: djjdb7GBDmc8ikLiRsdr"
-	})
 	@GET("users/{userId}/events")
 	Observable<ArrayList<EventResponse>> getEvents(@Path("userId") int userId);
 
-	@Headers({
-			"Content-Type: application/json",
-			"Accept: application/vnd.traveltime.v1",
-			"Authorization: djjdb7GBDmc8ikLiRsdr"
-	})
 	@POST("users/{userId}/events")
 	Observable<EventWithParticipantsResponse> createEvent(@Body EventRequest eventRequest);
 

@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.cartora.android.activities.EventCreateActivity;
 import com.cartora.android.models.EventWithParticipantsResponse;
+import com.cartora.android.utils.Utility;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -261,7 +262,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 				eventLocation.getLatLng().longitude,
 				participants);
 
-		RestServer.getInstance().createEvent(newEvent)
+		RestServer.createService(Utility.getAuthToken(getActivity())).createEvent(newEvent)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<EventWithParticipantsResponse>() {
 					@Override

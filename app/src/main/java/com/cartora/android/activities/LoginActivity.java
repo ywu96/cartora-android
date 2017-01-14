@@ -37,7 +37,9 @@ public class LoginActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_login);
 
 		sharedPreferences = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE);
-//		if (!Strings.isNullOrEmpty(sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null))) {
+//		String authToken = sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null);
+//		if (!Strings.isNullOrEmpty(authToken)) {
+//			Log.d("test123", authToken);
 //			goToEventListActivity();
 //		}
 
@@ -56,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 		signUpButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				RestServer.getInstance().signUp(new SignUpRequest(
+				RestServer.createService().signUp(new SignUpRequest(
 						"ha", "ha",
 						email.getText().toString(),
 						password.getText().toString()))
@@ -68,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
 
 							@Override
 							public void onError(Throwable e) {
-								Snackbar.make(findViewById(R.id.container), "error", Snackbar.LENGTH_SHORT).show();
+								Snackbar.make(findViewById(R.id.container), R.string.error_generic_retry, Snackbar.LENGTH_SHORT).show();
 							}
 
 							@Override
@@ -93,7 +95,9 @@ public class LoginActivity extends AppCompatActivity {
 		logInButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (!Strings.isNullOrEmpty(sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null))) {
+				String authToken = sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null);
+				if (!Strings.isNullOrEmpty(authToken)) {
+					Log.d("test123", authToken);
 					goToEventListActivity();
 				}
 			}

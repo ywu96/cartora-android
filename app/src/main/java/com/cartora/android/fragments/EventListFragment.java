@@ -81,7 +81,7 @@ public class EventListFragment extends Fragment {
 	}
 
 	private void loadList() {
-		RestServer.getInstance().getEvents(Utility.getUid(getActivity()))
+		RestServer.createService(Utility.getAuthToken(getActivity())).getEvents(Utility.getUid(getActivity()))
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<ArrayList<EventResponse>>() {
 					@Override
