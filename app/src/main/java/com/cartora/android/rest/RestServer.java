@@ -2,6 +2,7 @@ package com.cartora.android.rest;
 
 import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
+import com.cartora.android.models.EventWithParticipantsResponse;
 import com.cartora.android.models.LocationUpdateRequest;
 import com.cartora.android.models.SignUpRequest;
 import com.cartora.android.models.UserResponse;
@@ -18,7 +19,7 @@ import rx.schedulers.Schedulers;
 public class RestServer {
 
 	// TODO: remember to update
-	private static final String BASE_URL = "https://travel-time.herokuapp.com/";
+	private static final String BASE_URL = "https://cartora.herokuapp.com/";
 	private static RestServer restServer = null;
 
 	private RestService restService;
@@ -47,7 +48,7 @@ public class RestServer {
 		return restService.getEvents(userId);
 	}
 
-	public Observable<EventResponse> createEvent(EventRequest eventRequest) {
+	public Observable<EventWithParticipantsResponse> createEvent(EventRequest eventRequest) {
 		return restService.createEvent(eventRequest);
 	}
 

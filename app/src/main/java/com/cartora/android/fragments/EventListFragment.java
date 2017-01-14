@@ -19,9 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cartora.android.R;
-import com.cartora.android.activities.EventCreateActivity;
 import com.cartora.android.activities.EventListActivity;
-import com.cartora.android.activities.LocationActivity;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.rest.RestServer;
 import com.cartora.android.uihelpers.EventListAdapter;
@@ -39,8 +37,6 @@ public class EventListFragment extends Fragment {
 	private TextView noEventsText;
 	private RecyclerView listRecyclerView;
 	private EventListAdapter listAdapter;
-	private ItemTouchHelper itemTouchHelper;
-	private FloatingActionButton fab;
 	private ProgressBar spinner;
 
 	private ArrayList<EventResponse> eventList;
@@ -64,48 +60,10 @@ public class EventListFragment extends Fragment {
 
 		listAdapter = new EventListAdapter(getActivity(), eventList, R.layout.event_list_item);
 
-		ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-			@Override
-			public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-				return false;
-			}
-
-			@Override
-			public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
-				final int listIndex = viewHolder.getLayoutPosition();
-				EventResponse event = eventList.get(listIndex);
-
-				RestServer.getInstance().deleteEvent(event.id)
-						.observeOn(AndroidSchedulers.mainThread())
-						.subscribe(new Observer<EventResponse>() {
-							@Override
-							public void onCompleted() {
-							}
-
-							@Override
-							public void onError(Throwable e) {
-								// Handle the error.
-							}
-
-							@Override
-							public void onNext(EventResponse eventResponse) {
-								if (!isDetached()) {
-									eventList.remove(listIndex);
-									listAdapter.notifyItemRemoved(listIndex);
-
-									Toast.makeText(getActivity(), R.string.event_deleted, Toast.LENGTH_SHORT).show();
-								}
-							}
-						});
-			}
-		};
-		itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-
 		listRecyclerView = (RecyclerView) rootView.findViewById(R.id.event_list_recyclerview);
 		listRecyclerView.setAdapter(listAdapter);
 		listRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 		listRecyclerView.setItemAnimator(new DefaultItemAnimator());
-		itemTouchHelper.attachToRecyclerView(listRecyclerView);
 		loadList();
 
 		return rootView;
@@ -132,7 +90,7 @@ public class EventListFragment extends Fragment {
 
 					@Override
 					public void onError(Throwable e) {
-						// Handle errors.
+						Toast.makeText(getActivity(), R.string.error_generic_retry, Toast.LENGTH_SHORT).show();
 					}
 
 					@Override

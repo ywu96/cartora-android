@@ -1,9 +1,7 @@
 package com.cartora.android.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cartora.android.activities.EventCreateActivity;
+import com.cartora.android.models.EventWithParticipantsResponse;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -38,10 +37,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.cartora.android.R;
 import com.cartora.android.models.EventRequest;
-import com.cartora.android.models.EventResponse;
-import com.cartora.android.models.EventUserRequest;
 import com.cartora.android.rest.RestServer;
-import com.cartora.android.utils.Strings;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -72,7 +68,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 	private EditText eventName;
 	private Place eventLocation;
-	private ArrayList<EventUserRequest> userList;
 
 	private GoogleApiClient googleApiClient;
 
@@ -95,7 +90,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					.enableAutoManage(getActivity(), this)
 					.build();
 		}
-		userList = new ArrayList<>();
 		setHasOptionsMenu(true);
 	}
 
@@ -226,7 +220,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 	}
 
 	@Override
-	public void onFabClick(FloatingActionButton fab) {
+	public void onFabClick(final FloatingActionButton fab) {
 		if (eventName.getText().toString().isEmpty()) {
 			Snackbar.make(getActivity().findViewById(R.id.container),
 					R.string.no_event_name,
@@ -253,36 +247,45 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 		spinnerContainer.setVisibility(View.VISIBLE);
 		spinnerContainer.animate().alpha(1f).setDuration(200L).start();
 
-		SharedPreferences preferences = getActivity().getApplicationContext()
-				.getSharedPreferences(Strings.SHARED_PREF_NAME, Context.MODE_PRIVATE);
-		EventUserRequest selfUser = new EventUserRequest(preferences.getString(Strings.SHARED_PREF_ID_KEY, null));
-		userList.add(selfUser);
-
 		// User did not change the time
 		if (timePickerText.getText().toString().equals("12:00 PM")) {
 			calendar.set(Calendar.HOUR_OF_DAY, 12);
 			calendar.set(Calendar.MINUTE, 0);
 		}
 
+		ArrayList<Integer> participants = new ArrayList<>();
+
 		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
-				userList,
+				calendar.getTimeInMillis() / 1000,
 				eventLocation.getLatLng().latitude,
 				eventLocation.getLatLng().longitude,
-				calendar.getTimeInMillis() / 1000);
+				participants);
 
 		RestServer.getInstance().createEvent(newEvent)
 				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(new Observer<EventResponse>() {
+				.subscribe(new Observer<EventWithParticipantsResponse>() {
 					@Override
 					public void onCompleted() {
 					}
 
 					@Override
 					public void onError(Throwable e) {
+						// Reset the click listener
+						fab.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								onFabClick(fab);
+							}
+						});
+						spinnerContainer.setVisibility(View.GONE);
+						Snackbar.make(getActivity().findViewById(R.id.container),
+								R.string.error_generic_retry,
+								Snackbar.LENGTH_SHORT)
+								.show();
 					}
 
 					@Override
-					public void onNext(EventResponse eventResponse) {
+					public void onNext(EventWithParticipantsResponse response) {
 						spinnerContainer.setVisibility(View.GONE);
 						Snackbar.make(getActivity().findViewById(R.id.container),
 								R.string.event_created,
@@ -294,7 +297,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					}
 				});
 	}
-
 
 	@Override
 	public void onStart() {

@@ -2,6 +2,7 @@ package com.cartora.android.rest;
 
 import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
+import com.cartora.android.models.EventWithParticipantsResponse;
 import com.cartora.android.models.LocationUpdateRequest;
 import com.cartora.android.models.SignUpRequest;
 import com.cartora.android.models.UserResponse;
@@ -33,8 +34,13 @@ public interface RestService {
 	@GET("users/{userId}/events")
 	Observable<ArrayList<EventResponse>> getEvents(@Path("userId") int userId);
 
-	@POST("events")
-	Observable<EventResponse> createEvent(@Body EventRequest eventRequest);
+	@Headers({
+			"Content-Type: application/json",
+			"Accept: application/vnd.traveltime.v1",
+			"Authorization: djjdb7GBDmc8ikLiRsdr"
+	})
+	@POST("users/{userId}/events")
+	Observable<EventWithParticipantsResponse> createEvent(@Body EventRequest eventRequest);
 
 	@DELETE("events/{eventId}")
 	Observable<EventResponse> deleteEvent(@Path("eventId") String eventId);

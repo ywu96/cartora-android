@@ -27,4 +27,6 @@
     <string name="no_event_date">Your event needs a date.</string>
     <string name="no_event_location">Your event needs a location.</string>
 
+    <string name="error_generic_retry">Oops, something went wrong! Please try again.</string>
+
 </resources>

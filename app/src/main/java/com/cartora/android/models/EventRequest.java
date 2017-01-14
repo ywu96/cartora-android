@@ -7,22 +7,26 @@ import java.util.ArrayList;
 
 public class EventRequest {
 
-	@SerializedName("eventName")
-	protected String eventName;
+	@SerializedName("name")
+	public String name;
+
+	@SerializedName("start_time")
+	public long startTime;
+
+	@SerializedName("end_time")
+	public long endTime;
 
 	@SerializedName("location")
-	protected EventLocation eventLocation;
+	public EventLocation location;
 
-	@SerializedName("users")
-	protected ArrayList<EventUserRequest> users;
+	@SerializedName("participants")
+	public ArrayList<Integer> participants;
 
-	@SerializedName("timeSecs")
-	protected long timeSecs;
-
-	public EventRequest(String eventName, ArrayList<EventUserRequest> users, double lat, double lng, long time) {
-		this.eventName = eventName;
-		this.users = users;
-		this.eventLocation = new EventLocation(lat, lng);
-		this.timeSecs = time;
+	public EventRequest(String name, long startTime, double lat, double lng, ArrayList<Integer> participants) {
+		this.name = name;
+		this.startTime = startTime;
+		this.endTime = 999999999999999999L; // TODO: Add end time to event request
+		this.location = new EventLocation(lat, lng);
+		this.participants = participants;
 	}
 }
