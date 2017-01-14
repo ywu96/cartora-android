@@ -122,6 +122,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 				return;
 			}
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_MIN_TIME, LOCATION_MIN_DIST, locationListener);
+			setInitialMap();
 		}
 	}
 
