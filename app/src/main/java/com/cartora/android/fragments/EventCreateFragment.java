@@ -255,6 +255,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 		}
 
 		ArrayList<Integer> participants = new ArrayList<>();
+		participants.add(Utility.getUid(getActivity()));
 
 		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
 				calendar.getTimeInMillis() / 1000,
@@ -262,7 +263,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 				eventLocation.getLatLng().longitude,
 				participants);
 
-		RestServer.createService(Utility.getAuthToken(getActivity())).createEvent(newEvent)
+		RestServer.createService(Utility.getAuthToken(getActivity())).createEvent(Utility.getUid(getActivity()), newEvent)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<EventWithParticipantsResponse>() {
 					@Override

@@ -27,7 +27,7 @@ public interface RestService {
 	Observable<ArrayList<EventResponse>> getEvents(@Path("userId") int userId);
 
 	@POST("users/{userId}/events")
-	Observable<EventWithParticipantsResponse> createEvent(@Body EventRequest eventRequest);
+	Observable<EventWithParticipantsResponse> createEvent(@Path("userId") int userId, @Body EventRequest eventRequest);
 
 	@DELETE("events/{eventId}")
 	Observable<EventResponse> deleteEvent(@Path("eventId") String eventId);

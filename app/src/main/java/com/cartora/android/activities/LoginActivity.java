@@ -95,9 +95,11 @@ public class LoginActivity extends AppCompatActivity {
 		logInButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				int userId = sharedPreferences.getInt(Strings.SHARED_PREF_ID_KEY, -1);
 				String authToken = sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null);
+
 				if (!Strings.isNullOrEmpty(authToken)) {
-					Log.d("test123", authToken);
+					Log.d("test123", userId + " " + authToken);
 					goToEventListActivity();
 				}
 			}

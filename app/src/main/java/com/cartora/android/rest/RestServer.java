@@ -81,8 +81,8 @@ public class RestServer {
 		return restService.getEvents(userId);
 	}
 
-	public Observable<EventWithParticipantsResponse> createEvent(EventRequest eventRequest) {
-		return restService.createEvent(eventRequest);
+	public Observable<EventWithParticipantsResponse> createEvent(int userId, EventRequest eventRequest) {
+		return restService.createEvent(userId, eventRequest);
 	}
 
 	public Observable<EventResponse> deleteEvent(String eventId) {
