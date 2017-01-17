@@ -12,6 +12,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
+import com.cartora.android.R;
+import com.cartora.android.uihelpers.LatLngInterpolator;
+import com.cartora.android.utils.Utility;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -19,9 +22,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.cartora.android.R;
-import com.cartora.android.uihelpers.LatLngInterpolator;
-import com.cartora.android.utils.Utility;
 
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
 

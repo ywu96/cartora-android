@@ -8,13 +8,9 @@ import android.view.View;
 
 import com.cartora.android.R;
 import com.cartora.android.fragments.EventListFragment;
-import com.cartora.android.utils.Strings;
 
 public class EventListActivity extends AppCompatActivity {
 
-	public static final int NEW_EVENT_REQUEST = 100;
-
-	private int userId;
 	private FloatingActionButton fab;
 
 	@Override
@@ -24,14 +20,12 @@ public class EventListActivity extends AppCompatActivity {
 
 		setTitle(R.string.event_list_title);
 
-		userId = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE).getInt(Strings.SHARED_PREF_ID_KEY, -1);
-
 		fab = (FloatingActionButton) findViewById(R.id.event_list_fab);
 		fab.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(EventListActivity.this, EventCreateActivity.class);
-				startActivityForResult(intent, NEW_EVENT_REQUEST);
+				startActivity(intent);
 			}
 		});
 		fab.setOnLongClickListener(new View.OnLongClickListener() {

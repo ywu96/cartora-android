@@ -1,16 +1,12 @@
 package com.cartora.android.fragments;
 
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cartora.android.R;
-import com.cartora.android.activities.EventListActivity;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.rest.RestServer;
 import com.cartora.android.uihelpers.EventListAdapter;
@@ -51,6 +46,12 @@ public class EventListFragment extends Fragment {
 	}
 
 	@Override
+	public void onResume() {
+		super.onResume();
+		loadList();
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_event_list, container, false);
@@ -67,17 +68,6 @@ public class EventListFragment extends Fragment {
 		loadList();
 
 		return rootView;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-			case EventListActivity.NEW_EVENT_REQUEST:
-				if (resultCode == Activity.RESULT_OK) {
-					loadList();
-				}
-		}
 	}
 
 	private void loadList() {
