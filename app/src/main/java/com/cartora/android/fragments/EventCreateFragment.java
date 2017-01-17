@@ -254,11 +254,11 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 			calendar.set(Calendar.MINUTE, 0);
 		}
 
-		ArrayList<Integer> participants = new ArrayList<>();
-		participants.add(Utility.getUid(getActivity()));
+		ArrayList<EventRequest.Participant> participants = new ArrayList<>();
+		participants.add(EventRequest.Participant.from(Utility.getUid(getActivity())));
 
 		EventRequest newEvent = new EventRequest(eventName.getText().toString(),
-				calendar.getTimeInMillis() / 1000,
+				calendar.getTimeInMillis() / 1000, // Convert to seconds
 				eventLocation.getLatLng().latitude,
 				eventLocation.getLatLng().longitude,
 				participants);

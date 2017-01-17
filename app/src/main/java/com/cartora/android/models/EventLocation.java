@@ -13,11 +13,11 @@ public class EventLocation {
 	@SerializedName("lat")
 	public double latitude;
 
-	@SerializedName("lon")
+	@SerializedName("lng")
 	public double longitude;
 
-	public EventLocation(double lat, double lon) {
+	public EventLocation(double lat, double lng) {
 		latitude = lat;
-		longitude = lon;
+		longitude = lng;
 	}
 }
