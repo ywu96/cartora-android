@@ -17,7 +17,7 @@ public class EventRequest {
 	public long endTime;
 
 	@SerializedName("location")
-	public EventLocation location;
+	public LocationLatLng location;
 
 	@SerializedName("participants")
 	public ArrayList<Participant> participants;
@@ -26,7 +26,7 @@ public class EventRequest {
 		this.name = name;
 		this.startTime = startTime;
 		this.endTime = startTime + 5L; // TODO: Add end time to event request
-		this.location = new EventLocation(lat, lng);
+		this.location = new LocationLatLng(lat, lng);
 		this.participants = participants;
 	}
 

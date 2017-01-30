@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Parcel
 public class EventResponse {
 
@@ -26,5 +23,5 @@ public class EventResponse {
 	public long endTime;
 
 	@SerializedName("location")
-	public EventLocation location;
+	public LocationLatLng location;
 }

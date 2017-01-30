@@ -19,7 +19,7 @@ public class EventWithParticipantsResponse {
 	public long endTime;
 
 	@SerializedName("location")
-	public EventLocation location;
+	public LocationLatLng location;
 
 	@SerializedName("host")
 	public UserPublicResponse host;

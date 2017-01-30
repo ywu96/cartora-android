@@ -3,7 +3,7 @@ package com.cartora.android.rest;
 import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.EventWithParticipantsResponse;
-import com.cartora.android.models.LocationUpdateRequest;
+import com.cartora.android.models.LocationLatLng;
 import com.cartora.android.models.SignUpRequest;
 import com.cartora.android.models.UserResponse;
 import com.cartora.android.utils.Strings;
@@ -89,8 +89,11 @@ public class RestServer {
 		return restService.deleteEvent(eventId);
 	}
 
-	public Observable<EventResponse> updateLocation(String eventId, LocationUpdateRequest locationUpdateRequest) {
-		return restService.updateLocation(eventId, locationUpdateRequest);
+	public Observable<EventResponse> updateLocationBackground(int userId, LocationLatLng locationLatLng) {
+		return restService.updateLocationBackground(userId, locationLatLng);
 	}
 
+	public Observable<EventResponse> updateLocation(int userId, int eventId, LocationLatLng locationLatLng) {
+		return restService.updateLocation(userId, eventId, locationLatLng);
+	}
 }

@@ -13,6 +13,9 @@ import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.cartora.android.R;
+import com.cartora.android.models.EventResponse;
+import com.cartora.android.models.LocationLatLng;
+import com.cartora.android.rest.RestServer;
 import com.cartora.android.uihelpers.LatLngInterpolator;
 import com.cartora.android.utils.Utility;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +26,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private GoogleMap map;
@@ -32,7 +38,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 	private LocationListener locationListener;
 
 	private static final long LOCATION_MIN_TIME = 3000L;
-	private static final float LOCATION_MIN_DIST = 10f;
+	private static final float LOCATION_MIN_DIST = 0.0f;
 
 	private static final int LOCATION_UPDATES = 1;
 
@@ -93,6 +99,27 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			}
 
 			map.animateCamera(CameraUpdateFactory.newLatLng(newLocation));
+
+			final Context context = LocationActivity.this;
+			RestServer.createService(Utility.getAuthToken(context))
+					.updateLocationBackground(Utility.getUid(context), new LocationLatLng(location.getLatitude(), location.getLongitude()))
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(new Observer<EventResponse>() {
+						@Override
+						public void onCompleted() {
+
+						}
+
+						@Override
+						public void onError(Throwable e) {
+							Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
+						}
+
+						@Override
+						public void onNext(EventResponse eventResponse) {
+							Toast.makeText(context, "Location updated", Toast.LENGTH_SHORT).show();
+						}
+					});
 		}
 
 		@Override

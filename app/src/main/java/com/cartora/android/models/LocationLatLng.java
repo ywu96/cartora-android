@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 import org.parceler.Parcel;
 
 @Parcel
-public class EventLocation {
+public class LocationLatLng {
 
-	public EventLocation() {
+	private LocationLatLng() {
 	}
 
 	@SerializedName("lat")
@@ -16,7 +16,7 @@ public class EventLocation {
 	@SerializedName("lng")
 	public double longitude;
 
-	public EventLocation(double lat, double lng) {
+	public LocationLatLng(double lat, double lng) {
 		latitude = lat;
 		longitude = lng;
 	}
