@@ -9,7 +9,6 @@ import android.util.TypedValue;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.cartora.android.uihelpers.LatLngInterpolator;
 
 public class Utility {
 

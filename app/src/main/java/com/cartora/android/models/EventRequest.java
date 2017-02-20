@@ -26,7 +26,7 @@ public class EventRequest {
 		this.name = name;
 		this.startTime = startTime;
 		this.endTime = startTime + 5L; // TODO: Add end time to event request
-		this.location = new LocationLatLng(lat, lng);
+		this.location = LocationLatLng.from(lat, lng);
 		this.participants = participants;
 	}
 

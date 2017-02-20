@@ -1,4 +1,4 @@
-package com.cartora.android.uihelpers;
+package com.cartora.android.adapters;
 
 import android.content.Context;
 import android.content.Intent;

@@ -28,8 +28,8 @@ public interface RestService {
 	@POST("users/{userId}/events")
 	Observable<EventWithParticipantsResponse> createEvent(@Path("userId") int userId, @Body EventRequest eventRequest);
 
-	@DELETE("events/{eventId}")
-	Observable<EventResponse> deleteEvent(@Path("eventId") String eventId);
+	@DELETE("/users/{userId}/events/{eventId}")
+	Observable<EventResponse> deleteEvent(@Path("userId") int userId, @Path("eventId") int eventId);
 
 	@PUT("users/{userId}/location")
 	Observable<EventResponse> updateLocationBackground(@Path("userId") int userId, @Body LocationLatLng locationLatLng);

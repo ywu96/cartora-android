@@ -85,8 +85,8 @@ public class RestServer {
 		return restService.createEvent(userId, eventRequest);
 	}
 
-	public Observable<EventResponse> deleteEvent(String eventId) {
-		return restService.deleteEvent(eventId);
+	public Observable<EventResponse> deleteEvent(int userId, int eventId) {
+		return restService.deleteEvent(userId, eventId);
 	}
 
 	public Observable<EventResponse> updateLocationBackground(int userId, LocationLatLng locationLatLng) {

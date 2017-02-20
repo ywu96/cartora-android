@@ -7,16 +7,20 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.widget.Toast;
 
 import com.cartora.android.R;
+import com.cartora.android.managers.MarkerManager;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.LocationLatLng;
+import com.cartora.android.models.LocationUpdateResponse;
+import com.cartora.android.models.UserLocation;
 import com.cartora.android.rest.RestServer;
-import com.cartora.android.uihelpers.LatLngInterpolator;
+import com.cartora.android.utils.LatLngInterpolator;
 import com.cartora.android.utils.Utility;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,6 +30,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 
@@ -33,7 +39,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
 	private GoogleMap map;
 
-	private Marker selfMarker;
+	private MarkerManager markerManager;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
 
@@ -88,32 +94,19 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 
 	public class CustomLocationListener implements LocationListener {
 
-		private static final long ANIMATE_DURATION = 3000L;
-
 		@Override
 		public void onLocationChanged(Location location) {
-			LatLng newLocation = new LatLng(location.getLatitude(), location.getLongitude());
-
-			if (selfMarker != null) {
-				Utility.animateMarker(selfMarker, newLocation, ANIMATE_DURATION, new LatLngInterpolator.Linear());
-			}
-
-			map.animateCamera(CameraUpdateFactory.newLatLng(newLocation));
-
 			final Context context = LocationActivity.this;
+
 			RestServer.createService(Utility.getAuthToken(context))
-					.updateLocationBackground(Utility.getUid(context), new LocationLatLng(location.getLatitude(), location.getLongitude()))
+					.updateLocationBackground(Utility.getUid(context), LocationLatLng.from(location.getLatitude(), location.getLongitude()))
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(new Observer<EventResponse>() {
 						@Override
-						public void onCompleted() {
-
-						}
+						public void onCompleted() {}
 
 						@Override
-						public void onError(Throwable e) {
-							Toast.makeText(context, "error", Toast.LENGTH_SHORT).show();
-						}
+						public void onError(Throwable e) {}
 
 						@Override
 						public void onNext(EventResponse eventResponse) {
@@ -123,16 +116,13 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		}
 
 		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {
-		}
+		public void onStatusChanged(String provider, int status, Bundle extras) {}
 
 		@Override
-		public void onProviderEnabled(String provider) {
-		}
+		public void onProviderEnabled(String provider) {}
 
 		@Override
-		public void onProviderDisabled(String provider) {
-		}
+		public void onProviderDisabled(String provider) {}
 	}
 
 	@Override
@@ -160,12 +150,33 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		Location lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 		if (lastLocation != null) {
 			LatLng lastLatLng = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
-			MarkerOptions markerOptions = new MarkerOptions().position(lastLatLng);
-			selfMarker = map.addMarker(markerOptions);
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(lastLatLng, 16f));
 		} else {
 			LatLng world = new LatLng(0, 0);
 			map.moveCamera(CameraUpdateFactory.newLatLngZoom(world, 0.1f));
 		}
+
+		// just for testing
+		UserLocation location1 = UserLocation.from(1, LocationLatLng.from(43.8590, -79.2846));
+		UserLocation location2 = UserLocation.from(2, LocationLatLng.from(43.8595, -79.2850));
+		ArrayList<UserLocation> locations = new ArrayList<>();
+		locations.add(location1);
+		locations.add(location2);
+
+		LocationUpdateResponse lur = new LocationUpdateResponse(locations);
+		markerManager = new MarkerManager(map, lur);
+	}
+
+	// Just for tests!!!!!!
+	@Override
+	public void onBackPressed() {
+		UserLocation location1 = UserLocation.from(1, LocationLatLng.from(43.8585, -79.2840));
+		UserLocation location2 = UserLocation.from(2, LocationLatLng.from(43.8600, -79.2855));
+		ArrayList<UserLocation> locations2 = new ArrayList<>();
+		locations2.add(location1);
+		locations2.add(location2);
+
+		LocationUpdateResponse lur2 = new LocationUpdateResponse(locations2);
+		markerManager.updateMarkers(lur2);
 	}
 }

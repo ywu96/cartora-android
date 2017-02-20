@@ -16,7 +16,11 @@ public class LocationLatLng {
 	@SerializedName("lng")
 	public double longitude;
 
-	public LocationLatLng(double lat, double lng) {
+	public static LocationLatLng from(double lat, double lng) {
+		return new LocationLatLng(lat, lng);
+	}
+
+	private LocationLatLng(double lat, double lng) {
 		latitude = lat;
 		longitude = lng;
 	}

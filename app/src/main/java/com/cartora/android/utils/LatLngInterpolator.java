@@ -1,4 +1,4 @@
-package com.cartora.android.uihelpers;
+package com.cartora.android.utils;
 
 import com.google.android.gms.maps.model.LatLng;
 
