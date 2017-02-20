@@ -123,26 +123,11 @@
                 android:text="@string/event_location_hint" />
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/map_layout"
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/map_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="16dp"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="2" />
-
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/map_view"
-                android:layout_width="0dp"
-                android:layout_height="200dp"
-                android:layout_weight="10" />
-        </LinearLayout>
+            android:layout_height="200dp"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/event_people_layout"

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cartora.android.R;
@@ -63,7 +62,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 
 	private Calendar calendar;
 
-	private LinearLayout mapLayout;
 	private GoogleMap googleMap;
 	private MapView mapView;
 
@@ -117,7 +115,7 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 				Place place = PlacePicker.getPlace(getActivity(), data);
 				eventLocation = place;
 				placePickerText.setText(place.getName().toString());
-				mapLayout.setVisibility(View.VISIBLE);
+				mapView.setVisibility(View.VISIBLE);
 				googleMap.clear();
 				googleMap.addMarker(new MarkerOptions()
 						.position(place.getLatLng()));
@@ -216,7 +214,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 			}
 		});
 
-		mapLayout = (LinearLayout) rootView.findViewById(R.id.map_layout);
 		mapView = (MapView) rootView.findViewById(R.id.map_view);
 	}
 
@@ -289,11 +286,6 @@ public class EventCreateFragment extends Fragment implements GoogleApiClient.Con
 					@Override
 					public void onNext(EventWithParticipantsResponse response) {
 						spinnerContainer.setVisibility(View.GONE);
-						Snackbar.make(getActivity().findViewById(R.id.container),
-								R.string.event_created,
-								Snackbar.LENGTH_SHORT)
-								.show();
-
 						getActivity().setResult(Activity.RESULT_OK);
 						getActivity().finish();
 					}
