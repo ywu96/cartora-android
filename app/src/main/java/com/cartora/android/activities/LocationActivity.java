@@ -159,24 +159,42 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		// just for testing
 		UserLocation location1 = UserLocation.from(1, LocationLatLng.from(43.8590, -79.2846));
 		UserLocation location2 = UserLocation.from(2, LocationLatLng.from(43.8595, -79.2850));
+		UserLocation location3 = UserLocation.from(3, LocationLatLng.from(43.8600, -79.2853));
+		UserLocation location4 = UserLocation.from(4, LocationLatLng.from(43.8580, -79.2863));
+
 		ArrayList<UserLocation> locations = new ArrayList<>();
 		locations.add(location1);
 		locations.add(location2);
+		locations.add(location3);
+		locations.add(location4);
 
 		LocationUpdateResponse lur = new LocationUpdateResponse(locations);
 		markerManager = new MarkerManager(map, lur);
 	}
 
+	boolean test = false;
+
 	// Just for tests!!!!!!
 	@Override
 	public void onBackPressed() {
+		if (test) {
+			super.onBackPressed();
+			return;
+		}
+
 		UserLocation location1 = UserLocation.from(1, LocationLatLng.from(43.8585, -79.2840));
 		UserLocation location2 = UserLocation.from(2, LocationLatLng.from(43.8600, -79.2855));
+		UserLocation location3 = UserLocation.from(3, LocationLatLng.from(43.8590, -79.2880));
+		UserLocation location4 = UserLocation.from(4, LocationLatLng.from(43.8600, -79.2846));
+
 		ArrayList<UserLocation> locations2 = new ArrayList<>();
 		locations2.add(location1);
 		locations2.add(location2);
+		locations2.add(location3);
+		locations2.add(location4);
 
 		LocationUpdateResponse lur2 = new LocationUpdateResponse(locations2);
 		markerManager.updateMarkers(lur2);
+		test = true;
 	}
 }

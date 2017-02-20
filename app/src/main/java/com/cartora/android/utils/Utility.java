@@ -34,8 +34,8 @@ public class Utility {
 				return latLngInterpolator.interpolate(fraction, startValue, endValue);
 			}
 		};
-		Property<Marker, LatLng> property = Property.of(Marker.class, LatLng.class, "position");
-		ObjectAnimator animator = ObjectAnimator.ofObject(marker, property, typeEvaluator, finalPosition);
+		Property<Marker, LatLng> position = Property.of(Marker.class, LatLng.class, "position");
+		ObjectAnimator animator = ObjectAnimator.ofObject(marker, position, typeEvaluator, finalPosition);
 		animator.setDuration(duration);
 		animator.start();
 	}
