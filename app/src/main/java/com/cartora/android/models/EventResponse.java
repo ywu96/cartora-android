@@ -7,8 +7,8 @@ import org.parceler.Parcel;
 @Parcel
 public class EventResponse {
 
-	public EventResponse() {
-	}
+	// Empty constructor for Parceler
+	public EventResponse() {}
 
 	@SerializedName("id")
 	public String id;

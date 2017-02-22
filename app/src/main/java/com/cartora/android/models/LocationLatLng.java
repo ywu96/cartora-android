@@ -7,8 +7,8 @@ import org.parceler.Parcel;
 @Parcel
 public class LocationLatLng {
 
-	private LocationLatLng() {
-	}
+	// Empty constructor for Parceler
+	public LocationLatLng() {}
 
 	@SerializedName("lat")
 	public double latitude;

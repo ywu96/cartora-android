@@ -36,8 +36,7 @@ public class EventListFragment extends Fragment {
 
 	private ArrayList<EventResponse> eventList;
 
-	public EventListFragment() {
-	}
+	public EventListFragment() {}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {

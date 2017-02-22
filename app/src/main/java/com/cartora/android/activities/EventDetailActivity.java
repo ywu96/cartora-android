@@ -2,6 +2,7 @@ package com.cartora.android.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.cartora.android.R;
@@ -40,6 +41,7 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 		eventLocation = (TextView) findViewById(R.id.event_location);
 
 		eventName.setText(event.name);
+		eventName.setSelected(true);
 
 		Date date = new Date(event.startTime * 1000L);
 		SimpleDateFormat format = new SimpleDateFormat("EEE, MMM d, yyyy 'at' h:mm a");
@@ -53,9 +55,11 @@ public class EventDetailActivity extends AppCompatActivity implements OnMapReady
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		map = googleMap;
-		LatLng eventLatLng = new LatLng(event.location.latitude, event.location.longitude);
-		MarkerOptions markerOptions = new MarkerOptions().position(eventLatLng);
-		map.addMarker(markerOptions);
-		map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 15f));
+
+		// TODO: uncomment this once Millin adds locations to events
+//		LatLng eventLatLng = new LatLng(event.location.latitude, event.location.longitude);
+//		MarkerOptions markerOptions = new MarkerOptions().position(eventLatLng);
+//		map.addMarker(markerOptions);
+//		map.moveCamera(CameraUpdateFactory.newLatLngZoom(eventLatLng, 15f));
 	}
 }
