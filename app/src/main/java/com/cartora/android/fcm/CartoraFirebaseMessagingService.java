@@ -17,7 +17,7 @@ public class CartoraFirebaseMessagingService extends FirebaseMessagingService {
 
 		// TODO: just for testing
 		Log.d("test123", "Data received!");
-		Intent intent = new Intent(getApplicationContext(), LocationService.class);
+		Intent intent = new Intent(CartoraFirebaseMessagingService.this, LocationService.class);
 		startService(intent);
 	}
 }
