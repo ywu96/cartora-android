@@ -2,18 +2,14 @@ package com.cartora.android.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.cartora.android.R;
-import com.cartora.android.models.EventResponse;
 import com.cartora.android.adapters.EventListAdapter;
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.cartora.android.models.EventResponse;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.parceler.Parcels;
 

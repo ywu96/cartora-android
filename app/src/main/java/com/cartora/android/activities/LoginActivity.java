@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_login);
 
 		sharedPreferences = getSharedPreferences(Strings.SHARED_PREF_NAME, MODE_PRIVATE);
+
+		// TODO: just for testing
 //		String authToken = sharedPreferences.getString(Strings.SHARED_PREF_AUTH_TOKEN_KEY, null);
 //		if (!Strings.isNullOrEmpty(authToken)) {
 //			Log.d("test123", authToken);
@@ -91,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
 			}
 		});
 
-		// Sketchy stuff for now.
+		// TODO: just for testing
 		logInButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

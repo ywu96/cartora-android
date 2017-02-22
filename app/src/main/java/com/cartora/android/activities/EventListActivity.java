@@ -42,6 +42,5 @@ public class EventListActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		// Do nothing.
 	}
 }

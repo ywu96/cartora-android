@@ -15,9 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cartora.android.R;
+import com.cartora.android.adapters.EventListAdapter;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.rest.RestServer;
-import com.cartora.android.adapters.EventListAdapter;
 import com.cartora.android.utils.Utility;
 
 import java.util.ArrayList;
@@ -36,7 +36,8 @@ public class EventListFragment extends Fragment {
 
 	private ArrayList<EventResponse> eventList;
 
-	public EventListFragment() {}
+	public EventListFragment() {
+	}
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {

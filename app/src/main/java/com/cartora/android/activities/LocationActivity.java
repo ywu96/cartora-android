@@ -7,7 +7,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -20,15 +19,12 @@ import com.cartora.android.models.LocationLatLng;
 import com.cartora.android.models.LocationUpdateResponse;
 import com.cartora.android.models.UserLocation;
 import com.cartora.android.rest.RestServer;
-import com.cartora.android.utils.LatLngInterpolator;
 import com.cartora.android.utils.Utility;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
@@ -103,10 +99,12 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 					.observeOn(AndroidSchedulers.mainThread())
 					.subscribe(new Observer<EventResponse>() {
 						@Override
-						public void onCompleted() {}
+						public void onCompleted() {
+						}
 
 						@Override
-						public void onError(Throwable e) {}
+						public void onError(Throwable e) {
+						}
 
 						@Override
 						public void onNext(EventResponse eventResponse) {
@@ -116,13 +114,16 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		}
 
 		@Override
-		public void onStatusChanged(String provider, int status, Bundle extras) {}
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+		}
 
 		@Override
-		public void onProviderEnabled(String provider) {}
+		public void onProviderEnabled(String provider) {
+		}
 
 		@Override
-		public void onProviderDisabled(String provider) {}
+		public void onProviderDisabled(String provider) {
+		}
 	}
 
 	@Override
