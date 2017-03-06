@@ -3,6 +3,7 @@ package com.cartora.android.rest;
 import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.EventWithParticipantsResponse;
+import com.cartora.android.models.FcmIdUpdateRequest;
 import com.cartora.android.models.LocationLatLng;
 import com.cartora.android.models.SignUpRequest;
 import com.cartora.android.models.UserResponse;
@@ -75,6 +76,10 @@ public class RestServer {
 
 	public Observable<UserResponse> signUp(SignUpRequest signUpRequest) {
 		return restService.signUp(signUpRequest);
+	}
+
+	public Observable<UserResponse> updateFcmId(FcmIdUpdateRequest fcmIdUpdateRequest) {
+		return restService.updateFcmId(fcmIdUpdateRequest);
 	}
 
 	public Observable<ArrayList<EventResponse>> getEvents(int userId) {

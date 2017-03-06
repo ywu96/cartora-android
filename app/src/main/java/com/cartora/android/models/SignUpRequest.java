@@ -5,25 +5,29 @@ import com.google.gson.annotations.SerializedName;
 public class SignUpRequest {
 
 	@SerializedName("first_name")
-	protected String firstName;
+	public String firstName;
 
 	@SerializedName("last_name")
-	protected String lastName;
+	public String lastName;
 
 	@SerializedName("email")
-	protected String email;
+	public String email;
 
 	@SerializedName("password")
-	protected String password;
+	public String password;
 
 	@SerializedName("password_confirmation")
-	protected String passwordConfirmation;
+	public String passwordConfirmation;
 
-	public SignUpRequest(String firstName, String lastName, String email, String password) {
+	@SerializedName("fcm_id")
+	public String fcmId;
+
+	public SignUpRequest(String firstName, String lastName, String email, String password, String fcmId) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.passwordConfirmation = password;
+		this.fcmId = fcmId;
 	}
 }

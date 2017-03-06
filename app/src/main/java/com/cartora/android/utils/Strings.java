@@ -10,6 +10,7 @@ public class Strings {
 	public static final String SHARED_PREF_AVATAR_KEY = "avatar";
 	public static final String SHARED_PREF_EMAIL_KEY = "email";
 	public static final String SHARED_PREF_AUTH_TOKEN_KEY = "auth_token";
+	public static final String SHARED_PREF_FCM_ID_KEY = "fcm_id";
 
 	public static boolean isNullOrEmpty(String s) {
 		return s == null || s.isEmpty();

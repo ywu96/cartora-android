@@ -63,7 +63,8 @@ public class LoginActivity extends AppCompatActivity {
 				RestServer.createService().signUp(new SignUpRequest(
 						"ha", "ha",
 						email.getText().toString(),
-						password.getText().toString()))
+						password.getText().toString(),
+						sharedPreferences.getString(Strings.SHARED_PREF_FCM_ID_KEY, null)))
 						.observeOn(AndroidSchedulers.mainThread())
 						.subscribe(new Observer<UserResponse>() {
 							@Override

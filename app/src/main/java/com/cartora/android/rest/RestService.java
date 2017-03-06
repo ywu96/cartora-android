@@ -3,6 +3,7 @@ package com.cartora.android.rest;
 import com.cartora.android.models.EventRequest;
 import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.EventWithParticipantsResponse;
+import com.cartora.android.models.FcmIdUpdateRequest;
 import com.cartora.android.models.LocationLatLng;
 import com.cartora.android.models.SignUpRequest;
 import com.cartora.android.models.UserResponse;
@@ -21,6 +22,9 @@ public interface RestService {
 
 	@POST("users")
 	Observable<UserResponse> signUp(@Body SignUpRequest signUpRequest);
+
+	@PUT("users/{userId}")
+	Observable<UserResponse> updateFcmId(@Body FcmIdUpdateRequest fcmIdUpdateRequest);
 
 	@GET("users/{userId}/events")
 	Observable<ArrayList<EventResponse>> getEvents(@Path("userId") int userId);
