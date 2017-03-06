@@ -15,17 +15,19 @@
 
     <string name="event_created">Event created!</string>
     <string name="event_deleted">Event deleted</string>
-    <string name="no_events">When you join or create an event,\nit will appear here.</string>
+    <string name="no_events">When you join or create an event,\nit will appear here</string>
     <string name="event_name_hint">Name your event</string>
     <string name="event_date_hint">Pick a date</string>
     <string name="event_time_hint">12:00 PM</string>
     <string name="event_location_hint">Set a location</string>
     <string name="event_people_hint">Add people</string>
     <string name="title_activity_location">Map</string>
+    <string name="location_service_tracking">Your friends are sharing their locations with you</string>
 
-    <string name="no_event_name">Your event needs a name.</string>
-    <string name="no_event_date">Your event needs a date.</string>
-    <string name="no_event_location">Your event needs a location.</string>
+    <!--Errors-->
+    <string name="no_event_name">Your event needs a name</string>
+    <string name="no_event_date">Your event needs a date</string>
+    <string name="no_event_location">Your event needs a location</string>
 
     <string name="error_generic_retry">Oops, something went wrong! Please try again.</string>
 

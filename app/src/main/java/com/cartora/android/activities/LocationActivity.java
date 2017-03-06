@@ -33,16 +33,15 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class LocationActivity extends FragmentActivity implements OnMapReadyCallback {
 
+	public static final int LOCATION_UPDATES = 1;
+	private static final long LOCATION_MIN_TIME = 3000L;
+	private static final float LOCATION_MIN_DIST = 3.0f;
+
 	private GoogleMap map;
 
 	private MarkerManager markerManager;
 	private LocationManager locationManager;
 	private LocationListener locationListener;
-
-	private static final long LOCATION_MIN_TIME = 3000L;
-	private static final float LOCATION_MIN_DIST = 0.0f;
-
-	private static final int LOCATION_UPDATES = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +54,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		mapFragment.getMapAsync(this);
 
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationListener = new CustomLocationListener();
+		locationListener = new ForegroundLocationListener();
 	}
 
 	@Override
@@ -72,9 +71,6 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 	@Override
 	protected void onPause() {
 		super.onPause();
-		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-			return;
-		}
 		locationManager.removeUpdates(locationListener);
 	}
 
@@ -88,7 +84,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 		setInitialMap();
 	}
 
-	public class CustomLocationListener implements LocationListener {
+	private class ForegroundLocationListener implements LocationListener {
 
 		@Override
 		public void onLocationChanged(Location location) {
@@ -97,7 +93,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 			RestServer.createService(Utility.getAuthToken(context))
 					.updateLocationBackground(Utility.getUid(context), LocationLatLng.from(location.getLatitude(), location.getLongitude()))
 					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(new Observer<EventResponse>() {
+					.subscribe(new Observer<LocationLatLng>() {
 						@Override
 						public void onCompleted() {
 						}
@@ -107,7 +103,7 @@ public class LocationActivity extends FragmentActivity implements OnMapReadyCall
 						}
 
 						@Override
-						public void onNext(EventResponse eventResponse) {
+						public void onNext(LocationLatLng locationLatLng) {
 							Toast.makeText(context, "Location updated", Toast.LENGTH_SHORT).show();
 						}
 					});

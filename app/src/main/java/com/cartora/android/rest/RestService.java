@@ -36,7 +36,7 @@ public interface RestService {
 	Observable<EventResponse> deleteEvent(@Path("userId") int userId, @Path("eventId") int eventId);
 
 	@PUT("users/{userId}/location")
-	Observable<EventResponse> updateLocationBackground(@Path("userId") int userId, @Body LocationLatLng locationLatLng);
+	Observable<LocationLatLng> updateLocationBackground(@Path("userId") int userId, @Body LocationLatLng locationLatLng);
 
 	@PUT("users/{userId}/events/{eventId}/location")
 	Observable<EventResponse> updateLocation(@Path("userId") int userId, @Path("eventId") int eventId, @Body LocationLatLng locationLatLng);
