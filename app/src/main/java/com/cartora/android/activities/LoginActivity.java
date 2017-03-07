@@ -45,10 +45,10 @@ public class LoginActivity extends AppCompatActivity {
 //			goToEventListActivity();
 //		}
 
-		setupViews();
+		initViews();
 	}
 
-	private void setupViews() {
+	private void initViews() {
 		email = (EditText) findViewById(R.id.login_email_edittext);
 		password = (EditText) findViewById(R.id.login_pwd_edittext);
 		signUpButton = (Button) findViewById(R.id.login_sign_up_button);
