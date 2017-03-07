@@ -1,6 +1,5 @@
 package com.cartora.android.fragments;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -71,7 +70,7 @@ public class EventListFragment extends Fragment {
 	}
 
 	private void loadList() {
-		RestServer.createService(Utility.getAuthToken(getActivity())).getEvents(Utility.getUid(getActivity()))
+		RestServer.createService(Utility.getAuthToken(getActivity())).getEventList(Utility.getUid(getActivity()))
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(new Observer<ArrayList<EventResponse>>() {
 					@Override

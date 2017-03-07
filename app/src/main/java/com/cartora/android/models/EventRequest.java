@@ -1,6 +1,5 @@
 package com.cartora.android.models;
 
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;

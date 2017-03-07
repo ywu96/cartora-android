@@ -15,15 +15,14 @@ import com.cartora.android.R;
 import com.cartora.android.activities.EventDetailActivity;
 import com.cartora.android.models.EventResponse;
 
-import org.parceler.Parcels;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.ViewHolder> {
 
-	public static final String EVENT_LIST_PARCEL_KEY = "event_list_parcel";
+	public static final String EVENT_LIST_NAME_KEY = "event_list_name";
+	public static final String EVENT_LIST_ID_KEY = "event_list_id";
 
 	private Context context;
 	private ArrayList<EventResponse> eventList;
@@ -53,7 +52,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.View
 			@Override
 			public void onClick(View v) {
 				Bundle bundle = new Bundle();
-				bundle.putParcelable(EVENT_LIST_PARCEL_KEY, Parcels.wrap(event));
+				bundle.putInt(EVENT_LIST_ID_KEY, Integer.valueOf(event.id));
 				Intent intent = new Intent(context, EventDetailActivity.class);
 				intent.putExtras(bundle);
 				context.startActivity(intent);

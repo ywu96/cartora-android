@@ -27,7 +27,10 @@ public interface RestService {
 	Observable<UserResponse> updateFcmId(@Body FcmIdUpdateRequest fcmIdUpdateRequest);
 
 	@GET("users/{userId}/events")
-	Observable<ArrayList<EventResponse>> getEvents(@Path("userId") int userId);
+	Observable<ArrayList<EventResponse>> getEventList(@Path("userId") int userId);
+
+	@GET("users/{userId}/events/{eventId}")
+	Observable<EventWithParticipantsResponse> getEvent(@Path("userId") int userId, @Path("eventId") int eventId);
 
 	@POST("users/{userId}/events")
 	Observable<EventWithParticipantsResponse> createEvent(@Path("userId") int userId, @Body EventRequest eventRequest);

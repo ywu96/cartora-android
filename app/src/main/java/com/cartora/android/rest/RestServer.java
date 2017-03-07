@@ -82,8 +82,12 @@ public class RestServer {
 		return restService.updateFcmId(fcmIdUpdateRequest);
 	}
 
-	public Observable<ArrayList<EventResponse>> getEvents(int userId) {
-		return restService.getEvents(userId);
+	public Observable<ArrayList<EventResponse>> getEventList(int userId) {
+		return restService.getEventList(userId);
+	}
+
+	public Observable<EventWithParticipantsResponse> getEvent(int userId, int eventId) {
+		return restService.getEvent(userId, eventId);
 	}
 
 	public Observable<EventWithParticipantsResponse> createEvent(int userId, EventRequest eventRequest) {

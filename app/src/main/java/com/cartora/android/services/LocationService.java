@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.cartora.android.R;
 import com.cartora.android.activities.EventListActivity;
-import com.cartora.android.models.EventResponse;
 import com.cartora.android.models.LocationLatLng;
 import com.cartora.android.rest.RestServer;
 import com.cartora.android.utils.Utility;
@@ -29,8 +28,8 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class LocationService extends Service {
 
-	private static final long LOCATION_MIN_TIME = 3000L;
-	private static final float LOCATION_MIN_DIST = 0.0f;
+	private static final long LOCATION_MIN_TIME = 10000L;
+	private static final float LOCATION_MIN_DIST = 3.0f;
 	private static final int NOTIFICATION_ID = R.string.location_service_tracking;
 
 	private BackgroundLocationListener backgroundLocationListener;
@@ -111,6 +110,7 @@ public class LocationService extends Service {
 
 						@Override
 						public void onNext(LocationLatLng locationLatLng) {
+							// TODO: Just for testing
 							Toast.makeText(getApplicationContext(), "location update", Toast.LENGTH_SHORT).show();
 						}
 					});

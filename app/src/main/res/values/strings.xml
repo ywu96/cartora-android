@@ -8,7 +8,7 @@
     <string name="login_sign_up">Sign up</string>
 
     <string name="event_list_title">@string/app_name</string>
-    <string name="event_create_title">New Event</string>
+    <string name="event_create_title">Create a new event</string>
 
     <string name="action_cancel">Cancel</string>
     <string name="action_accept">Accept</string>
@@ -20,7 +20,7 @@
     <string name="event_date_hint">Pick a date</string>
     <string name="event_time_hint">12:00 PM</string>
     <string name="event_location_hint">Set a location</string>
-    <string name="event_people_hint">Add people</string>
+    <string name="event_people_hint">Invite people</string>
     <string name="title_activity_location">Map</string>
     <string name="location_service_tracking">Your friends are sharing their locations with you</string>
 
