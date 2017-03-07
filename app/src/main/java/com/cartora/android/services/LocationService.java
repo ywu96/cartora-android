@@ -52,7 +52,7 @@ public class LocationService extends Service {
 		showNotification();
 		backgroundLocationListener = new BackgroundLocationListener();
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, LOCATION_MIN_TIME, LOCATION_MIN_DIST, backgroundLocationListener);
-		return START_STICKY;
+		return START_NOT_STICKY;
 	}
 
 	@Override
