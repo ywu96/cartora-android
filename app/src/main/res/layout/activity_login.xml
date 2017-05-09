@@ -112,6 +112,6 @@
         android:gravity="center"
         android:text="Find the people you need to find\nat just the right time."
         android:textColor="@color/white_80p"
-        android:textSize="16sp" />
+        android:textSize="16sp"/>
 
 </RelativeLayout>
